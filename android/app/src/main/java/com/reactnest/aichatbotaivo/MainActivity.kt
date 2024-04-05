@@ -1,4 +1,4 @@
-package com.aichatbotaivo
+package com.reactnest.aichatbotaivo
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

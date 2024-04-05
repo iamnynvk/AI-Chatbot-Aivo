@@ -1,4 +1,4 @@
-package com.aichatbotaivo
+package com.reactnest.aichatbotaivo
 
 import android.app.Application
 import com.facebook.react.PackageList
