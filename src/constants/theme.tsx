@@ -23,12 +23,10 @@ export const color: any = {
   light: {
     backgroundColor: '#ffffff',
     textColor: '#000000',
-    buttonColor: '#ff0000',
   },
   dark: {
-    backgroundColor: '#000000',
+    backgroundColor: '#070911',
     textColor: '#ffffff',
-    buttonColor: '#00ff00',
   },
 };
 
