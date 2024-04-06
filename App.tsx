@@ -1,6 +1,9 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import {globalStyles} from './src/styles/global';
+import {ContextProvider} from './src/context/ContextProvider';
+import Routes from './src/routes';
 
 const App = () => {
   useEffect(() => {
@@ -8,9 +11,16 @@ const App = () => {
   }, []);
 
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <ContextProvider>
+      <View style={globalStyles.container}>
+        <StatusBar
+          animated={false}
+          backgroundColor={'#FFFFFF'}
+          barStyle={'dark-content'}
+        />
+        <Routes />
+      </View>
+    </ContextProvider>
   );
 };
 
