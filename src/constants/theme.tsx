@@ -26,7 +26,7 @@ export const color: any = {
     textColor: '#000000',
   },
   dark: {
-    statusBarColor: '#27374D',
+    statusBarColor: '#222831',
     backgroundColor: '#070911',
     textColor: '#ffffff',
   },

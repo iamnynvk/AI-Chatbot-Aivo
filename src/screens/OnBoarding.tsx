@@ -1,17 +1,22 @@
 import React, {useRef, useState, useMemo} from 'react';
 import {View, FlatList, Animated} from 'react-native';
-import {ON_BOARDING} from '../../assets/data';
 import useAppContext from '../context/useAppContext';
+import {ON_BOARDING} from '../../assets/data';
 import {globalStyles} from '../styles/globalStyles';
-import Paginator from '../components/Paginator';
-import OnBoardingSlides from '../components/OnBoardingSlides';
+import Paginator from '../components/OnBoarding/Paginator';
+import OnBoardingSlides from '../components/OnBoarding/OnBoardingSlides';
+import {storeValueInAsync} from '../utils/AsyncStorage';
+import {ON_BOARDING_BUTTON} from '../enums';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTES} from '../routes/routes';
 
 const OnBoarding = () => {
-  const slideRef = useRef(null);
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const navigation: any = useNavigation();
+  const slideRef: any = useRef(null);
+  const scrollX: any = useRef(new Animated.Value(0)).current;
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const {theme}: any = useAppContext();
-  const globalStyle = globalStyles({theme});
+  const globalStyle: any = globalStyles({theme});
 
   const viewableItemChanged = useMemo(() => {
     return ({viewableItems}: any) => {
@@ -29,11 +34,15 @@ const OnBoarding = () => {
     });
   }, [scrollX]);
 
-  const scrollTo = () => {
+  const scrollTo = async () => {
     if (currentIndex < ON_BOARDING.length - 1 && slideRef.current) {
       slideRef.current.scrollToIndex({index: currentIndex + 1});
     } else {
-      console.log('LAST SLIDE');
+      await storeValueInAsync(ON_BOARDING_BUTTON.ALREADYLAUNCHED, true);
+      navigation.reset({
+        index: 0,
+        routes: [{name: ROUTES.SIGNIN}],
+      });
     }
   };
 
@@ -51,8 +60,8 @@ const OnBoarding = () => {
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
         data={ON_BOARDING}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => <OnBoardingSlides slides={item} />}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({item}: any) => <OnBoardingSlides slides={item} />}
         bounces={false}
         onScroll={onScroll}
         scrollEventThrottle={32}
