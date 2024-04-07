@@ -21,9 +21,7 @@ export const ContextProvider = ({children}: any) => {
       <StatusBar
         animated={false}
         backgroundColor={theme.statusBarColor}
-        barStyle={
-          colorScheme == MODE.DARK ? MODE.LIGHT_CONTENT : MODE.DARK_CONTENT
-        }
+        barStyle={MODE.LIGHT_CONTENT}
       />
       {children}
     </AppContext.Provider>

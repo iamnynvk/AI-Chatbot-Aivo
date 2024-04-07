@@ -1,0 +1,18 @@
+{
+  "LABELS": {
+    "UPGRADE": "Upgrade Premium",
+    "GENERATEDAIIMAGE": "Generated Unlimited AI Images",
+    "HIGHERWORDSLIMIT": "Higher Words Limit",
+    "NOADS": "No Ads",
+    "NOLIMITS": "No Limits",
+    "SELECTPLANS": "SELECT PLANS",
+    "WEEKLY": "Weekly Subscriptions",
+    "MONTHLY": "Monthly Subscriptions",
+    "YEARLY": "Yearly Subscriptions",
+    "POPULAR": "Popular",
+    "DOLLAR": "$",
+    "WEEK": "/week",
+    "MONTH": "/month",
+    "YEAR": "/year"
+  }
+}

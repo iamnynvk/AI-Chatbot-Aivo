@@ -1,91 +1,74 @@
-import React, {useRef} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import Onboarding from 'react-native-onboarding-swiper';
+import React, {useRef, useState, useMemo} from 'react';
+import {View, FlatList, Animated} from 'react-native';
 import {ON_BOARDING} from '../../assets/data';
-import {COLORS, FONT} from '../constants';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {useNavigation} from '@react-navigation/native';
-import {ON_BOARDING_BUTTON} from '../enums';
-import {ROUTES} from '../routes/routes';
+import useAppContext from '../context/useAppContext';
+import {globalStyles} from '../styles/globalStyles';
+import Paginator from '../components/Paginator';
+import OnBoardingSlides from '../components/OnBoardingSlides';
 
-const OnBoardingScreen = () => {
-  const onBoardingRef: any = useRef();
-  const navigation: any = useNavigation();
+const OnBoarding = () => {
+  const slideRef = useRef(null);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const {theme}: any = useAppContext();
+  const globalStyle = globalStyles({theme});
 
-  const renderOnButton = (label: string) => {
-    return (
-      <TouchableOpacity
-        style={[
-          styles.labelContainer,
-          {
-            backgroundColor:
-              label === ON_BOARDING_BUTTON.SKIP ? '' : COLORS.white,
-          },
-        ]}
-        activeOpacity={0.8}
-        onPress={() =>
-          label === ON_BOARDING_BUTTON.NEXT
-            ? onBoardingRef.current.goNext()
-            : label === ON_BOARDING_BUTTON.SKIP
-            ? onBoardingRef.current.goToPage(3, true)
-            : navigation.reset({
-                index: 0,
-                routes: [{name: ROUTES.INAPPPURCHASE}],
-              })
-        }>
-        <Text
-          style={[
-            styles.labelButtonStyles,
-            {
-              color:
-                label === ON_BOARDING_BUTTON.SKIP ? COLORS.white : COLORS.black,
-            },
-          ]}>
-          {label}
-        </Text>
-      </TouchableOpacity>
-    );
+  const viewableItemChanged = useMemo(() => {
+    return ({viewableItems}: any) => {
+      setCurrentIndex(viewableItems[0].index);
+    };
+  }, []);
+
+  const viewConfig = useMemo(() => {
+    return {viewAreaCoveragePercentThreshold: 50};
+  }, []);
+
+  const onScroll = useMemo(() => {
+    return Animated.event([{nativeEvent: {contentOffset: {x: scrollX}}}], {
+      useNativeDriver: false,
+    });
+  }, [scrollX]);
+
+  const scrollTo = () => {
+    if (currentIndex < ON_BOARDING.length - 1 && slideRef.current) {
+      slideRef.current.scrollToIndex({index: currentIndex + 1});
+    } else {
+      console.log('LAST SLIDE');
+    }
+  };
+
+  const skipTo = () => {
+    const lastIndex = ON_BOARDING.length - 1;
+    if (slideRef.current) {
+      slideRef.current.scrollToIndex({index: lastIndex});
+    }
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Onboarding
-        ref={onBoardingRef}
-        pages={ON_BOARDING}
-        titleStyles={styles.titleStyles}
-        containerStyles={styles.containerStyles}
-        subTitleStyles={styles.subTitleStyles}
-        bottomBarHeight={wp(14)}
-        bottomBarHighlight={false}
-        allowFontScaling={false}
-        NextButtonComponent={() => renderOnButton(ON_BOARDING_BUTTON.NEXT)}
-        SkipButtonComponent={() => renderOnButton(ON_BOARDING_BUTTON.SKIP)}
-        DoneButtonComponent={() => renderOnButton(ON_BOARDING_BUTTON.DONE)}
+    <View style={globalStyle.container}>
+      <FlatList
+        horizontal={true}
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        data={ON_BOARDING}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => <OnBoardingSlides slides={item} />}
+        bounces={false}
+        onScroll={onScroll}
+        scrollEventThrottle={32}
+        onViewableItemsChanged={viewableItemChanged}
+        viewabilityConfig={viewConfig}
+        ref={slideRef}
+      />
+      <Paginator
+        data={ON_BOARDING}
+        scrollX={scrollX}
+        currentIndex={currentIndex}
+        onNext={scrollTo}
+        onSkip={skipTo}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  titleStyles: {
-    fontFamily: FONT.notoSansBold,
-    fontSize: wp(6),
-  },
-  containerStyles: {
-    padding: wp(6),
-  },
-  subTitleStyles: {
-    fontFamily: FONT.notoSansMedium,
-  },
-  labelContainer: {
-    padding: wp(4),
-    borderTopLeftRadius: wp(5),
-    borderBottomLeftRadius: wp(5),
-  },
-  labelButtonStyles: {
-    fontFamily: FONT.notoSansExtraBold,
-    fontSize: wp(4),
-  },
-});
-
-export default OnBoardingScreen;
+export default OnBoarding;
