@@ -1,7 +1,7 @@
 import {createContext, useState} from 'react';
 import {Appearance, StatusBar} from 'react-native';
 import {color} from '../constants';
-import {MODE} from '../enums/mode';
+import {MODE} from '../enums';
 
 export const AppContext = createContext({});
 
@@ -20,7 +20,7 @@ export const ContextProvider = ({children}: any) => {
       }}>
       <StatusBar
         animated={false}
-        backgroundColor={theme.backgroundColor}
+        backgroundColor={theme.statusBarColor}
         barStyle={
           colorScheme == MODE.DARK ? MODE.LIGHT_CONTENT : MODE.DARK_CONTENT
         }

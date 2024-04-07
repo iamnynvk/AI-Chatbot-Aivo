@@ -4,3 +4,9 @@ export const MODE: any = {
   LIGHT_CONTENT: 'light-content',
   DARK_CONTENT: 'dark-content',
 };
+
+export const ON_BOARDING_BUTTON: any = {
+  NEXT: 'Next',
+  DONE: 'Done',
+  SKIP: 'Skip',
+};

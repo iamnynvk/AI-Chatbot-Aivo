@@ -112,6 +112,9 @@ dependencies {
     // Splash Screen
     implementation project(':react-native-splash-screen')
 
+    // Vector Icons
+    implementation project(':react-native-vector-icons')
+
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
@@ -120,3 +123,4 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")

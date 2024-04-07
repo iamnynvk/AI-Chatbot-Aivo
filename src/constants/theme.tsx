@@ -21,10 +21,12 @@ export const COLORS = {
 
 export const color: any = {
   light: {
+    statusBarColor: '#070911',
     backgroundColor: '#ffffff',
     textColor: '#000000',
   },
   dark: {
+    statusBarColor: '#070911',
     backgroundColor: '#070911',
     textColor: '#ffffff',
   },
