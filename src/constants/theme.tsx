@@ -24,19 +24,19 @@ export const color: any = {
     // Instagram
     backgroundColor: '#ffffff',
     textColor: '#262626',
-    lightTextColor:'#737373',
+    lightTextColor: '#737373',
     // Linkedin
-    secondaryColor:'#0b66c3',
-    wrapperColor:"#f9fafc",
+    secondaryColor: '#0b66c3',
+    wrapperColor: '#f9fafc',
   },
   dark: {
     // Instagram
     backgroundColor: '#000000',
     textColor: '#f5f5f5',
-    lightTextColor:'#a8a8a8',
+    lightTextColor: '#a8a8a8',
     // Linkedin
-    secondaryColor:'#0195f7',
-    wrapperColor:"#f9fafc",
+    secondaryColor: '#0195f7',
+    wrapperColor: '#f9fafc',
   },
 };
 

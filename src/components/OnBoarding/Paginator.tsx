@@ -11,9 +11,8 @@ import {SCREEN_WIDTH} from '../../constants/theme';
 import {ON_BOARDING_BUTTON} from '../../enums';
 
 const Paginator = ({data, scrollX, currentIndex, onNext, onSkip}: any) => {
-  const {theme} : any = useAppContext();
-  const styles : any = getStyles({theme});
-
+  const {theme}: any = useAppContext();
+  const styles: any = getStyles({theme});
   return (
     <View style={styles.dotContainer}>
       <TouchableOpacity
