@@ -21,37 +21,30 @@ export const COLORS = {
 
 export const color: any = {
   light: {
-    // Instagram
     backgroundColor: '#ffffff',
     textColor: '#262626',
     lightTextColor: '#737373',
-    // Linkedin
     secondaryColor: '#0b66c3',
     wrapperColor: '#f9fafc',
+    danger: '#ff3040',
+    link: '#0b66c3',
+    borderLines: '#4A4E51',
+    inputColor: '#f9fafc',
+    lightBorder: '#0b66c3',
   },
   dark: {
-    // Instagram
     backgroundColor: '#000000',
     textColor: '#f5f5f5',
     lightTextColor: '#a8a8a8',
-    // Linkedin
     secondaryColor: '#0195f7',
     wrapperColor: '#f9fafc',
+    danger: '#ff3040',
+    link: '#f19c12',
+    borderLines: '#4A4E51',
+    inputColor: '#181D2C',
+    lightBorder: '#3BF6F1',
   },
 };
-
-// export const color: any = {
-//   light: {
-//     statusBarColor: '#27374D',
-//     backgroundColor: '#ffffff',
-//     textColor: '#000000',
-//   },
-//   dark: {
-//     statusBarColor: '#222831',
-//     backgroundColor: '#070911',
-//     textColor: '#ffffff',
-//   },
-// };
 
 export const SCREEN_HEIGHT = Dimensions.get('screen').height;
 export const SCREEN_WIDTH = Dimensions.get('screen').width;
