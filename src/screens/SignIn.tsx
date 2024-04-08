@@ -3,20 +3,23 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
 import LottieView from 'lottie-react-native';
-import {FONT, images} from '../constants';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+// Imports
+import {FONT, images} from '../constants';
 import InputText from '../components/InputText';
 import SubmitButton from '../components/SubmitButton';
 import {LABELS} from '../localization/labels';
 import {signInValidation} from '../enums/validation';
 import useAppContext from '../context/useAppContext';
 import {IToggle} from '../types';
+import {ROUTES} from '../routes/routes';
 
 const SignIn = () => {
   const {theme}: any = useAppContext();
+  const styles: any = getStyles({theme});
   const navigation = useNavigation();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -25,8 +28,6 @@ const SignIn = () => {
     loading: false,
     isClick: false,
   });
-
-  const styles: any = getStyles({theme});
 
   const signInHandler = async (values: any) => {
     // Your sign in logic
@@ -78,9 +79,13 @@ const SignIn = () => {
               activeInputField={activeInputField}
               setActiveInputField={setActiveInputField}
             />
-            {touched.email && errors.email && (
+            {touched.email && errors.email ? (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{errors.email}</Text>
+              </View>
+            ) : (
+              <View style={styles.errorContainer}>
+                <Text></Text>
               </View>
             )}
 
@@ -107,7 +112,7 @@ const SignIn = () => {
             ) : (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('ForgotPassword')}
+                onPress={() => navigation.navigate(ROUTES.SIGNUP)}
                 style={styles.forgotContainer}>
                 <Text style={styles.forgotText}>{LABELS.FORGOTPASSWORD}</Text>
               </TouchableOpacity>
@@ -129,7 +134,7 @@ const SignIn = () => {
               {LABELS.DONTHAVEACCOUNT}{' '}
               <Text
                 style={styles.register}
-                onPress={() => navigation.navigate('SignUp')}>
+                onPress={() => navigation.navigate(ROUTES.SIGNUP)}>
                 {LABELS.SIGNUP}
               </Text>
             </Text>

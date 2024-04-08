@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  useNavigation,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // Imports
 import {ROUTES} from './routes';
@@ -10,10 +14,12 @@ import OnBoarding from '../screens/OnBoarding';
 import InAppPurchase from '../screens/InAppPurchase';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
+import useAppContext from '../context/useAppContext';
 
 const Stack = createNativeStackNavigator();
 
 const index = () => {
+  const {theme}: any = useAppContext();
   const [isSeenIntro, setIsSeenIntro] = useState<any>(null);
 
   // Actions
@@ -31,8 +37,17 @@ const index = () => {
 
   if (isSeenIntro === null) return null;
 
+  const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: theme?.backgroundColor,
+      background: theme?.backgroundColor,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
         initialRouteName={isSeenIntro ? ROUTES.SIGNIN : ROUTES.ONBOARDING}
         screenOptions={{headerShown: false}}>

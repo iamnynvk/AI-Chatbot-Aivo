@@ -31,6 +31,7 @@ export const color: any = {
     borderLines: '#4A4E51',
     inputColor: '#f9fafc',
     lightBorder: '#0b66c3',
+    backColor: '#000000',
   },
   dark: {
     backgroundColor: '#000000',
@@ -43,6 +44,7 @@ export const color: any = {
     borderLines: '#4A4E51',
     inputColor: '#181D2C',
     lightBorder: '#3BF6F1',
+    backColor: '#FFFFFF',
   },
 };
 
