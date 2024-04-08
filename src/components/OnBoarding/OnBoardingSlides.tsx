@@ -26,24 +26,24 @@ const OnBoardingSlides = ({slides: {image, title, subtitle}}: any) => {
 const getStyles = ({theme}: any) => ({
   container: {
     flex: 1,
-    backgroundColor: theme.statusBarColor,
+    backgroundColor: theme.backgroundColor,
     width: SCREEN_WIDTH,
     alignItems: 'center',
     justifyContent: 'center',
   },
   imageStyles: {
-    height: wp(80),
-    width: wp(80),
+    height: wp(70),
+    width: wp(70),
     marginBottom: wp(20),
   },
   textStyles: {
-    color: COLORS.white,
+    color: theme.textColor,
     fontSize: wp(6),
     fontFamily: FONT.notoSansBold,
     marginBottom: wp(10),
   },
   descriptionStyles: {
-    color: COLORS.white,
+    color: theme.lightTextColor,
     fontSize: wp(4),
     fontFamily: FONT.notoSansMedium,
     marginHorizontal: wp(6),

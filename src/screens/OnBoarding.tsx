@@ -1,13 +1,15 @@
 import React, {useRef, useState, useMemo} from 'react';
 import {View, FlatList, Animated} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+// Components
+import Paginator from '../components/OnBoarding/Paginator';
+import OnBoardingSlides from '../components/OnBoarding/OnBoardingSlides';
+// Imports
 import useAppContext from '../context/useAppContext';
 import {ON_BOARDING} from '../../assets/data';
 import {globalStyles} from '../styles/globalStyles';
-import Paginator from '../components/OnBoarding/Paginator';
-import OnBoardingSlides from '../components/OnBoarding/OnBoardingSlides';
 import {storeValueInAsync} from '../utils/AsyncStorage';
 import {ON_BOARDING_BUTTON} from '../enums';
-import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../routes/routes';
 
 const OnBoarding = () => {
@@ -18,9 +20,10 @@ const OnBoarding = () => {
   const {theme}: any = useAppContext();
   const globalStyle: any = globalStyles({theme});
 
+  // Functions
   const viewableItemChanged = useMemo(() => {
     return ({viewableItems}: any) => {
-      setCurrentIndex(viewableItems[0].index);
+      setCurrentIndex(viewableItems[0]?.index);
     };
   }, []);
 

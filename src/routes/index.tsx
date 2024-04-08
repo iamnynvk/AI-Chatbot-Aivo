@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+// Imports
 import {ROUTES} from './routes';
 import {getValueInAsync} from '../utils/AsyncStorage';
 import {ON_BOARDING_BUTTON} from '../enums';
@@ -15,10 +16,12 @@ const Stack = createNativeStackNavigator();
 const index = () => {
   const [isSeenIntro, setIsSeenIntro] = useState<any>(null);
 
+  // Actions
   useEffect(() => {
     alreadyLaunched();
   }, []);
 
+  // Functions
   const alreadyLaunched = async () => {
     const isAlreadyLaunched = await getValueInAsync(
       ON_BOARDING_BUTTON.ALREADYLAUNCHED,

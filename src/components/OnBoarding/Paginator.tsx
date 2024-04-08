@@ -1,14 +1,19 @@
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {FONT} from '../../constants';
-import {COLORS, SCREEN_WIDTH} from '../../constants/theme';
+import {Animated, Text, TouchableOpacity, View} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+// Imports
+import useAppContext from '../../context/useAppContext';
+import {FONT} from '../../constants';
+import {SCREEN_WIDTH} from '../../constants/theme';
 import {ON_BOARDING_BUTTON} from '../../enums';
 
 const Paginator = ({data, scrollX, currentIndex, onNext, onSkip}: any) => {
+  const {theme} : any = useAppContext();
+  const styles : any = getStyles({theme});
+
   return (
     <View style={styles.dotContainer}>
       <TouchableOpacity
@@ -16,13 +21,13 @@ const Paginator = ({data, scrollX, currentIndex, onNext, onSkip}: any) => {
         style={styles.skipContainer}
         disabled={currentIndex === 3}
         onPress={onSkip}>
-        <Text style={styles.buttonStyles}>
+        <Text style={styles.skipButtonStyles}>
           {currentIndex === 3 ? '' : ON_BOARDING_BUTTON.SKIP}
         </Text>
       </TouchableOpacity>
 
       <View style={styles.pagingDot}>
-        {data.map((item: any) => {
+        {data?.map((item: any) => {
           const inputRange = [
             (item?.id - 1) * SCREEN_WIDTH,
             item?.id * SCREEN_WIDTH,
@@ -67,9 +72,7 @@ const Paginator = ({data, scrollX, currentIndex, onNext, onSkip}: any) => {
   );
 };
 
-export default React.memo(Paginator);
-
-const styles = StyleSheet.create({
+const getStyles = ({theme}: any) => ({
   dotContainer: {
     position: 'absolute',
     bottom: 0,
@@ -82,17 +85,19 @@ const styles = StyleSheet.create({
   skipContainer: {
     width: '16%',
     height: '100%',
+    borderTopRightRadius: wp(4),
+    borderBottomRightRadius: wp(4),
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonStyles: {
+  skipButtonStyles: {
     fontFamily: FONT.notoSansBold,
-    color: COLORS.white,
+    color: theme.textColor,
   },
   animatedDot: {
     height: wp(2),
     borderRadius: wp(2),
-    backgroundColor: COLORS.lightWhite,
+    backgroundColor: theme.secondaryColor,
     marginHorizontal: wp(1),
   },
   NextContainer: {
@@ -100,15 +105,17 @@ const styles = StyleSheet.create({
     height: '100%',
     borderTopLeftRadius: wp(4),
     borderBottomLeftRadius: wp(4),
-    backgroundColor: COLORS.white,
+    backgroundColor: theme.secondaryColor,
     justifyContent: 'center',
     alignItems: 'center',
   },
   nextButtonStyles: {
-    color: COLORS.black,
+    color: theme.wrapperColor,
     fontFamily: FONT.notoSansBold,
   },
   pagingDot: {
     flexDirection: 'row',
   },
 });
+
+export default React.memo(Paginator);
