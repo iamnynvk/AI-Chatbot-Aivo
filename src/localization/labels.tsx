@@ -23,4 +23,11 @@ export const LABELS = {
   DONTHAVEACCOUNT: "Don't have an account?",
   SIGNUP: 'Sign Up',
   REGISTER: 'Register Here',
+  PLACEHOLDERFULLNAME: 'Enter the full name',
+  EMAIL: 'Enter the email address',
+  PLACEHOLDERCONFIRMPASSWORD: 'Confirm Password',
+  HAVEALREADYACCOUNT: 'Have already an account?',
+  SIGNIN: 'Sign In',
+  CAMERA: 'Camera',
+  GALLERY: 'GALLERY',
 };

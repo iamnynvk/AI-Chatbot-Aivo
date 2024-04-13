@@ -1,8 +1,9 @@
 import React from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {COLORS} from '../constants';
+import useAppContext from '../context/useAppContext';
 
 const BottomSheets = ({refs, children, sheetHeight}: any) => {
+  const {theme}: any = useAppContext();
   return (
     <RBSheet
       ref={refs}
@@ -13,13 +14,17 @@ const BottomSheets = ({refs, children, sheetHeight}: any) => {
           borderTopEndRadius: 10,
           borderTopStartRadius: 10,
           height: sheetHeight,
-          backgroundColor: COLORS.secondary,
+          backgroundColor: theme?.borderLines,
         },
         wrapper: {
           backgroundColor: 'transparent',
         },
       }}
       animationType="slide"
+      customModalProps={{
+        animationType: 'slide',
+        statusBarTranslucent: true,
+      }}
       closeOnPressBack={true}>
       {children}
     </RBSheet>

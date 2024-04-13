@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  DefaultTheme,
-  NavigationContainer,
-  useNavigation,
-} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // Imports
 import {ROUTES} from './routes';

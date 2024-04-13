@@ -1,22 +1,20 @@
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import React, {useRef, useState} from 'react';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {Formik} from 'formik';
-import {signUpValidation} from '../enums/validation';
-import useAppContext from '../context/useAppContext';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import {COLORS, FONT, images} from '../constants';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
+// Imports
+import useAppContext from '../context/useAppContext';
 import InputText from '../components/InputText';
-import {IToggle} from '../types';
 import SubmitButton from '../components/SubmitButton';
-import {LABELS} from '../localization/labels';
 import BottomSheets from '../components/BottomSheets';
 import Header from '../components/Header';
+import {signUpValidation} from '../enums/validation';
+import {FONT, images} from '../constants';
+import {IToggle} from '../types';
+import {LABELS} from '../localization/labels';
 
 const SignUp = () => {
   const emailRef: any = useRef();
@@ -33,7 +31,7 @@ const SignUp = () => {
     isClick: false,
   });
 
-  const onMediaPicker = data => {};
+  const onMediaPicker = (data: any) => {};
 
   // const signUpHandler = async (values: any) => {
   //   setHandleToggle({
@@ -110,7 +108,7 @@ const SignUp = () => {
           <View style={styles.fieldContainer}>
             <InputText
               name="fullName"
-              placeHolderText={'Enter the full name'}
+              placeHolderText={LABELS.PLACEHOLDERFULLNAME}
               isNextFocus={emailRef}
               isSecure={false}
               keyType={'email-address'}
@@ -137,7 +135,7 @@ const SignUp = () => {
               name={'email'}
               refs={emailRef}
               textContainer={styles.userInputContainer}
-              placeHolderText={'Enter the email address'}
+              placeHolderText={LABELS.EMAIL}
               isNextFocus={passwordRef}
               isSecure={false}
               onBlurInput={handleBlur('email')}
@@ -163,7 +161,7 @@ const SignUp = () => {
               name={'Password'}
               textContainer={styles.userInputContainer}
               refs={passwordRef}
-              placeHolderText={'Password'}
+              placeHolderText={LABELS.PLACEHOLDERPASSWORD}
               isNextFocus={confirmPassRef}
               isSecure={true}
               onBlurInput={handleBlur('password')}
@@ -189,7 +187,7 @@ const SignUp = () => {
               name={'confirmPassword'}
               textContainer={styles.userInputContainer}
               refs={confirmPassRef}
-              placeHolderText={'Confirm Password'}
+              placeHolderText={LABELS.PLACEHOLDERCONFIRMPASSWORD}
               isAutoFocus={false}
               isSecure={true}
               onBlurInput={handleBlur('confirmPassword')}
@@ -223,11 +221,11 @@ const SignUp = () => {
 
           <View style={styles.signUpLinkContainer}>
             <Text style={styles.signUpText}>
-              Have already an account?{' '}
+              {LABELS.HAVEALREADYACCOUNT}{' '}
               <Text
                 style={styles.register}
                 onPress={() => navigation?.goBack()}>
-                Sign In
+                {LABELS.SIGNIN}
               </Text>
             </Text>
           </View>
@@ -239,9 +237,14 @@ const SignUp = () => {
                   style={styles.boxContainer}
                   activeOpacity={0.9}
                   onPress={() => onMediaPicker('camera')}>
-                  <Ionicons name="camera" size={30} color={COLORS.white} />
-                  <Text style={[styles.signUpText, {color: COLORS.white}]}>
-                    Camera
+                  <Ionicons
+                    name="camera"
+                    size={30}
+                    color={theme?.wrapperColor}
+                  />
+                  <Text
+                    style={[styles.signUpText, {color: theme?.wrapperColor}]}>
+                    {LABELS.CAMERA}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -250,9 +253,14 @@ const SignUp = () => {
                   style={styles.boxContainer}
                   activeOpacity={0.9}
                   onPress={() => onMediaPicker('gallery')}>
-                  <Ionicons name="image" size={30} color={COLORS.white} />
-                  <Text style={[styles.signUpText, {color: COLORS.white}]}>
-                    Gallery
+                  <Ionicons
+                    name="image"
+                    size={30}
+                    color={theme?.wrapperColor}
+                  />
+                  <Text
+                    style={[styles.signUpText, {color: theme?.wrapperColor}]}>
+                    {LABELS.GALLERY}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -276,19 +284,19 @@ const getStyles = ({theme}: any) => ({
     alignSelf: 'center',
     fontFamily: FONT.notoSansExtraBold,
     fontSize: wp(6),
+    paddingHorizontal: wp(2),
   },
   photoContainer: {
     marginTop: wp(10),
     width: wp(40),
     height: wp(40),
     alignSelf: 'center',
-    borderRadius: wp(20),
   },
   openModelStyles: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: COLORS.white,
+    backgroundColor: theme.backgroundColor,
     borderRadius: wp(20),
   },
   imageStyles: {
@@ -347,14 +355,13 @@ const getStyles = ({theme}: any) => ({
   boxContainer: {
     alignSelf: 'center',
     alignItems: 'center',
-    shadowColor: '#fff',
+    shadowColor: theme?.wrapperColor,
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
 });
