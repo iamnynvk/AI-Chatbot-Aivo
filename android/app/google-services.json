@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "551397325167",
+    "project_id": "ai-chatbot-aivo-007",
+    "storage_bucket": "ai-chatbot-aivo-007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551397325167:android:4f85d5d449343cc9f8909a",
+        "android_client_info": {
+          "package_name": "com.reactnest.aichatbotaivo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSOmX89TIMmac-q3q4tVA6T_GHpOv6OsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
