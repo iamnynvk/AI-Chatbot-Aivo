@@ -11,3 +11,17 @@ export const ON_BOARDING_BUTTON: any = {
   SKIP: 'Skip',
   ALREADYLAUNCHED: 'AlreadyLaunched',
 };
+
+export const COLLECTIONS: any = {
+  USERS: 'Users',
+  PROFILE: 'Profile',
+  CHAT: 'generalChat',
+  ART: 'artChat',
+  CODE: 'codeChat',
+  BOOKING: 'bookingChat',
+  CONTENT: 'contentChat',
+  HEALTH: 'healthChat',
+  TRANSLATE: 'translateChat',
+  MUSIC: 'musicChat',
+  MOVIES: 'moviesChat',
+};

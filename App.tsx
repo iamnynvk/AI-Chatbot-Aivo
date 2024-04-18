@@ -4,6 +4,7 @@ import SplashScreen from 'react-native-splash-screen';
 // Import
 import Routes from './src/routes';
 import {ContextProvider} from './src/context/ContextProvider';
+import {requestMultiplePermissions} from './src/utils/AskPermission';
 
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
@@ -17,6 +18,7 @@ TextInput.defaultProps = {
 const App = () => {
   useEffect(() => {
     SplashScreen.hide();
+    requestMultiplePermissions();
   }, []);
 
   return (

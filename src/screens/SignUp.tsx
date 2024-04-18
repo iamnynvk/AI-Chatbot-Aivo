@@ -1,10 +1,11 @@
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {Formik} from 'formik';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
+import ImagePicker from 'react-native-image-crop-picker';
 // Imports
 import useAppContext from '../context/useAppContext';
 import InputText from '../components/InputText';
@@ -13,8 +14,10 @@ import BottomSheets from '../components/BottomSheets';
 import Header from '../components/Header';
 import {signUpValidation} from '../enums/validation';
 import {FONT, images} from '../constants';
-import {IToggle} from '../types';
 import {LABELS} from '../localization/labels';
+import {IToggle} from '../types';
+import {createUser} from '../utils/Firebase';
+import {ROUTES} from '../routes/routes';
 
 const SignUp = () => {
   const emailRef: any = useRef();
@@ -22,7 +25,7 @@ const SignUp = () => {
   const confirmPassRef: any = useRef();
   const refRBSheet: any = useRef();
   const navigation: any = useNavigation();
-  const {theme}: any = useAppContext();
+  const {theme, signUpUser}: any = useAppContext();
   const styles: any = getStyles({theme});
   const [profileImage, setProfileImage] = useState<any>(null);
   const [activeInputField, setActiveInputField] = useState('');
@@ -31,32 +34,60 @@ const SignUp = () => {
     isClick: false,
   });
 
-  const onMediaPicker = (data: any) => {};
+  const onMediaPicker = useCallback((type: string) => {
+    if (type === 'camera') {
+      ImagePicker.openCamera({
+        cropping: true,
+        width: 500,
+        height: 500,
+        includeExif: true,
+        compressImageQuality: 0.8,
+      })
+        .then((image: any) => {
+          setProfileImage(image?.path);
+          refRBSheet?.current?.close();
+        })
+        .catch(e => refRBSheet?.current?.close());
+    } else {
+      ImagePicker.openPicker({
+        cropping: true,
+        width: 500,
+        height: 500,
+        includeExif: true,
+        compressImageQuality: 0.8,
+      })
+        .then((image: any) => {
+          setProfileImage(image?.path);
+          refRBSheet?.current?.close();
+        })
+        .catch(e => refRBSheet?.current?.close());
+    }
+  }, []);
 
-  // const signUpHandler = async (values: any) => {
-  //   setHandleToggle({
-  //     isClick: true,
-  //     loading: true,
-  //   });
-  //   const userCollection = {
-  //     ...values,
-  //     userImageUrl: profileImage,
-  //   };
+  const signUpHandler = async (values: any) => {
+    setHandleToggle({
+      isClick: true,
+      loading: true,
+    });
+    const userCollection = {
+      ...values,
+      userImageUrl: profileImage,
+    };
 
-  //   const confirmation = await signUpUser(values?.email, values?.password);
-  //   if (confirmation.code) {
-  //     setHandleToggle({
-  //       isClick: false,
-  //       loading: false,
-  //     });
-  //   } else {
-  //     await createUser(userCollection, confirmation);
-  //     navigation?.reset({
-  //       index: 0,
-  //       routes: [{name: 'Main'}],
-  //     });
-  //   }
-  // };
+    const confirmation = await signUpUser(values?.email, values?.password);
+    if (confirmation.code) {
+      setHandleToggle({
+        isClick: false,
+        loading: false,
+      });
+    } else {
+      await createUser(userCollection, confirmation);
+      navigation?.reset({
+        index: 0,
+        routes: [{name: ROUTES.INAPPPURCHASE}],
+      });
+    }
+  };
 
   return (
     <Formik
@@ -68,7 +99,7 @@ const SignUp = () => {
       }}
       validateOnMount={true}
       validationSchema={signUpValidation}
-      onSubmit={(values: any) => {}}>
+      onSubmit={(values: any) => signUpHandler(values)}>
       {({
         handleChange,
         handleBlur,

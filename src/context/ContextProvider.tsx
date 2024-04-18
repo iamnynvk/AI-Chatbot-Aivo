@@ -1,8 +1,9 @@
 import {createContext, useState} from 'react';
-import {Appearance, StatusBar} from 'react-native';
+import {Alert, Appearance, StatusBar} from 'react-native';
 // Imports
 import {color} from '../constants';
 import {MODE} from '../enums';
+import {handleAuthError, signUpWithEmailPassword} from '../utils/Firebase';
 
 export const AppContext = createContext({});
 
@@ -18,6 +19,20 @@ export const ContextProvider = ({children}: any) => {
         colorScheme,
         setColorScheme,
         theme,
+        signUpUser: async (email: string, password: string) => {
+          try {
+            const confirmation: any = await signUpWithEmailPassword(
+              email,
+              password,
+            );
+            return confirmation;
+          } catch (e: any) {
+            handleAuthError(e, (message: any) => {
+              Alert.alert('Aivo', message);
+            });
+            return e;
+          }
+        },
       }}>
       <StatusBar
         animated={false}
