@@ -1,4 +1,5 @@
 import {images} from '../../src/constants';
+import {LABELS} from '../../src/localization/labels';
 
 export const ON_BOARDING = [
   {
@@ -31,41 +32,25 @@ export const ON_BOARDING = [
   },
 ];
 
-// export const ON_BOARDING = [
-//   {
-//     id: 0,
-//     // backgroundColor: '#222831',
-//     backgroundColor: '#27374D',
-//     image: images.img_bot_say,
-//     title: 'Welcome to AI Chatbot AIVO',
-//     subtitle:
-//       'Experience the power of artificial intelligence at your fingertips with AIVO. Get ready to explore a world with AIVO!',
-//   },
-//   {
-//     id: 1,
-//     // backgroundColor: '#393E46',
-//     backgroundColor: '#27374D',
-//     image: images.img_bot_chatlist,
-//     title: 'Engage with AI Conversations',
-//     subtitle:
-//       'Integrating ChatGPT and DALLE APIs to provide you with intelligent responses to your queries.',
-//   },
-//   {
-//     id: 2,
-//     // backgroundColor: '#112D4E',
-//     backgroundColor: '#27374D',
-//     image: images.img_bot_search,
-//     title: 'Break Language Barriers',
-//     subtitle:
-//       'AIVO goes beyond boundaries with its built-in translator feature. From English to Hindi and a variety of other languages',
-//   },
-//   {
-//     id: 3,
-//     backgroundColor: '#27374D',
-//     image: images.img_bot_movies,
-//     title: 'Explore Endless Possibilities',
-//     subtitle:
-//       'Whether you are interested in art, coding tips, health advice, or entertainment recommendations, AIVO has you covered.',
-//   },
-// ];
-
+export const IN_APP_PURCHASE_DATA = [
+  {
+    id: 0,
+    featuresName: LABELS.GENERATED_AI_IMAGE,
+    image: 'robot-love',
+  },
+  {
+    id: 1,
+    featuresName: LABELS.HIGHER_WORDS_LIMIT,
+    image: 'file-word-box',
+  },
+  {
+    id: 2,
+    featuresName: LABELS.NO_ADS,
+    image: 'google-ads',
+  },
+  {
+    id: 3,
+    featuresName: LABELS.NO_LIMITS,
+    image: 'infinity',
+  },
+];

@@ -45,7 +45,8 @@ const index = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
-        initialRouteName={isSeenIntro ? ROUTES.SIGNIN : ROUTES.ONBOARDING}
+        // initialRouteName={isSeenIntro ? ROUTES.SIGNIN : ROUTES.ONBOARDING}
+        initialRouteName={ROUTES.INAPPPURCHASE}
         screenOptions={{headerShown: false}}>
         <Stack.Group>
           <Stack.Screen name={ROUTES.ONBOARDING} component={OnBoarding} />

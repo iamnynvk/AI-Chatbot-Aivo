@@ -1,21 +1,69 @@
 import React, {useEffect} from 'react';
-import {View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import useAppContext from '../context/useAppContext';
 import {globalStyles} from '../styles/globalStyles';
+import Header from '../components/Header';
+import {LABELS} from '../localization/labels';
+import FastImage from 'react-native-fast-image';
+import {images} from '../constants';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import LottieView from 'lottie-react-native';
+import {IN_APP_PURCHASE_DATA} from '../../assets/data';
+import FeaturesList from '../components/InAppPurchase/FeaturesList';
+import {Text} from 'react-native';
 
 const InAppPurchase = (props: any) => {
   const {theme}: any = useAppContext();
-  const styles = globalStyles({theme});
+  const styles: any = getStyles({theme});
 
-  useEffect(() => {
-    props?.route?.params?.from && watchOnBoarding();
-  }, []);
+  return (
+    <View style={styles.container}>
+      <Header isBack={false} title={LABELS.UPGRADE} />
+      {/* Image */}
+      <View style={styles.ImageContainer}>
+        <FastImage
+          source={images.img_premium_plan}
+          style={styles.imageStyles}
+          resizeMode="contain"
+        />
+      </View>
 
-  const watchOnBoarding = () => {
-    console.log('Once user seen on-boarding screen');
-  };
+      <FlatList
+        data={IN_APP_PURCHASE_DATA}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({item}: any) => <FeaturesList data={item} />}
+        showsVerticalScrollIndicator={false}
+      />
 
-  return <View style={styles.container}></View>;
+      {/* Select Plans */}
+      <View style={styles.lineContainer} />
+      <Text>Select Plans</Text>
+      <View style={styles.lineContainer} />
+    </View>
+  );
 };
+
+const getStyles = ({theme}: any) => ({
+  container: {
+    flex: 1,
+    backgroundColor: theme?.backgroundColor,
+  },
+  ImageContainer: {
+    alignItems: 'center',
+    marginTop: wp(10),
+    alignSelf: 'center',
+  },
+  imageStyles: {
+    height: wp(80),
+    width: wp(80),
+  },
+  lineContainer: {
+    borderColor: '#fff',
+    borderWidth: 1,
+  },
+});
 
 export default InAppPurchase;

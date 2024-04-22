@@ -59,6 +59,7 @@ const OnBoarding = () => {
   return (
     <View style={globalStyle.container}>
       <FlatList
+        ref={slideRef}
         horizontal={true}
         pagingEnabled={true}
         showsHorizontalScrollIndicator={false}
@@ -70,7 +71,6 @@ const OnBoarding = () => {
         scrollEventThrottle={32}
         onViewableItemsChanged={viewableItemChanged}
         viewabilityConfig={viewConfig}
-        ref={slideRef}
       />
       <Paginator
         data={ON_BOARDING}

@@ -4,6 +4,8 @@ import img_bot_movies from '../../assets/images/img_bot_movies.png';
 import img_bot_search from '../../assets/images/img_bot_search.png';
 import anim_authSession from '../../assets/animations/authSession.json';
 import img_user_logo from '../../assets/images/img_user_logo.png';
+import img_premium_plan from '../../assets/images/img_premium_plan.png';
+import anim_robot from '../../assets/animations/anim_robot.json';
 
 const images = {
   img_bot_say,
@@ -12,6 +14,8 @@ const images = {
   img_bot_search,
   anim_authSession,
   img_user_logo,
+  img_premium_plan,
+  anim_robot,
 };
 
 export default images;
