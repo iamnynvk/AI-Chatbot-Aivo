@@ -1,19 +1,20 @@
 import React, {useEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import {View} from 'react-native';
 import useAppContext from '../context/useAppContext';
 import {globalStyles} from '../styles/globalStyles';
 import Header from '../components/Header';
 import {LABELS} from '../localization/labels';
 import FastImage from 'react-native-fast-image';
-import {images} from '../constants';
+import {FONT, images} from '../constants';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import LottieView from 'lottie-react-native';
-import {IN_APP_PURCHASE_DATA} from '../../assets/data';
+import {FEATURES, IN_APP_PURCHASE_DATA} from '../../assets/data';
 import FeaturesList from '../components/InAppPurchase/FeaturesList';
-import {Text} from 'react-native';
+import {Divider, Text} from 'react-native-paper';
+import LottieView from 'lottie-react-native';
+import PlansList from '../components/InAppPurchase/PlansList';
 
 const InAppPurchase = (props: any) => {
   const {theme}: any = useAppContext();
@@ -23,25 +24,41 @@ const InAppPurchase = (props: any) => {
     <View style={styles.container}>
       <Header isBack={false} title={LABELS.UPGRADE} />
       {/* Image */}
-      <View style={styles.ImageContainer}>
-        <FastImage
-          source={images.img_premium_plan}
-          style={styles.imageStyles}
-          resizeMode="contain"
+      <View style={styles.animContainer}>
+        <LottieView
+          source={images.anim_robot}
+          autoPlay
+          loop
+          style={styles.animStyles}
         />
       </View>
 
-      <FlatList
-        data={IN_APP_PURCHASE_DATA}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({item}: any) => <FeaturesList data={item} />}
-        showsVerticalScrollIndicator={false}
-      />
+      {/* Features */}
+      <View style={styles.featuresContainer}>
+        {FEATURES.map((feature: any) => (
+          <FeaturesList data={feature} />
+        ))}
+      </View>
+
+      {/* Divider */}
+      <View style={styles.dividerContainer}>
+        <Divider
+          style={styles.divider}
+          theme={{colors: {primary: theme?.textColor}}}
+        />
+        <Text style={styles.planText}>{LABELS.SELECT_PLANS}</Text>
+        <Divider
+          style={styles.divider}
+          theme={{colors: {primary: theme?.textColor}}}
+        />
+      </View>
 
       {/* Select Plans */}
-      <View style={styles.lineContainer} />
-      <Text>Select Plans</Text>
-      <View style={styles.lineContainer} />
+      <View style={styles.planContainer}>
+        {IN_APP_PURCHASE_DATA.map((planDetails: any) => (
+          <PlansList data={planDetails} />
+        ))}
+      </View>
     </View>
   );
 };
@@ -51,18 +68,36 @@ const getStyles = ({theme}: any) => ({
     flex: 1,
     backgroundColor: theme?.backgroundColor,
   },
-  ImageContainer: {
+  animContainer: {
     alignItems: 'center',
-    marginTop: wp(10),
     alignSelf: 'center',
+    marginTop: wp(-10),
+    marginBottom: wp(-6),
+    borderColor: '#fff',
   },
-  imageStyles: {
+  animStyles: {
     height: wp(80),
     width: wp(80),
   },
-  lineContainer: {
-    borderColor: '#fff',
-    borderWidth: 1,
+  featuresContainer: {
+    marginTop: wp(2),
+  },
+  planText: {
+    fontFamily: FONT.notoSansMedium,
+    fontSize: wp(4),
+    color: theme?.textColor,
+  },
+  dividerContainer: {
+    marginTop: wp(6),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  divider: {
+    flex: 1,
+    marginHorizontal: wp(4),
+  },
+  planContainer: {
+    marginTop: wp(4),
   },
 });
 

@@ -11,14 +11,13 @@ import {FONT} from '../../constants';
 const FeaturesList = ({data}: any) => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
-  console.log('data ---', data);
   return (
-    <View style={styles.container}>
+    <View key={data?.id} style={styles.container}>
       <View style={styles.iconContainer}>
         <MaterialCommunityIcons
           name={data?.image}
           color={theme.textColor}
-          size={wp(6)}
+          size={wp(5.6)}
         />
       </View>
       <View style={styles.featureContainer}>
@@ -45,7 +44,7 @@ const getStyles = ({theme}: any) => ({
   },
   featuresText: {
     fontFamily: FONT.notoSansMedium,
-    fontSize: wp(4),
+    fontSize: wp(3.8),
     color: theme?.textColor,
   },
 });

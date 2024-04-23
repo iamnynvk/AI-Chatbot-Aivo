@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Text, TextInput} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import {PaperProvider} from 'react-native-paper';
 // Import
 import Routes from './src/routes';
 import {ContextProvider} from './src/context/ContextProvider';
@@ -23,7 +24,9 @@ const App = () => {
 
   return (
     <ContextProvider>
-      <Routes />
+      <PaperProvider>
+        <Routes />
+      </PaperProvider>
     </ContextProvider>
   );
 };

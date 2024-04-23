@@ -50,8 +50,8 @@ const index = () => {
         screenOptions={{headerShown: false}}>
         <Stack.Group>
           <Stack.Screen name={ROUTES.ONBOARDING} component={OnBoarding} />
-          <Stack.Screen name={ROUTES.SIGNIN} component={SignIn} />
-          <Stack.Screen name={ROUTES.SIGNUP} component={SignUp} />
+          <Stack.Screen name={ROUTES.SIGN_IN} component={SignIn} />
+          <Stack.Screen name={ROUTES.SIGN_UP} component={SignUp} />
           <Stack.Screen name={ROUTES.INAPPPURCHASE} component={InAppPurchase} />
         </Stack.Group>
       </Stack.Navigator>

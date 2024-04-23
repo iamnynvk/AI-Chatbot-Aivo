@@ -32,7 +32,7 @@ export const ON_BOARDING = [
   },
 ];
 
-export const IN_APP_PURCHASE_DATA = [
+export const FEATURES = [
   {
     id: 0,
     featuresName: LABELS.GENERATED_AI_IMAGE,
@@ -46,11 +46,29 @@ export const IN_APP_PURCHASE_DATA = [
   {
     id: 2,
     featuresName: LABELS.NO_ADS,
-    image: 'google-ads',
+    image: 'advertisements-off',
   },
   {
     id: 3,
     featuresName: LABELS.NO_LIMITS,
     image: 'infinity',
+  },
+];
+
+export const IN_APP_PURCHASE_DATA = [
+  {
+    id: 0,
+    title: 'INR 400.00/Week',
+    offers: '3 days free trial, Auto Renew',
+  },
+  {
+    id: 1,
+    title: 'INR 890.00/Month',
+    offers: '3 days free trial, Auto Renew',
+  },
+  {
+    id: 2,
+    title: 'INR 5200.00/Lifetime',
+    offers: 'Billed Once',
   },
 ];
