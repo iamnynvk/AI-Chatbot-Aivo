@@ -1,27 +1,27 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import useAppContext from '../../context/useAppContext';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Text, View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import useAppContext from '../../context/useAppContext';
 import {FONT} from '../../constants';
 
 const FeaturesList = ({data}: any) => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
   return (
-    <View key={data?.id} style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.iconContainer}>
         <MaterialCommunityIcons
-          name={data?.image}
+          name={data?.item?.image}
           color={theme.textColor}
           size={wp(5.6)}
         />
       </View>
       <View style={styles.featureContainer}>
-        <Text style={styles.featuresText}>{data?.featuresName}</Text>
+        <Text style={styles.featuresText}>{data?.item?.featuresName}</Text>
       </View>
     </View>
   );
@@ -49,4 +49,4 @@ const getStyles = ({theme}: any) => ({
   },
 });
 
-export default FeaturesList;
+export default React.memo(FeaturesList);

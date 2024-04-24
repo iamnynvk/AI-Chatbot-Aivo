@@ -1,26 +1,36 @@
+import React, {useMemo} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import useAppContext from '../../context/useAppContext';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {LABELS} from '../../localization/labels';
 import {FONT} from '../../constants';
 
-const PlansList = ({data}: any) => {
+const PlansList = ({data, selectedPlan, selected}: any) => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
 
+  const borderColor = useMemo(() => {
+    return selected ? theme?.tagColor : theme?.borderColor;
+  }, [selected, theme]);
+
   return (
     <TouchableOpacity
-      key={data?.id}
-      activeOpacity={0.8}
-      style={styles.container}>
-      <Text style={styles.offers}>{data?.offers}</Text>
-      <Text style={styles.title}>{data?.title}</Text>
-      {data?.id == 1 && (
+      activeOpacity={1}
+      disabled={selected}
+      style={[styles.container, {borderColor}]}
+      onPress={() => selectedPlan(data?.item)}>
+      <Text style={styles.offers}>{data?.item?.offers}</Text>
+      <Text style={styles.title}>{data?.item?.title}</Text>
+      {data?.item?.id == 1 && (
         <View style={styles.popularContainer}>
-          <Text style={styles.popular}>Popular</Text>
+          <Text style={styles.popular}>
+            {LABELS.SAVE30} | {LABELS.POPULAR}
+          </Text>
+        </View>
+      )}
+      {data?.item?.id == 2 && (
+        <View style={styles.popularContainer}>
+          <Text style={styles.popular}>{LABELS.SAVE70}</Text>
         </View>
       )}
     </TouchableOpacity>
@@ -30,7 +40,6 @@ const PlansList = ({data}: any) => {
 const getStyles = ({theme}: any) => ({
   container: {
     borderWidth: 1,
-    borderColor: theme?.borderLines,
     marginHorizontal: wp(6),
     marginBottom: wp(4),
     borderRadius: wp(2),
@@ -48,19 +57,22 @@ const getStyles = ({theme}: any) => ({
     marginTop: wp(1),
     marginBottom: wp(2),
     fontFamily: FONT.notoSansExtraBold,
+    fontSize: wp(3.6),
   },
   popularContainer: {
     position: 'absolute',
     right: 0,
-    backgroundColor: theme?.link,
+    backgroundColor: theme?.tagColor,
     paddingHorizontal: wp(3),
     paddingVertical: wp(0.4),
     borderTopRightRadius: wp(1.5),
+    borderBottomLeftRadius: wp(1.5),
   },
   popular: {
     color: theme?.wrapperColor,
     fontFamily: FONT.notoSansExtraBold,
+    fontSize: wp(3),
   },
 });
 
-export default PlansList;
+export default React.memo(PlansList);

@@ -41,10 +41,10 @@ const OnBoarding = () => {
     if (currentIndex < ON_BOARDING.length - 1 && slideRef.current) {
       slideRef.current.scrollToIndex({index: currentIndex + 1});
     } else {
-      await storeValueInAsync(ON_BOARDING_BUTTON.ALREADYLAUNCHED, true);
+      await storeValueInAsync(ON_BOARDING_BUTTON.ALREADY_LAUNCHED, true);
       navigation.reset({
         index: 0,
-        routes: [{name: ROUTES.SIGNIN}],
+        routes: [{name: ROUTES.SIGN_IN}],
       });
     }
   };

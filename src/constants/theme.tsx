@@ -32,6 +32,8 @@ export const color: any = {
     inputColor: '#f9fafc',
     lightBorder: '#0b66c3',
     backColor: '#000000',
+    borderColor: '#E1E1E1',
+    tagColor: '#5AB5FA',
   },
   dark: {
     backgroundColor: '#000000',
@@ -45,6 +47,8 @@ export const color: any = {
     inputColor: '#181D2C',
     lightBorder: '#3BF6F1',
     backColor: '#FFFFFF',
+    borderColor: '#A0A0A0',
+    tagColor: '#5AB5FA',
   },
 };
 

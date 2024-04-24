@@ -11,6 +11,7 @@ import InAppPurchase from '../screens/InAppPurchase';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import useAppContext from '../context/useAppContext';
+import Home from '../screens/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +27,7 @@ const index = () => {
   // Functions
   const alreadyLaunched = async () => {
     const isAlreadyLaunched = await getValueInAsync(
-      ON_BOARDING_BUTTON.ALREADYLAUNCHED,
+      ON_BOARDING_BUTTON.ALREADY_LAUNCHED,
     );
     setIsSeenIntro(isAlreadyLaunched === true ? true : false);
   };
@@ -45,14 +46,14 @@ const index = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
-        // initialRouteName={isSeenIntro ? ROUTES.SIGNIN : ROUTES.ONBOARDING}
-        initialRouteName={ROUTES.INAPPPURCHASE}
+        initialRouteName={!isSeenIntro ? ROUTES.ONBOARDING : ROUTES.SIGN_IN}
         screenOptions={{headerShown: false}}>
         <Stack.Group>
           <Stack.Screen name={ROUTES.ONBOARDING} component={OnBoarding} />
           <Stack.Screen name={ROUTES.SIGN_IN} component={SignIn} />
           <Stack.Screen name={ROUTES.SIGN_UP} component={SignUp} />
           <Stack.Screen name={ROUTES.INAPPPURCHASE} component={InAppPurchase} />
+          <Stack.Screen name={ROUTES.HOME} component={Home} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

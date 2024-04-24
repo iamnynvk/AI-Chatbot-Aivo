@@ -9,7 +9,7 @@ export const ON_BOARDING_BUTTON: any = {
   NEXT: 'Next',
   DONE: 'Done',
   SKIP: 'Skip',
-  ALREADYLAUNCHED: 'AlreadyLaunched',
+  ALREADY_LAUNCHED: 'AlreadyLaunched',
 };
 
 export const COLLECTIONS: any = {

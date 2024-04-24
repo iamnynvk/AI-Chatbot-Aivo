@@ -9,7 +9,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import useAppContext from '../context/useAppContext';
 import {FONT} from '../constants';
 
-const Header = ({isBack = true, title, menuName, onMenuPress}: any) => {
+const Header = ({
+  isBack = true,
+  isClose = false,
+  onClose,
+  title,
+  menuName,
+  onMenuPress,
+}: any) => {
   const {theme}: any = useAppContext();
   const navigation: any = useNavigation();
   const styles: any = getStyles({theme});
@@ -19,10 +26,17 @@ const Header = ({isBack = true, title, menuName, onMenuPress}: any) => {
       <View style={styles.backContainer}>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => navigation?.goBack()}>
+          onPress={() => (isClose ? onClose() : navigation?.goBack())}>
           {isBack && (
             <Ionicons
               name="chevron-back"
+              color={theme?.backColor}
+              size={wp(7)}
+            />
+          )}
+          {isClose && (
+            <Ionicons
+              name="close-outline"
               color={theme?.backColor}
               size={wp(7)}
             />
@@ -59,7 +73,7 @@ const getStyles = ({theme}: any) => ({
   heading: {
     color: theme?.textColor,
     fontFamily: FONT.notoSansMedium,
-    fontSize: wp(5),
+    fontSize: wp(4.6),
   },
   backContainer: {
     flex: 1,

@@ -1,28 +1,48 @@
-import React, {useEffect} from 'react';
-import {View} from 'react-native';
-import useAppContext from '../context/useAppContext';
-import {globalStyles} from '../styles/globalStyles';
-import Header from '../components/Header';
-import {LABELS} from '../localization/labels';
-import FastImage from 'react-native-fast-image';
-import {FONT, images} from '../constants';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-import {FEATURES, IN_APP_PURCHASE_DATA} from '../../assets/data';
-import FeaturesList from '../components/InAppPurchase/FeaturesList';
+import React, {useState} from 'react';
+import {FlatList, View} from 'react-native';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Divider, Text} from 'react-native-paper';
 import LottieView from 'lottie-react-native';
+import {useNavigation} from '@react-navigation/native';
+// Imports
+import useAppContext from '../context/useAppContext';
+import Header from '../components/Header';
+import {LABELS} from '../localization/labels';
+import {FONT, images} from '../constants';
+import {FEATURES, IN_APP_PURCHASE_DATA} from '../../assets/data';
+import FeaturesList from '../components/InAppPurchase/FeaturesList';
 import PlansList from '../components/InAppPurchase/PlansList';
+import SubmitButton from '../components/SubmitButton';
+import {ROUTES} from '../routes/routes';
 
-const InAppPurchase = (props: any) => {
+const InAppPurchase = () => {
+  const navigation: any = useNavigation();
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
+  const [planSelect, setPlanSelect] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const selectedPlan = (plans: any) => {
+    setPlanSelect(plans);
+  };
+
+  const onSubscriptionHandler = async () => {
+    setIsLoading(true);
+  };
 
   return (
     <View style={styles.container}>
-      <Header isBack={false} title={LABELS.UPGRADE} />
+      <Header
+        isBack={false}
+        isClose={true}
+        onClose={() =>
+          navigation.reset({
+            index: 0,
+            routes: [{name: ROUTES.HOME}],
+          })
+        }
+        title={LABELS.UPGRADE}
+      />
       {/* Image */}
       <View style={styles.animContainer}>
         <LottieView
@@ -34,10 +54,13 @@ const InAppPurchase = (props: any) => {
       </View>
 
       {/* Features */}
-      <View style={styles.featuresContainer}>
-        {FEATURES.map((feature: any) => (
-          <FeaturesList data={feature} />
-        ))}
+      <View>
+        <FlatList
+          data={FEATURES}
+          keyExtractor={(feature: any) => feature?.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={(feature: any) => <FeaturesList data={feature} />}
+        />
       </View>
 
       {/* Divider */}
@@ -55,9 +78,36 @@ const InAppPurchase = (props: any) => {
 
       {/* Select Plans */}
       <View style={styles.planContainer}>
-        {IN_APP_PURCHASE_DATA.map((planDetails: any) => (
-          <PlansList data={planDetails} />
-        ))}
+        <FlatList
+          data={IN_APP_PURCHASE_DATA}
+          keyExtractor={(planDetails: any) => planDetails?.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={(planDetails: any) => (
+            <PlansList
+              data={planDetails}
+              selectedPlan={selectedPlan}
+              selected={planSelect?.id === planDetails?.item?.id}
+            />
+          )}
+        />
+      </View>
+
+      {/* Subscription Button */}
+      <View style={styles.subscriptionContainer}>
+        <SubmitButton
+          isDisable={!planSelect}
+          handleSubmitButton={onSubscriptionHandler}
+          isLoading={isLoading}
+          title={LABELS.SUBSCRIPTION_BUTTON}
+        />
+      </View>
+      <View style={styles.conditionContainer}>
+        <Text style={styles.condition}>
+          {LABELS.PRIVACY} | {LABELS.TERMS}
+        </Text>
+        <Text style={[styles.condition, {color: theme?.lightTextColor}]}>
+          {LABELS.CANCEL_ANYTIME}
+        </Text>
       </View>
     </View>
   );
@@ -71,16 +121,13 @@ const getStyles = ({theme}: any) => ({
   animContainer: {
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: wp(-10),
+    marginTop: wp(-14),
     marginBottom: wp(-6),
-    borderColor: '#fff',
+    zIndex: -999,
   },
   animStyles: {
     height: wp(80),
     width: wp(80),
-  },
-  featuresContainer: {
-    marginTop: wp(2),
   },
   planText: {
     fontFamily: FONT.notoSansMedium,
@@ -99,6 +146,21 @@ const getStyles = ({theme}: any) => ({
   planContainer: {
     marginTop: wp(4),
   },
+  subscriptionContainer: {
+    alignItems: 'center',
+    marginTop: wp(4),
+  },
+  conditionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: wp(6),
+    marginTop: wp(4),
+  },
+  condition: {
+    fontSize: wp(3),
+    fontFamily: FONT.notoSansRegular,
+    color: theme?.textColor,
+  },
 });
 
-export default InAppPurchase;
+export default React.memo(InAppPurchase);

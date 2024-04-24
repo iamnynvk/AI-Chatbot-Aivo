@@ -111,7 +111,7 @@ const SignUp = () => {
       }: any) => (
         <ScrollView style={styles.container}>
           <Header onPress={() => navigation?.goBack()} />
-          <Text style={styles.heading}>{LABELS.SIGNUP}</Text>
+          <Text style={styles.heading}>{LABELS.SIGN_UP}</Text>
 
           {/* Profile Photo */}
           <View style={styles.photoContainer}>
@@ -139,7 +139,7 @@ const SignUp = () => {
           <View style={styles.fieldContainer}>
             <InputText
               name="fullName"
-              placeHolderText={LABELS.PLACEHOLDERFULLNAME}
+              placeHolderText={LABELS.PLACEHOLDER_FULL_NAME}
               isNextFocus={emailRef}
               isSecure={false}
               keyType={'email-address'}
@@ -192,7 +192,7 @@ const SignUp = () => {
               name={'Password'}
               textContainer={styles.userInputContainer}
               refs={passwordRef}
-              placeHolderText={LABELS.PLACEHOLDERPASSWORD}
+              placeHolderText={LABELS.PLACEHOLDER_PASSWORD}
               isNextFocus={confirmPassRef}
               isSecure={true}
               onBlurInput={handleBlur('password')}
@@ -218,7 +218,7 @@ const SignUp = () => {
               name={'confirmPassword'}
               textContainer={styles.userInputContainer}
               refs={confirmPassRef}
-              placeHolderText={LABELS.PLACEHOLDERCONFIRMPASSWORD}
+              placeHolderText={LABELS.PLACEHOLDER_CONFIRM_PASSWORD}
               isAutoFocus={false}
               isSecure={true}
               onBlurInput={handleBlur('confirmPassword')}
@@ -252,11 +252,11 @@ const SignUp = () => {
 
           <View style={styles.signUpLinkContainer}>
             <Text style={styles.signUpText}>
-              {LABELS.HAVEALREADYACCOUNT}{' '}
+              {LABELS.HAVE_ALREADY_ACCOUNT}{' '}
               <Text
                 style={styles.register}
                 onPress={() => navigation?.goBack()}>
-                {LABELS.SIGNIN}
+                {LABELS.SIGN_IN}
               </Text>
             </Text>
           </View>

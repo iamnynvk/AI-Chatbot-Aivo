@@ -20,7 +20,7 @@ import {ROUTES} from '../routes/routes';
 const SignIn = () => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
-  const navigation = useNavigation();
+  const navigation: any = useNavigation();
   const emailRef = useRef();
   const passwordRef = useRef();
   const [activeInputField, setActiveInputField] = useState('');
@@ -52,7 +52,7 @@ const SignIn = () => {
           {/* Heading container */}
           <View>
             <Text style={styles.headingText}>{LABELS.WELCOME}</Text>
-            <Text style={styles.childText}>{LABELS.GREETWELCOME}</Text>
+            <Text style={styles.childText}>{LABELS.GREET_WELCOME}</Text>
 
             <LottieView
               source={images.anim_authSession}
@@ -66,7 +66,7 @@ const SignIn = () => {
             <InputText
               name="email"
               refs={emailRef}
-              placeHolderText={LABELS.PLACEHOLDEREMAIL}
+              placeHolderText={LABELS.PLACEHOLDER_EMAIL}
               isNextFocus={passwordRef}
               isSecure={false}
               keyType={'email-address'}
@@ -93,7 +93,7 @@ const SignIn = () => {
               name="password"
               textContainer={styles.userInputContainer}
               refs={passwordRef}
-              placeHolderText={LABELS.PLACEHOLDERPASSWORD}
+              placeHolderText={LABELS.PLACEHOLDER_PASSWORD}
               isAutoFocus={false}
               isSecure={true}
               onBlurInput={handleBlur('password')}
@@ -112,9 +112,9 @@ const SignIn = () => {
             ) : (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate(ROUTES.SIGNUP)}
+                onPress={() => navigation.navigate(ROUTES.SIGN_UP)}
                 style={styles.forgotContainer}>
-                <Text style={styles.forgotText}>{LABELS.FORGOTPASSWORD}</Text>
+                <Text style={styles.forgotText}>{LABELS.FORGOT_PASSWORD}</Text>
               </TouchableOpacity>
             )}
           </View>
@@ -131,11 +131,11 @@ const SignIn = () => {
 
           <View style={{marginTop: wp(5)}}>
             <Text style={styles.signUpText}>
-              {LABELS.DONTHAVEACCOUNT}{' '}
+              {LABELS.DON_T_HAVE_ACCOUNT}{' '}
               <Text
                 style={styles.register}
-                onPress={() => navigation.navigate(ROUTES.SIGNUP)}>
-                {LABELS.SIGNUP}
+                onPress={() => navigation.navigate(ROUTES.SIGN_UP)}>
+                {LABELS.SIGN_UP}
               </Text>
             </Text>
           </View>
