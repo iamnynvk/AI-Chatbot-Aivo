@@ -30,7 +30,10 @@ const SignIn = () => {
   });
 
   const signInHandler = async (values: any) => {
-    // Your sign in logic
+    setHandleToggle({
+      loading: true,
+      isClick: true,
+    });
   };
 
   return (
@@ -122,9 +125,9 @@ const SignIn = () => {
           {/* Submit Button Here */}
           <View style={styles.userInputContainer}>
             <SubmitButton
-              isDisable={!isValid || handleToggle.isClick}
+              isDisable={!isValid || handleToggle?.isClick}
               handleSubmitButton={handleSubmit}
-              isLoading={handleToggle.loading}
+              isLoading={handleToggle?.loading}
               title={LABELS.SUBMIT}
             />
           </View>

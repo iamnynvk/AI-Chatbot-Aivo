@@ -300,10 +300,14 @@ export const createUser = async (userCollection: any, confirmation: any) => {
         .doc(confirmation?.user?.uid)
         .set({
           email: userCollection?.email,
+          password: userCollection?.password,
           fullName: userCollection?.fullName,
           userImageUrl: url,
           fcmToken: fcmToken,
           subscription: null,
+          credit: 10,
+          currentPlan: null,
+          createdAt: new Date(),
         })
         .then((response: any) => resolve(response))
         .catch((err: any) => {
