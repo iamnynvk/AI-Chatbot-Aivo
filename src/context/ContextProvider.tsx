@@ -4,10 +4,12 @@ import {Alert, Appearance, StatusBar} from 'react-native';
 import {color} from '../constants';
 import {MODE} from '../enums';
 import {
+  getUserData,
   handleAuthError,
   signInWithEmailPassword,
   signUpWithEmailPassword,
 } from '../utils/Firebase';
+import {firebase} from '@react-native-firebase/auth';
 
 export const AppContext = createContext({});
 
@@ -15,6 +17,7 @@ export const ContextProvider = ({children}: any) => {
   const systemScheme = Appearance.getColorScheme();
   const [colorScheme, setColorScheme] = useState<any>(systemScheme);
   const theme: any = color[colorScheme];
+  const [authUser, setAuthUser] = useState<any>();
 
   return (
     <AppContext.Provider
@@ -23,6 +26,8 @@ export const ContextProvider = ({children}: any) => {
         colorScheme,
         setColorScheme,
         theme,
+        authUser,
+        setAuthUser,
         signUpUser: async (email: string, password: string) => {
           try {
             const confirmation: any = await signUpWithEmailPassword(
@@ -48,12 +53,33 @@ export const ContextProvider = ({children}: any) => {
             return e;
           }
         },
+        fetchCurrentUserData: async () => {
+          try {
+            const userCollection: any = await getUserData(authUser?.uid);
+            setAuthUser(userCollection?._data);
+          } catch (e) {
+            handleAuthError(e, (message: any) => {
+              Alert.alert('Aivo', message);
+            });
+            return e;
+          }
+        },
+        sendResetLink: async (email: string) => {
+          try {
+            await firebase.auth().sendPasswordResetEmail(email);
+          } catch (e) {
+            handleAuthError(e, (message: any) => {
+              Alert.alert('Aivo', message);
+            });
+            return e;
+          }
+        },
       }}>
       <StatusBar
         animated={false}
         backgroundColor={theme.backgroundColor}
         barStyle={
-          colorScheme === 'dark' ? MODE.LIGHT_CONTENT : MODE.DARK_CONTENT
+          colorScheme === MODE.DARK ? MODE.LIGHT_CONTENT : MODE.DARK_CONTENT
         }
       />
       {children}

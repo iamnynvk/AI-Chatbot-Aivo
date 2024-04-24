@@ -21,7 +21,7 @@ export const LABELS = {
   SUBSCRIPTION_BUTTON: 'Start free trial and Plan',
   WELCOME: 'Welcome!',
   GREET_WELCOME:
-    'Welcome to AI AIVO!, Your trusted company for intelligent interactions.',
+    'Welcome to AI AIVO!, Our trusted company for intelligent interactions.',
   PLACEHOLDER_EMAIL: 'Email Address',
   PLACEHOLDER_PASSWORD: 'Password',
   FORGOT_PASSWORD: 'Forgot Password?',
@@ -36,4 +36,7 @@ export const LABELS = {
   SIGN_IN: 'Sign In',
   CAMERA: 'Camera',
   GALLERY: 'GALLERY',
+  FORGOT_PASSWORD_LABEL: 'Forgot Password',
+  FORGOT_DESCRIPTION: `We'll send reset password link to your email address. You can change
+  password to the link.`,
 };

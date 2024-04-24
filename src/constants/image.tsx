@@ -6,6 +6,7 @@ import anim_authSession from '../../assets/animations/authSession.json';
 import img_user_logo from '../../assets/images/img_user_logo.png';
 import img_premium_plan from '../../assets/images/img_premium_plan.png';
 import anim_robot from '../../assets/animations/anim_robot.json';
+import anim_forgot from '../../assets/animations/anim_forgot.json';
 
 const images = {
   img_bot_say,
@@ -16,6 +17,7 @@ const images = {
   img_user_logo,
   img_premium_plan,
   anim_robot,
+  anim_forgot,
 };
 
 export default images;

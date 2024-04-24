@@ -163,4 +163,4 @@ const getStyles = ({theme}: any) => ({
   },
 });
 
-export default React.memo(InAppPurchase);
+export default InAppPurchase;

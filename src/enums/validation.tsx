@@ -22,3 +22,9 @@ export const signUpValidation = object({
     .oneOf([ref('password'), null], 'Passwords does not match')
     .required('Confirm Password is required'),
 });
+
+export const forgotPasswordValidation = object({
+  email: string()
+    .matches(emailRegEx, 'Email address is not valid!')
+    .required('Email address is required!'),
+});

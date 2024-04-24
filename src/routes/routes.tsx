@@ -4,4 +4,5 @@ export const ROUTES = {
   SIGN_UP: 'SignUp',
   INAPPPURCHASE: 'InAppPurchase',
   HOME: 'Home',
+  FORGOT_PASSWORD: 'ForgotPassword',
 };

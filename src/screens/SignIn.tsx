@@ -8,12 +8,12 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 // Imports
-import {FONT, images} from '../constants';
 import InputText from '../components/InputText';
 import SubmitButton from '../components/SubmitButton';
+import useAppContext from '../context/useAppContext';
 import {LABELS} from '../localization/labels';
 import {signInValidation} from '../enums/validation';
-import useAppContext from '../context/useAppContext';
+import {FONT, images} from '../constants';
 import {IToggle} from '../types';
 import {ROUTES} from '../routes/routes';
 import {getFCMToken, setCollectionData} from '../utils/Firebase';
@@ -48,7 +48,7 @@ const SignIn = () => {
       confirmation?.user?.uid &&
         navigation?.reset({
           index: 0,
-          routes: [{name: ROUTES.HOME}],
+          routes: [{name: ROUTES.INAPPPURCHASE}],
         });
     }
   };
@@ -132,7 +132,7 @@ const SignIn = () => {
             ) : (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate(ROUTES.SIGN_UP)}
+                onPress={() => navigation.navigate(ROUTES.FORGOT_PASSWORD)}
                 style={styles.forgotContainer}>
                 <Text style={styles.forgotText}>{LABELS.FORGOT_PASSWORD}</Text>
               </TouchableOpacity>
