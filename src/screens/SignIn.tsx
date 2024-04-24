@@ -16,9 +16,11 @@ import {signInValidation} from '../enums/validation';
 import useAppContext from '../context/useAppContext';
 import {IToggle} from '../types';
 import {ROUTES} from '../routes/routes';
+import {getFCMToken, setCollectionData} from '../utils/Firebase';
+import {COLLECTIONS} from '../enums';
 
 const SignIn = () => {
-  const {theme}: any = useAppContext();
+  const {theme, signInUser}: any = useAppContext();
   const styles: any = getStyles({theme});
   const navigation: any = useNavigation();
   const emailRef = useRef();
@@ -34,6 +36,21 @@ const SignIn = () => {
       loading: true,
       isClick: true,
     });
+    const fcmToken = await getFCMToken();
+    const confirmation = await signInUser(values?.email, values?.password);
+    if (confirmation?.code) {
+      setHandleToggle({
+        loading: false,
+        isClick: false,
+      });
+    } else {
+      await setCollectionData({fcmToken: fcmToken}, COLLECTIONS.USERS);
+      confirmation?.user?.uid &&
+        navigation?.reset({
+          index: 0,
+          routes: [{name: ROUTES.HOME}],
+        });
+    }
   };
 
   return (

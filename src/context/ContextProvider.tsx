@@ -3,7 +3,11 @@ import {Alert, Appearance, StatusBar} from 'react-native';
 // Imports
 import {color} from '../constants';
 import {MODE} from '../enums';
-import {handleAuthError, signUpWithEmailPassword} from '../utils/Firebase';
+import {
+  handleAuthError,
+  signInWithEmailPassword,
+  signUpWithEmailPassword,
+} from '../utils/Firebase';
 
 export const AppContext = createContext({});
 
@@ -27,6 +31,17 @@ export const ContextProvider = ({children}: any) => {
             );
             return confirmation;
           } catch (e: any) {
+            handleAuthError(e, (message: any) => {
+              Alert.alert('Aivo', message);
+            });
+            return e;
+          }
+        },
+        signInUser: async (email: string, password: string) => {
+          try {
+            const confirmation = await signInWithEmailPassword(email, password);
+            return confirmation;
+          } catch (e) {
             handleAuthError(e, (message: any) => {
               Alert.alert('Aivo', message);
             });
