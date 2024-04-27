@@ -1,7 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {logoutUser} from '../utils/Firebase';
+import {StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+// Components
+
+// Imports
+import {logoutUser} from '../utils/Firebase';
 import {ROUTES} from '../routes/routes';
 
 const Home = () => {

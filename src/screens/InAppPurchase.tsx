@@ -4,15 +4,16 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {Divider, Text} from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
-// Imports
+// Components
 import useAppContext from '../context/useAppContext';
 import Header from '../components/Header';
-import {LABELS} from '../localization/labels';
-import {FONT, images} from '../constants';
-import {FEATURES, IN_APP_PURCHASE_DATA} from '../../assets/data';
 import FeaturesList from '../components/InAppPurchase/FeaturesList';
 import PlansList from '../components/InAppPurchase/PlansList';
 import SubmitButton from '../components/SubmitButton';
+// Imports
+import {LABELS} from '../localization/labels';
+import {FONT, images} from '../constants';
+import {FEATURES, IN_APP_PURCHASE_DATA} from '../../assets/data';
 import {ROUTES} from '../routes/routes';
 
 const InAppPurchase = () => {
@@ -38,7 +39,7 @@ const InAppPurchase = () => {
         onClose={() =>
           navigation.reset({
             index: 0,
-            routes: [{name: ROUTES.HOME}],
+            routes: [{name: ROUTES.MAIN}],
           })
         }
         title={LABELS.UPGRADE}

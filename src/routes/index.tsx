@@ -15,6 +15,7 @@ import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import Home from '../screens/Home';
 import ForgotPassword from '../screens/ForgotPassword';
+import TabNavigation from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const index = () => {
   const [user, setUser] = useState();
   const [isSeenIntro, setIsSeenIntro] = useState<any>(null);
 
+  // Actions
   function onAuthStateChanged(user: any) {
     setUser(user);
     setAuthUser(user);
@@ -33,14 +35,12 @@ const index = () => {
     if (initializing) setInitializing(false);
   }
 
-  // Actions
   useEffect(() => {
     alreadyLaunched();
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
 
-  // Functions
   const alreadyLaunched = async () => {
     const isAlreadyLaunched = await getValueInAsync(
       ON_BOARDING_BUTTON.ALREADY_LAUNCHED,
@@ -77,7 +77,7 @@ const index = () => {
       theme={MyTheme}>
       <Stack.Navigator
         initialRouteName={
-          !isSeenIntro ? ROUTES.ONBOARDING : user ? ROUTES.HOME : ROUTES.SIGN_IN
+          !isSeenIntro ? ROUTES.ONBOARDING : user ? ROUTES.MAIN : ROUTES.SIGN_IN
         }
         screenOptions={{headerShown: false}}>
         <Stack.Group>
@@ -88,6 +88,7 @@ const index = () => {
             name={ROUTES.FORGOT_PASSWORD}
             component={ForgotPassword}
           />
+          <Stack.Screen name={ROUTES.MAIN} component={TabNavigation} />
           <Stack.Screen name={ROUTES.INAPPPURCHASE} component={InAppPurchase} />
           <Stack.Screen name={ROUTES.HOME} component={Home} />
         </Stack.Group>

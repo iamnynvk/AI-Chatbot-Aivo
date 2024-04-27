@@ -6,12 +6,13 @@ import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import ImagePicker from 'react-native-image-crop-picker';
-// Imports
-import useAppContext from '../context/useAppContext';
+// Components
 import InputText from '../components/InputText';
 import SubmitButton from '../components/SubmitButton';
 import BottomSheets from '../components/BottomSheets';
 import Header from '../components/Header';
+// Imports
+import useAppContext from '../context/useAppContext';
 import {signUpValidation} from '../enums/validation';
 import {FONT, images} from '../constants';
 import {LABELS} from '../localization/labels';

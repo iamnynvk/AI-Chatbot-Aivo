@@ -3,6 +3,11 @@ export const ROUTES = {
   SIGN_IN: 'SignIn',
   SIGN_UP: 'SignUp',
   INAPPPURCHASE: 'InAppPurchase',
-  HOME: 'Home',
   FORGOT_PASSWORD: 'ForgotPassword',
+  MAIN: 'Main',
+  HOME: 'Home',
+  AI_ASSISTANCE: 'AI Assistance',
+  CHAT: 'Chat',
+  HISTORY: 'History',
+  PROFILE: 'Profile',
 };

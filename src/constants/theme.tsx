@@ -34,6 +34,7 @@ export const color: any = {
     backColor: '#000000',
     borderColor: '#E1E1E1',
     tagColor: '#5AB5FA',
+    tabBorderColor: '#E1E1E1',
   },
   dark: {
     backgroundColor: '#000000',
@@ -49,6 +50,7 @@ export const color: any = {
     backColor: '#FFFFFF',
     borderColor: '#A0A0A0',
     tagColor: '#5AB5FA',
+    tabBorderColor: '#4A4E51',
   },
 };
 

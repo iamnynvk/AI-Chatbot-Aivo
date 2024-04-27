@@ -7,11 +7,12 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-// Imports
-import useAppContext from '../context/useAppContext';
+// Components
 import InputText from '../components/InputText';
 import SubmitButton from '../components/SubmitButton';
 import Header from '../components/Header';
+// Imports
+import useAppContext from '../context/useAppContext';
 import {FONT, images} from '../constants';
 import {LABELS} from '../localization/labels';
 import {IToggle} from '../types';
