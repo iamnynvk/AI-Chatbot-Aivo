@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-// Components
-
 // Imports
 import {logoutUser} from '../utils/Firebase';
 import {ROUTES} from '../routes/routes';
+import useAppContext from '../context/useAppContext';
 
 const Home = () => {
+  const {theme}: any = useAppContext();
+  const styles = getStyles({theme});
   const navigation: any = useNavigation();
 
   return (
@@ -32,6 +33,6 @@ const Home = () => {
   );
 };
 
-export default Home;
+const getStyles = ({theme}: any) => ({});
 
-const styles = StyleSheet.create({});
+export default Home;

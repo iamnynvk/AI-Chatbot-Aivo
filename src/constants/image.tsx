@@ -7,6 +7,8 @@ import img_user_logo from '../../assets/images/img_user_logo.png';
 import img_premium_plan from '../../assets/images/img_premium_plan.png';
 import anim_robot from '../../assets/animations/anim_robot.json';
 import anim_forgot from '../../assets/animations/anim_forgot.json';
+import img_success from '../../assets/images/img_success.png';
+import img_error from '../../assets/images/img_error.png';
 
 const images = {
   img_bot_say,
@@ -18,6 +20,8 @@ const images = {
   img_premium_plan,
   anim_robot,
   anim_forgot,
+  img_success,
+  img_error,
 };
 
 export default images;

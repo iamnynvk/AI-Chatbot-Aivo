@@ -4,9 +4,11 @@ import SplashScreen from 'react-native-splash-screen';
 import {PaperProvider} from 'react-native-paper';
 // Import
 import Routes from './src/routes';
+import AlertPopUp from './src/components/AlertPopUp';
 import {ContextProvider} from './src/context/ContextProvider';
 import {requestMultiplePermissions} from './src/utils/AskPermission';
 
+// Prevent font-scaling
 Text.defaultProps = {
   ...(Text.defaultProps || {}),
   allowFontScaling: false,
@@ -25,6 +27,7 @@ const App = () => {
   return (
     <ContextProvider>
       <PaperProvider>
+        <AlertPopUp />
         <Routes />
       </PaperProvider>
     </ContextProvider>

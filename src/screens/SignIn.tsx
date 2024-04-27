@@ -12,16 +12,16 @@ import InputText from '../components/InputText';
 import SubmitButton from '../components/SubmitButton';
 import useAppContext from '../context/useAppContext';
 // Imports
-import {LABELS} from '../localization/labels';
+import {LABELS, STATIC_MESSAGE} from '../localization/labels';
 import {signInValidation} from '../enums/validation';
 import {FONT, images} from '../constants';
 import {IToggle} from '../types';
 import {ROUTES} from '../routes/routes';
 import {getFCMToken, setCollectionData} from '../utils/Firebase';
-import {COLLECTIONS} from '../enums';
+import {COLLECTIONS, FEEDBACK} from '../enums';
 
 const SignIn = () => {
-  const {theme, signInUser}: any = useAppContext();
+  const {theme, signInUser, setFeedBack}: any = useAppContext();
   const styles: any = getStyles({theme});
   const navigation: any = useNavigation();
   const emailRef = useRef();
@@ -45,6 +45,11 @@ const SignIn = () => {
         isClick: false,
       });
     } else {
+      setFeedBack({
+        show: true,
+        message: STATIC_MESSAGE.SIGN_IN_SUCCESS,
+        type: FEEDBACK.SUCCESS,
+      });
       await setCollectionData({fcmToken: fcmToken}, COLLECTIONS.USERS);
       confirmation?.user?.uid &&
         navigation?.reset({

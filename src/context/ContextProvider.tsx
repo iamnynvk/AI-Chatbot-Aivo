@@ -1,8 +1,8 @@
 import {createContext, useState} from 'react';
 import {Alert, Appearance, StatusBar} from 'react-native';
 // Imports
-import {color} from '../constants';
-import {MODE} from '../enums';
+import {color, COLORS} from '../constants';
+import {FEEDBACK, MODE} from '../enums';
 import {
   getUserData,
   handleAuthError,
@@ -18,6 +18,11 @@ export const ContextProvider = ({children}: any) => {
   const [colorScheme, setColorScheme] = useState<any>(systemScheme);
   const theme: any = color[colorScheme];
   const [authUser, setAuthUser] = useState<any>();
+  const [feedBack, setFeedBack] = useState({
+    show: false,
+    message: '',
+    type: null,
+  });
 
   return (
     <AppContext.Provider
@@ -26,6 +31,8 @@ export const ContextProvider = ({children}: any) => {
         colorScheme,
         setColorScheme,
         theme,
+        feedBack,
+        setFeedBack,
         authUser,
         setAuthUser,
         signUpUser: async (email: string, password: string) => {
@@ -77,9 +84,20 @@ export const ContextProvider = ({children}: any) => {
       }}>
       <StatusBar
         animated={false}
-        backgroundColor={theme.backgroundColor}
+        backgroundColor={
+          feedBack?.type === FEEDBACK.SUCCESS
+            ? COLORS.lightGreen
+            : feedBack?.type === FEEDBACK.ERROR
+            ? COLORS.danger
+            : theme.backgroundColor
+        }
         barStyle={
-          colorScheme === MODE.DARK ? MODE.LIGHT_CONTENT : MODE.DARK_CONTENT
+          colorScheme === MODE.DARK || feedBack?.type === FEEDBACK.SUCCESS
+            ? MODE.LIGHT_CONTENT
+            : colorScheme === MODE.LIGHT_CONTENT ||
+              feedBack?.type === FEEDBACK.SUCCESS
+            ? MODE.DARK_CONTENT
+            : MODE.DARK_CONTENT
         }
       />
       {children}

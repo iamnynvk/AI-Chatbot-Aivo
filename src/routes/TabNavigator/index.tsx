@@ -110,12 +110,20 @@ const TabNavigation = () => {
 
 const getStyles = ({theme}: any) => ({
   tabStyles: {
-    backgroundColor: theme.inputColor,
-    borderWidth: 0,
+    // Styles-1
+    // backgroundColor: theme.inputColor,
+    // borderWidth: 0,
+    // borderColor: theme.inputColor,
+    // elevation: 0,
+    // height: wp(16),
+    // borderRadius: wp(4),
+
+    // Styles-2
+    backgroundColor: theme.backgroundColor,
+    borderTopWidth: 1,
     borderColor: theme.inputColor,
     elevation: 0,
     height: wp(16),
-    borderRadius: wp(4),
   },
   focusTabStyles: {
     backgroundColor: theme.textColor,

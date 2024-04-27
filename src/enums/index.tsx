@@ -25,3 +25,8 @@ export const COLLECTIONS: any = {
   MUSIC: 'musicChat',
   MOVIES: 'moviesChat',
 };
+
+export const FEEDBACK: any = {
+  ERROR: 'Error',
+  SUCCESS: 'Success',
+};
