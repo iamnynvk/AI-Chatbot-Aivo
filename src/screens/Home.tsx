@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // Imports
 import {logoutUser} from '../utils/Firebase';
@@ -10,6 +10,10 @@ const Home = () => {
   const {theme}: any = useAppContext();
   const styles = getStyles({theme});
   const navigation: any = useNavigation();
+
+  const crashApp = () => {
+    // throw new Error('This is a test crash!');
+  };
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -29,6 +33,8 @@ const Home = () => {
         style={{color: '#fff'}}>
         Home
       </Text>
+
+      <Button title="Crash the App" onPress={crashApp} />
     </View>
   );
 };

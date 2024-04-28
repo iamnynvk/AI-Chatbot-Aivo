@@ -1863,6 +1863,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-firebase/analytics@^19.2.2":
+  version "19.2.2"
+  resolved "https://registry.npmjs.org/@react-native-firebase/analytics/-/analytics-19.2.2.tgz"
+  integrity sha512-0lxqiyDxa2mLg8E1Utbh5w92y8tc26710kbaElM8dZdTItexorB33nj6fzyCVuyzWEUUeHtmyAoepAPwGq+/sA==
+
 "@react-native-firebase/app@^19.2.2", "@react-native-firebase/app@19.2.2":
   version "19.2.2"
   resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-19.2.2.tgz"
