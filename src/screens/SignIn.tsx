@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
@@ -12,13 +12,14 @@ import InputText from '../components/InputText';
 import SubmitButton from '../components/SubmitButton';
 import useAppContext from '../context/useAppContext';
 // Imports
-import {LABELS, STATIC_MESSAGE} from '../localization/labels';
-import {signInValidation} from '../enums/validation';
-import {FONT, images} from '../constants';
 import {IToggle} from '../types';
 import {ROUTES} from '../routes/routes';
+import {FONT, images} from '../constants';
+import {signInValidation} from '../enums/validation';
+import {getValueInAsync} from '../utils/AsyncStorage';
+import {LABELS, STATIC_MESSAGE} from '../localization/labels';
 import {getFCMToken, setCollectionData} from '../utils/Firebase';
-import {COLLECTIONS, FEEDBACK} from '../enums';
+import {COLLECTIONS, FEEDBACK, IN_APP_PURCHASE_SEEN} from '../enums';
 
 const SignIn = () => {
   const {theme, signInUser, setFeedBack}: any = useAppContext();
@@ -26,11 +27,23 @@ const SignIn = () => {
   const navigation: any = useNavigation();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [activeInputField, setActiveInputField] = useState('');
+  const [activeInputField, setActiveInputField] = useState<string>('');
+  const [isSeenInApp, setIsSeenInApp] = useState<any>(null);
   const [handleToggle, setHandleToggle] = useState<IToggle>({
     loading: false,
     isClick: false,
   });
+
+  useEffect(() => {
+    alreadySeenInAppPurchase();
+  }, []);
+
+  const alreadySeenInAppPurchase = async () => {
+    const isAlreadySeenInAppPurchase = await getValueInAsync(
+      IN_APP_PURCHASE_SEEN.IN_APP_SEEN,
+    );
+    setIsSeenInApp(isAlreadySeenInAppPurchase === true ? true : false);
+  };
 
   const signInHandler = async (values: any) => {
     setHandleToggle({
@@ -54,7 +67,7 @@ const SignIn = () => {
       confirmation?.user?.uid &&
         navigation?.reset({
           index: 0,
-          routes: [{name: ROUTES.INAPPPURCHASE}],
+          routes: [{name: isSeenInApp ? ROUTES.MAIN : ROUTES.INAPPPURCHASE}],
         });
     }
   };

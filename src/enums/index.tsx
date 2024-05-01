@@ -30,3 +30,7 @@ export const FEEDBACK: any = {
   ERROR: 'Error',
   SUCCESS: 'Success',
 };
+
+export const IN_APP_PURCHASE_SEEN: any = {
+  IN_APP_SEEN: 'InAppSeen',
+};

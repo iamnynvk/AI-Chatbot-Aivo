@@ -15,6 +15,8 @@ import {LABELS} from '../localization/labels';
 import {FONT, images} from '../constants';
 import {FEATURES, IN_APP_PURCHASE_DATA} from '../../assets/data';
 import {ROUTES} from '../routes/routes';
+import {IN_APP_PURCHASE_SEEN} from '../enums';
+import {storeValueInAsync} from '../utils/AsyncStorage';
 
 const InAppPurchase = () => {
   const navigation: any = useNavigation();
@@ -36,12 +38,13 @@ const InAppPurchase = () => {
       <Header
         isBack={false}
         isClose={true}
-        onClose={() =>
+        onClose={async () => {
+          await storeValueInAsync(IN_APP_PURCHASE_SEEN.IN_APP_SEEN, true);
           navigation.reset({
             index: 0,
             routes: [{name: ROUTES.MAIN}],
-          })
-        }
+          });
+        }}
         title={LABELS.UPGRADE}
       />
       {/* Image */}

@@ -21,7 +21,7 @@ const Stack = createNativeStackNavigator();
 
 const index = () => {
   const {theme, setAuthUser, fetchCurrentUserData}: any = useAppContext();
-  const [initializing, setInitializing] = useState(true);
+  const [initializing, setInitializing] = useState<boolean>(true);
   const [user, setUser] = useState();
   const [isSeenIntro, setIsSeenIntro] = useState<any>(null);
 
