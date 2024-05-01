@@ -1,6 +1,7 @@
 import auth, {firebase} from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import firestore from '@react-native-firebase/firestore';
+import perf from '@react-native-firebase/perf';
 import storage from '@react-native-firebase/storage';
 import PushNotification from 'react-native-push-notification';
 import {Alert, Platform} from 'react-native';
@@ -33,7 +34,10 @@ export const getAuthUserId = () => firebaseAuth.currentUser?.uid;
  * get FCM token
  */
 export const getFCMToken = async () => {
+  const fcmTrack = perf().newTrace('getFcmToken-Track');
+  fcmTrack.start();
   const fcmToken = await messaging().getToken();
+  fcmTrack.stop();
   return fcmToken;
 };
 
@@ -83,16 +87,22 @@ export const convertDateToTimestamp = (date: any) =>
 
 export const signUpWithEmailPassword = (email: string, password: string) => {
   return new Promise((resolve, reject) => {
-    firebaseAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((confirmResult: any) => {
-        confirmResult?.user?.sendEmailVerification();
-        resolve(confirmResult);
-      })
-      .catch((error: any) => {
-        console.log('Error creating user -', error);
-        reject(error);
-      });
+    const signUpTrack = perf().newTrace('signUp-Track');
+    signUpTrack.start();
+
+    try {
+      const confirmResult = firebaseAuth.createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      confirmResult?.user?.sendEmailVerification();
+      signUpTrack.stop();
+      resolve(confirmResult);
+    } catch (error) {
+      console.log('Error creating user -', error);
+      signUpTrack.stop();
+      reject(error);
+    }
   });
 };
 
@@ -101,45 +111,70 @@ export const signInWithEmailPassword = async (
   password: string,
 ) => {
   return new Promise((resolve, reject) => {
-    firebaseAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((confirmResult: any) => {
-        resolve(confirmResult);
-      })
-      .catch((error: any) => {
-        console.log('Error while login -', error);
-        reject(error);
-      });
+    const signInTrack = perf().newTrace('signIn-Track');
+    signInTrack.start();
+
+    try {
+      const confirmResult = firebaseAuth.signInWithEmailAndPassword(
+        email,
+        password,
+      );
+      signInTrack.stop();
+      resolve(confirmResult);
+    } catch (error) {
+      console.log('Error while login -', error);
+      signInTrack.stop();
+      reject(error);
+    }
   });
 };
 
 export const getUserData = async (userId: any) => {
-  const currentUserId = await getAuthUserId();
-  const userDetails = await db
-    .collection(COLLECTIONS.USERS)
-    .doc(userId ? userId : currentUserId)
-    .get();
-  return userDetails;
+  const getUserDataTrack = perf().startTrace('getUserData-Track');
+  (await getUserDataTrack).start();
+
+  try {
+    const currentUserId = await getAuthUserId();
+    const userDetails = await db
+      .collection(COLLECTIONS.USERS)
+      .doc(userId ? userId : currentUserId)
+      .get();
+    (await getUserDataTrack).stop();
+    return userDetails;
+  } catch (error) {
+    console.log('Error while get User data -', error);
+    (await getUserDataTrack).stop();
+    return error;
+  }
 };
 
 export const deleteUser = async () => {
   return new Promise(async (resolve: any, reject: any) => {
+    const deleteUserTrack = perf().newTrace('deleteUser-Track');
+    deleteUserTrack.start();
+
     deleteUserData().then(() => {
       firebaseAuth.currentUser
         .delete()
         .then(() => {
+          deleteUserTrack.stop();
           resolve();
         })
         .catch((err: any) => {
           console.log(err);
+          deleteUserTrack.stop();
           reject(err);
         });
     });
+    deleteUserTrack.stop();
   });
 };
 
 export const deleteUserData = async () => {
   return new Promise(async (resolve: any, reject: any) => {
+    const deleteUserDataTrack = perf().newTrace('deleteUserData-Track');
+    deleteUserDataTrack.start();
+
     try {
       const currentUsers = await getAuthUserId();
       deleteLoop.map(async (collection: any) => {
@@ -157,11 +192,15 @@ export const deleteUserData = async () => {
         });
         await batch.commit();
       });
+      deleteUserDataTrack.stop();
+
       resolve();
     } catch (error) {
       console.log('Error deleteUserData -', error);
+      deleteUserDataTrack.stop();
       reject(error);
     }
+    deleteUserDataTrack.stop();
   });
 };
 
@@ -170,6 +209,9 @@ export const storeChatCommunication = async (
   type = 'generalChat',
 ) => {
   return new Promise(async (resolve, reject) => {
+    const storeChatTrack = perf().newTrace('storeChatCommunication-Track');
+    storeChatTrack.start();
+
     try {
       const findType =
         type === 'generalChat'
@@ -209,15 +251,21 @@ export const storeChatCommunication = async (
           ...chatMessage,
           createdAt: JSON.stringify(chatMessage?.createdAt),
         });
+      storeChatTrack.stop();
       resolve(newCollection);
     } catch (error) {
+      storeChatTrack.stop();
       reject(error);
     }
+    storeChatTrack.stop();
   });
 };
 
 export const getChatCollection = async (type = 'generalChat') => {
   return new Promise(async (resolve, reject) => {
+    const getChatDataTrack = perf().newTrace('getChatData-Track');
+    getChatDataTrack.start();
+
     try {
       const findType =
         type === 'generalChat'
@@ -249,13 +297,21 @@ export const getChatCollection = async (type = 'generalChat') => {
         .then((querySnapshot: any) => {
           return querySnapshot?._docs;
         });
+      getChatDataTrack.stop();
       resolve(queryMessage);
-    } catch (error) {}
+    } catch (error) {
+      getChatDataTrack.stop();
+      reject(error);
+    }
+    getChatDataTrack.stop();
   });
 };
 
 export const uploadImage = async (userId: any, imgResponse: any) => {
   return new Promise(async (resolve, reject) => {
+    const uploadImageTrack = perf().newTrace('uploadImage-Track');
+    uploadImageTrack.start();
+
     try {
       const storageRef = createImageStorageRef(userId, imgResponse);
       const imagePath = getFileLocalPath(imgResponse);
@@ -263,18 +319,25 @@ export const uploadImage = async (userId: any, imgResponse: any) => {
       uploadTask.on('state_changed', null, reject, async () => {
         try {
           const downloadedURL = await storageRef.getDownloadURL();
+          uploadImageTrack.stop();
           resolve(downloadedURL);
         } catch (error) {
+          uploadImageTrack.stop();
           reject(error);
         }
       });
     } catch (error) {
+      uploadImageTrack.stop();
       reject(error);
     }
+    uploadImageTrack.stop();
   });
 };
 
-export const initFirebase = () => {
+export const initFirebase = async () => {
+  // Performance measure
+  await firebase.perf().setPerformanceCollectionEnabled(true);
+  // Firebase push-notification
   messaging().onMessage(localNotifications);
   messaging()
     .getInitialNotification()
@@ -287,6 +350,9 @@ export const initFirebase = () => {
 
 export const createUser = async (userCollection: any, confirmation: any) => {
   return new Promise(async (resolve, reject) => {
+    const createUserTrack = perf().newTrace('createUser-Track');
+    createUserTrack.start();
+
     try {
       const fcmToken = await getFCMToken();
       const url: string =
@@ -309,17 +375,26 @@ export const createUser = async (userCollection: any, confirmation: any) => {
           currentPlan: null,
           createdAt: new Date(),
         })
-        .then((response: any) => resolve(response))
+        .then((response: any) => {
+          createUserTrack.stop();
+          resolve(response);
+        })
         .catch((err: any) => {
+          createUserTrack.stop();
           reject(err);
         });
     } catch (error) {
+      createUserTrack.stop();
       reject(error);
     }
+    createUserTrack.stop();
   });
 };
 
 export const updateUser = async (userDetails: any, userId: any) => {
+  const updateUserTrack = perf().newTrace('updateUser-Track');
+  updateUserTrack.start();
+
   try {
     var url;
     if (userDetails?.userImageUrl?.includes('file://')) {
@@ -329,9 +404,11 @@ export const updateUser = async (userDetails: any, userId: any) => {
     }
     const docRef = db.collection(COLLECTIONS.USERS).doc(userId);
     const res = await docRef.update({...userDetails, userImageUrl: url});
+    updateUserTrack.stop();
     return res;
   } catch (error) {
     console.log('Error for update profile  ---', error);
+    updateUserTrack.stop();
     return error;
   }
 };
@@ -341,15 +418,21 @@ export const setCollectionData = async (
   collectionName: string,
   docName?: any,
 ) => {
+  const collectionDataTrack = perf().newTrace('collectionData-Track');
+  collectionDataTrack.start();
+
   try {
     const currentUserId = await getAuthUserId();
     await db
       .collection(collectionName)
       .doc(docName ? docName : currentUserId)
       .update(storeData);
+    collectionDataTrack.stop();
   } catch (error) {
     console.log('Error while to update document', error);
+    collectionDataTrack.stop();
   }
+  collectionDataTrack.stop();
 };
 
 /**
@@ -377,15 +460,21 @@ export const getFileLocalPath = (response: any) => {
  */
 export const logoutUser = () => {
   return new Promise((resolve: any, reject: any) => {
+    const signOutTrack = perf().newTrace('signOut-Track');
+    signOutTrack.start();
+
     firebaseAuth
       .signOut()
       .then(() => {
+        signOutTrack.stop();
         resolve();
       })
       .catch((err: any) => {
         console.log(err);
+        signOutTrack.stop();
         reject(err);
       });
+    signOutTrack.stop();
   });
 };
 
