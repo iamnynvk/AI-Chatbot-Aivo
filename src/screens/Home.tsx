@@ -1,40 +1,27 @@
-import React, {useEffect} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import perf from '@react-native-firebase/perf';
-
-// Imports
-import {logoutUser} from '../utils/Firebase';
-import {ROUTES} from '../routes/routes';
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
 import useAppContext from '../context/useAppContext';
+import ProfileHeader from '../components/ProfileHeader';
 
 const Home = () => {
   const {theme}: any = useAppContext();
   const styles = getStyles({theme});
-  const navigation: any = useNavigation();
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text
-        onPress={() =>
-          logoutUser()
-            .then(() => {
-              navigation?.reset({
-                index: 0,
-                routes: [{name: ROUTES.SIGN_IN}],
-              });
-            })
-            .catch(e => {
-              console.log('error : ', e);
-            })
-        }
-        style={{color: '#fff'}}>
-        Home
-      </Text>
+    <View style={styles.container}>
+      {/* Header */}
+      <View>
+        <ProfileHeader />
+      </View>
     </View>
   );
 };
 
-const getStyles = ({theme}: any) => ({});
+const getStyles = ({theme}: any) => ({
+  container: {
+    flex: 1,
+    backgroundColor: theme?.backgroundColor,
+  },
+});
 
 export default Home;

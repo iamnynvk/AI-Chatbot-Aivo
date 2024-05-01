@@ -40,6 +40,7 @@ export const LABELS = {
   FORGOT_PASSWORD_LABEL: 'Forgot Password',
   FORGOT_DESCRIPTION: `We'll send reset password link to your email address. You can change
   password to the link.`,
+  WELCOME_BACK: 'Welcome Back!',
 };
 
 export const STATIC_MESSAGE = {
