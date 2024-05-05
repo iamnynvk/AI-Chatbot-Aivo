@@ -1,16 +1,20 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import useAppContext from '../context/useAppContext';
+import {View, Text, TouchableWithoutFeedback} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import LottieView from 'lottie-react-native';
 import FastImage from 'react-native-fast-image';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import {useNavigation} from '@react-navigation/native';
+// Imports
+import useAppContext from '../context/useAppContext';
 import {LABELS} from '../localization/labels';
-import {FONT} from '../constants';
+import {FONT, images} from '../constants';
+import {ROUTES} from '../routes/routes';
 
 const ProfileHeader = () => {
+  const navigation: any = useNavigation();
   const {theme, authUser}: any = useAppContext();
   const styles: any = getStyles({theme});
 
@@ -19,29 +23,35 @@ const ProfileHeader = () => {
       {/* Profile Photo */}
       <View style={styles.profilePhotoContainer}>
         <View style={styles.profilePhoto}>
-          <FastImage
-            source={{
-              uri: authUser?.userImageUrl,
-              priority: 'high',
-            }}
-            style={styles.imageStyles}
-            resizeMode={FastImage.resizeMode.contain}
-          />
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate(ROUTES.PROFILE)}>
+            <FastImage
+              source={{
+                uri: authUser?.userImageUrl,
+                priority: 'high',
+              }}
+              style={styles.imageStyles}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          </TouchableWithoutFeedback>
         </View>
         <View style={styles.userDetails}>
           <Text style={styles.greetingText}>{LABELS.WELCOME_BACK}</Text>
           <View style={styles.userContainer}>
             <Text style={styles.userNameText}>{authUser?.fullName}</Text>
-            <Text style={styles.freeAccountText}> Free Account </Text>
+            <Text style={styles.freeAccountText}>{LABELS.FREE_ACCOUNT}</Text>
           </View>
         </View>
         <View style={styles.menuContainer}>
-          <FontAwesome6
-            name="crown"
-            color={theme?.secondaryColor}
-            style={styles.menuIcon}
-            size={wp(5)}
-          />
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate(ROUTES.INAPPPURCHASE)}>
+            <LottieView
+              source={images.anim_crown}
+              autoPlay
+              loop
+              style={styles.animStyles}
+            />
+          </TouchableWithoutFeedback>
         </View>
       </View>
     </View>
@@ -51,6 +61,7 @@ const ProfileHeader = () => {
 const getStyles = ({theme}: any) => ({
   headerContainer: {
     height: hp(7),
+    marginHorizontal: wp(1),
   },
   profilePhotoContainer: {
     flex: 1,
@@ -98,10 +109,10 @@ const getStyles = ({theme}: any) => ({
     flex: 0.15,
     justifyContent: 'center',
   },
-  menuIcon: {
+  animStyles: {
+    height: wp(14),
+    width: wp(14),
     alignSelf: 'center',
-    padding: wp(3),
-    borderRadius: wp(10),
   },
 });
 

@@ -9,6 +9,7 @@ import anim_robot from '../../assets/animations/anim_robot.json';
 import anim_forgot from '../../assets/animations/anim_forgot.json';
 import img_success from '../../assets/images/img_success.png';
 import img_error from '../../assets/images/img_error.png';
+import anim_crown from '../../assets/animations/anim_crown.json';
 
 const images = {
   img_bot_say,
@@ -22,6 +23,7 @@ const images = {
   anim_forgot,
   img_success,
   img_error,
+  anim_crown,
 };
 
 export default images;

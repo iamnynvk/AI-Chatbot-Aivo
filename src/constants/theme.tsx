@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 
 export const COLORS = {
   white: '#FFFFFF',
@@ -57,6 +57,9 @@ export const color: any = {
 
 export const SCREEN_HEIGHT = Dimensions.get('screen').height;
 export const SCREEN_WIDTH = Dimensions.get('screen').width;
+
+export const IOS_DEVICE = Platform.OS === 'ios';
+export const ANDROID_DEVICE = Platform.OS === 'android';
 
 export const FONT = {
   notoSansBlack: 'NotoSans-Black',

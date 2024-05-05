@@ -41,6 +41,8 @@ export const LABELS = {
   FORGOT_DESCRIPTION: `We'll send reset password link to your email address. You can change
   password to the link.`,
   WELCOME_BACK: 'Welcome Back!',
+  FREE_ACCOUNT: ' Free Account ',
+  PREMIUM_ACCOUNT: ' Premium Account ',
 };
 
 export const STATIC_MESSAGE = {

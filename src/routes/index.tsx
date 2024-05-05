@@ -88,8 +88,16 @@ const index = () => {
             name={ROUTES.FORGOT_PASSWORD}
             component={ForgotPassword}
           />
-          <Stack.Screen name={ROUTES.MAIN} component={TabNavigation} />
-          <Stack.Screen name={ROUTES.INAPPPURCHASE} component={InAppPurchase} />
+          <Stack.Screen
+            name={ROUTES.MAIN}
+            component={TabNavigation}
+            options={{animation: 'fade_from_bottom', presentation: 'modal'}}
+          />
+          <Stack.Screen
+            name={ROUTES.INAPPPURCHASE}
+            component={InAppPurchase}
+            options={{animation: 'fade_from_bottom', presentation: 'modal'}}
+          />
           <Stack.Screen name={ROUTES.HOME} component={Home} />
         </Stack.Group>
       </Stack.Navigator>

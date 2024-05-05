@@ -5,12 +5,12 @@ import {
   Image,
   Animated,
   NativeModules,
-  Platform,
 } from 'react-native';
 import useAppContext from '../context/useAppContext';
 import {COLORS, FONT, images} from '../constants';
 import {LABELS} from '../localization/labels';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {IOS_DEVICE} from '../constants/theme';
 
 const AlertPopUp = () => {
   const {StatusBarManager} = NativeModules;
@@ -52,11 +52,11 @@ const AlertPopUp = () => {
       <Animated.View
         style={[
           styles.container,
-          {top: Platform.OS === 'ios' ? StatusBarManager.HEIGHT : 0},
+          {top: IOS_DEVICE ? StatusBarManager.HEIGHT : 0},
           feedBack.type === 'error' && styles.error,
           {
             transform: [{translateY: slideAnimation}],
-            top: Platform.OS === 'ios' ? StatusBarManager.HEIGHT : 0,
+            top: IOS_DEVICE ? StatusBarManager.HEIGHT : 0,
           },
         ]}>
         <Image

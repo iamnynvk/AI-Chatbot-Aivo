@@ -8,11 +8,12 @@ import {
 } from 'react-native-permissions';
 import messaging from '@react-native-firebase/messaging';
 import {initFirebase} from './Firebase';
+import {IOS_DEVICE} from '../constants/theme';
 
 export const checkMicrophonePermission = async () => {
   try {
     const result = await check(
-      Platform.OS === 'ios'
+      IOS_DEVICE
         ? PERMISSIONS.IOS.MICROPHONE
         : PERMISSIONS.ANDROID.RECORD_AUDIO,
     );
@@ -27,7 +28,7 @@ export const checkMicrophonePermission = async () => {
 export const requestMicrophonePermission = async () => {
   try {
     const result = await request(
-      Platform.OS === 'ios'
+      IOS_DEVICE
         ? PERMISSIONS.IOS.MICROPHONE
         : PERMISSIONS.ANDROID.RECORD_AUDIO,
     );
@@ -47,9 +48,7 @@ export const requestMicrophonePermission = async () => {
 export const checkCameraPermission = async () => {
   try {
     const cameraPermissionCheck = await check(
-      Platform.OS === 'ios'
-        ? PERMISSIONS.IOS.CAMERA
-        : PERMISSIONS.ANDROID.CAMERA,
+      IOS_DEVICE ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA,
     );
 
     if (cameraPermissionCheck === RESULTS.GRANTED) {
@@ -66,9 +65,7 @@ export const checkCameraPermission = async () => {
 export const requestCameraPermission = async () => {
   try {
     const result = await request(
-      Platform.OS === 'ios'
-        ? PERMISSIONS.IOS.CAMERA
-        : PERMISSIONS.ANDROID.CAMERA,
+      IOS_DEVICE ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA,
     );
     if (result === RESULTS.GRANTED) {
       return result;
@@ -87,7 +84,7 @@ export const requestCameraPermission = async () => {
 export const checkGalleryPermission = async () => {
   try {
     const galleryPermissionCheck = await check(
-      Platform.OS === 'ios'
+      IOS_DEVICE
         ? PERMISSIONS.IOS.MEDIA_LIBRARY
         : PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
     );
@@ -106,7 +103,7 @@ export const checkGalleryPermission = async () => {
 export const requestStoragePermission = async () => {
   try {
     const result = await request(
-      Platform.OS === 'ios'
+      IOS_DEVICE
         ? PERMISSIONS.IOS.MEDIA_LIBRARY
         : PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
     );
@@ -167,7 +164,7 @@ export const requestPushPermission = async () => {
 
 export const requestMultiplePermissions = async () => {
   const permissions = await requestMultiple(
-    Platform.OS === 'ios'
+    IOS_DEVICE
       ? [
           PERMISSIONS.IOS.MICROPHONE,
           PERMISSIONS.IOS.CAMERA,
@@ -181,18 +178,15 @@ export const requestMultiplePermissions = async () => {
         ],
   );
 
-  const audioRecPermission =
-    Platform.OS === 'ios'
-      ? permissions['ios.permission.MICROPHONE'] === RESULTS.GRANTED
-      : permissions['android.permission.RECORD_AUDIO'] === RESULTS.GRANTED;
-  const cameraPermission =
-    Platform.OS === 'ios'
-      ? permissions['ios.permission.CAMERA'] === RESULTS.GRANTED
-      : permissions['android.permission.CAMERA'] === RESULTS.GRANTED;
-  const storagePermission =
-    Platform.OS === 'ios'
-      ? permissions['ios.permission.MEDIA_LIBRARY'] === RESULTS.GRANTED
-      : permissions['android.permission.READ_MEDIA_IMAGES'] === RESULTS.GRANTED;
+  const audioRecPermission = IOS_DEVICE
+    ? permissions['ios.permission.MICROPHONE'] === RESULTS.GRANTED
+    : permissions['android.permission.RECORD_AUDIO'] === RESULTS.GRANTED;
+  const cameraPermission = IOS_DEVICE
+    ? permissions['ios.permission.CAMERA'] === RESULTS.GRANTED
+    : permissions['android.permission.CAMERA'] === RESULTS.GRANTED;
+  const storagePermission = IOS_DEVICE
+    ? permissions['ios.permission.MEDIA_LIBRARY'] === RESULTS.GRANTED
+    : permissions['android.permission.READ_MEDIA_IMAGES'] === RESULTS.GRANTED;
   const pushPermission =
     permissions['android.permission.POST_NOTIFICATIONS'] === RESULTS.GRANTED;
 

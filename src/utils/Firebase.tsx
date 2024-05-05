@@ -6,6 +6,7 @@ import storage from '@react-native-firebase/storage';
 import PushNotification from 'react-native-push-notification';
 import {Alert, Platform} from 'react-native';
 import {COLLECTIONS} from '../enums';
+import {ANDROID_DEVICE} from '../constants/theme';
 
 const firebaseAuth: any = auth();
 const db: any = firestore();
@@ -452,7 +453,7 @@ export const createImageStorageRef = (userId: any, imgResponse: any) => {
  * Returns a local storage file path.
  */
 export const getFileLocalPath = (response: any) => {
-  return Platform.OS === 'android' ? response : `file:///${response}`;
+  return ANDROID_DEVICE ? response : `file:///${response}`;
 };
 
 /**
