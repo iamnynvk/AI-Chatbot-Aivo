@@ -10,4 +10,5 @@ export const ROUTES = {
   CHAT: 'Chat',
   HISTORY: 'History',
   PROFILE: 'Profile',
+  SETTING: 'Setting',
 };

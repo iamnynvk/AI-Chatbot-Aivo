@@ -10,6 +10,7 @@ import anim_forgot from '../../assets/animations/anim_forgot.json';
 import img_success from '../../assets/images/img_success.png';
 import img_error from '../../assets/images/img_error.png';
 import anim_crown from '../../assets/animations/anim_crown.json';
+import anim_subscription from '../../assets/animations/anim_subscription.json';
 
 const images = {
   img_bot_say,
@@ -24,6 +25,7 @@ const images = {
   img_success,
   img_error,
   anim_crown,
+  anim_subscription,
 };
 
 export default images;

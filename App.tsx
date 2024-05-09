@@ -23,8 +23,13 @@ TextInput.defaultProps = {
 const App = () => {
   useEffect(() => {
     initFirebase();
-    SplashScreen.hide();
     requestMultiplePermissions();
+
+    const splashTime = setTimeout(() => {
+      SplashScreen.hide();
+    }, 1500);
+
+    return () => clearTimeout(splashTime);
   }, []);
 
   return (

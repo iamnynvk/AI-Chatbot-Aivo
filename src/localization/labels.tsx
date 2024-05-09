@@ -43,6 +43,10 @@ export const LABELS = {
   WELCOME_BACK: 'Welcome Back!',
   FREE_ACCOUNT: ' Free Account ',
   PREMIUM_ACCOUNT: ' Premium Account ',
+  HELPING_TEXT: 'How may I help\nyou today?',
+  AIVO_PREMIUM: 'Aivo Premium',
+  UNLOCK_DESC: 'Unlock your AI Chatbot & Get all premium features',
+  UPGRADE_PLAN: 'Upgrade Plan',
 };
 
 export const STATIC_MESSAGE = {

@@ -4,13 +4,13 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import LottieView from 'lottie-react-native';
 import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 // Imports
 import useAppContext from '../context/useAppContext';
 import {LABELS} from '../localization/labels';
-import {FONT, images} from '../constants';
+import {FONT} from '../constants';
 import {ROUTES} from '../routes/routes';
 
 const ProfileHeader = () => {
@@ -44,12 +44,12 @@ const ProfileHeader = () => {
         </View>
         <View style={styles.menuContainer}>
           <TouchableWithoutFeedback
-            onPress={() => navigation.navigate(ROUTES.INAPPPURCHASE)}>
-            <LottieView
-              source={images.anim_crown}
-              autoPlay
-              loop
-              style={styles.animStyles}
+            onPress={() => navigation.navigate(ROUTES.SETTING)}>
+            <Ionicons
+              name="settings-outline"
+              size={wp(6)}
+              color={theme?.backColor}
+              style={styles.settingIcon}
             />
           </TouchableWithoutFeedback>
         </View>
@@ -61,11 +61,12 @@ const ProfileHeader = () => {
 const getStyles = ({theme}: any) => ({
   headerContainer: {
     height: hp(7),
-    marginHorizontal: wp(1),
+    margin: wp(2),
   },
   profilePhotoContainer: {
     flex: 1,
     flexDirection: 'row',
+    padding: wp(1),
   },
   profilePhoto: {
     flex: 0.15,
@@ -75,8 +76,8 @@ const getStyles = ({theme}: any) => ({
     height: wp(12),
     width: wp(12),
     borderRadius: wp(10),
-    borderWidth: 1,
-    borderColor: theme?.borderColor,
+    borderWidth: 0.8,
+    borderColor: theme?.backColor,
     alignSelf: 'center',
   },
   userDetails: {
@@ -109,9 +110,7 @@ const getStyles = ({theme}: any) => ({
     flex: 0.15,
     justifyContent: 'center',
   },
-  animStyles: {
-    height: wp(14),
-    width: wp(14),
+  settingIcon: {
     alignSelf: 'center',
   },
 });

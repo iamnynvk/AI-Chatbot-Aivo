@@ -16,6 +16,7 @@ import SignUp from '../screens/SignUp';
 import Home from '../screens/Home';
 import ForgotPassword from '../screens/ForgotPassword';
 import TabNavigation from './TabNavigator';
+import Setting from '../screens/Setting';
 
 const Stack = createNativeStackNavigator();
 
@@ -99,6 +100,11 @@ const index = () => {
             options={{animation: 'fade_from_bottom', presentation: 'modal'}}
           />
           <Stack.Screen name={ROUTES.HOME} component={Home} />
+          <Stack.Screen
+            name={ROUTES.SETTING}
+            component={Setting}
+            options={{animation: 'fade_from_bottom', presentation: 'modal'}}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
