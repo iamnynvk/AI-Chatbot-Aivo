@@ -8,11 +8,17 @@ import useAppContext from '../context/useAppContext';
 import ProfileHeader from '../components/ProfileHeader';
 import {useNavigation} from '@react-navigation/native';
 import SubscriptionCard from '../components/InAppPurchase/SubscriptionCard';
+import {POPULAR_FEATURES} from '../../assets/data';
 
 const Home = () => {
   const navigation: any = useNavigation();
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
+
+  const renderPopularFeatures = (popularFeatures: any) => {
+    console.log('popularFeatures ----', popularFeatures);
+    return <View></View>;
+  };
 
   return (
     <View style={styles.container}>
@@ -21,9 +27,11 @@ const Home = () => {
 
       {/* Body */}
       <FlatList
-        data={[]}
+        data={POPULAR_FEATURES}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => <SubscriptionCard />}
-        renderItem={() => <></>}
+        renderItem={({item}: any) => renderPopularFeatures(item)}
         keyExtractor={() => String(Math.random())}
       />
     </View>

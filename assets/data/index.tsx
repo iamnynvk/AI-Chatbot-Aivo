@@ -72,3 +72,26 @@ export const IN_APP_PURCHASE_DATA = [
     offers: 'Billed Once',
   },
 ];
+
+export const POPULAR_FEATURES = [
+  {
+    id: 1,
+    title: 'Chat With Aivo',
+    images: images.img_bot_say,
+  },
+  {
+    id: 2,
+    title: 'Talk With Aivo',
+    images: images.img_bot_say,
+  },
+  {
+    id: 3,
+    title: 'Image Search',
+    images: images.img_bot_say,
+  },
+  {
+    id: 4,
+    title: 'History',
+    images: images.img_bot_say,
+  },
+];
