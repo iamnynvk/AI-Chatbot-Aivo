@@ -6,7 +6,7 @@ import LottieView from 'lottie-react-native';
 import {useNavigation} from '@react-navigation/native';
 // Components
 import useAppContext from '../context/useAppContext';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 import FeaturesList from '../components/InAppPurchase/FeaturesList';
 import PlansList from '../components/InAppPurchase/PlansList';
 import SubmitButton from '../components/Button/SubmitButton';

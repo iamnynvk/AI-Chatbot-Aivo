@@ -10,7 +10,7 @@ import {
 // Components
 import InputText from '../components/TextInput/InputText';
 import SubmitButton from '../components/Button/SubmitButton';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 // Imports
 import useAppContext from '../context/useAppContext';
 import {FONT, images} from '../constants';

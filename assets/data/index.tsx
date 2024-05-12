@@ -77,21 +77,21 @@ export const POPULAR_FEATURES = [
   {
     id: 1,
     title: 'Chat With Aivo',
-    images: images.img_bot_say,
+    images: images.img_message,
   },
   {
     id: 2,
     title: 'Talk With Aivo',
-    images: images.img_bot_say,
+    images: images.img_voice,
   },
   {
     id: 3,
     title: 'Image Search',
-    images: images.img_bot_say,
+    images: images.img_image,
   },
   {
     id: 4,
     title: 'History',
-    images: images.img_bot_say,
+    images: images.img_docks,
   },
 ];

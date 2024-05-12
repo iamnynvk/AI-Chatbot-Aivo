@@ -11,6 +11,10 @@ import img_success from '../../assets/images/img_success.png';
 import img_error from '../../assets/images/img_error.png';
 import anim_crown from '../../assets/animations/anim_crown.json';
 import anim_subscription from '../../assets/animations/anim_subscription.json';
+import img_message from '../../assets/images/img_message.png';
+import img_voice from '../../assets/images/img_micro.png';
+import img_image from '../../assets/images/img_picture.png';
+import img_docks from '../../assets/images/img_docks.png';
 
 const images = {
   img_bot_say,
@@ -26,6 +30,10 @@ const images = {
   img_error,
   anim_crown,
   anim_subscription,
+  img_message,
+  img_voice,
+  img_image,
+  img_docks,
 };
 
 export default images;

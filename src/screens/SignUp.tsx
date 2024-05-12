@@ -10,7 +10,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import InputText from '../components/TextInput/InputText';
 import SubmitButton from '../components/Button/SubmitButton';
 import BottomSheets from '../components/BottomSheet/BottomSheets';
-import Header from '../components/Header';
+import Header from '../components/Header/Header';
 // Imports
 import useAppContext from '../context/useAppContext';
 import {signUpValidation} from '../enums/validation';

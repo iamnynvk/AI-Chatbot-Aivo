@@ -10,7 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Imports
 import useAppContext from '../../context/useAppContext';
 import {LABELS} from '../../localization/labels';
-import {FONT} from '../../constants';
+import {FONT, images} from '../../constants';
 import {ROUTES} from '../../routes/routes';
 
 const ProfileHeader = () => {
@@ -26,10 +26,14 @@ const ProfileHeader = () => {
           <TouchableWithoutFeedback
             onPress={() => navigation.navigate(ROUTES.PROFILE)}>
             <FastImage
-              source={{
-                uri: authUser?.userImageUrl,
-                priority: 'high',
-              }}
+              source={
+                authUser?.userImageUrl
+                  ? {
+                      uri: authUser?.userImageUrl,
+                      priority: 'high',
+                    }
+                  : images.img_user_logo
+              }
               style={styles.imageStyles}
               resizeMode={FastImage.resizeMode.contain}
             />
@@ -38,7 +42,9 @@ const ProfileHeader = () => {
         <View style={styles.userDetails}>
           <Text style={styles.greetingText}>{LABELS.WELCOME_BACK}</Text>
           <View style={styles.userContainer}>
-            <Text style={styles.userNameText}>{authUser?.fullName}</Text>
+            <Text style={styles.userNameText}>
+              {authUser?.fullName ? authUser?.fullName : LABELS.USER}
+            </Text>
             <Text style={styles.freeAccountText}>{LABELS.FREE_ACCOUNT}</Text>
           </View>
         </View>
@@ -61,7 +67,8 @@ const ProfileHeader = () => {
 const getStyles = ({theme}: any) => ({
   headerContainer: {
     height: hp(7),
-    margin: wp(2),
+    marginHorizontal: wp(2),
+    marginVertical: wp(1),
   },
   profilePhotoContainer: {
     flex: 1,

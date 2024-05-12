@@ -6,8 +6,8 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import useAppContext from '../context/useAppContext';
-import {FONT} from '../constants';
+import useAppContext from '../../context/useAppContext';
+import {FONT} from '../../constants';
 
 const Header = ({
   isBack = true,

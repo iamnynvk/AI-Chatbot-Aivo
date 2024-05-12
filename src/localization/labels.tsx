@@ -47,6 +47,8 @@ export const LABELS = {
   AIVO_PREMIUM: 'Aivo Premium',
   UNLOCK_DESC: 'Unlock your AI Chatbot & Get all premium features',
   UPGRADE_PLAN: 'Upgrade Plan',
+  USER: 'User',
+  EXPLORE: 'Explore',
 };
 
 export const STATIC_MESSAGE = {

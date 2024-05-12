@@ -46,12 +46,19 @@ const SubscriptionCard = () => {
 
 const getStyles = ({theme}: any) => ({
   cardContainer: {
-    flex: 1,
     flexDirection: 'row',
-    margin: wp(4),
     backgroundColor: theme?.tagColor,
     padding: wp(4),
+    marginBottom: wp(3),
     borderRadius: wp(3),
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   detailContainer: {
     flex: 1,
