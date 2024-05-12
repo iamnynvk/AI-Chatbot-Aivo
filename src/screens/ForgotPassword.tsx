@@ -8,8 +8,8 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 // Components
-import InputText from '../components/InputText';
-import SubmitButton from '../components/SubmitButton';
+import InputText from '../components/TextInput/InputText';
+import SubmitButton from '../components/Button/SubmitButton';
 import Header from '../components/Header';
 // Imports
 import useAppContext from '../context/useAppContext';

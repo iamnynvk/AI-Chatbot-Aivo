@@ -7,9 +7,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import ImagePicker from 'react-native-image-crop-picker';
 // Components
-import InputText from '../components/InputText';
-import SubmitButton from '../components/SubmitButton';
-import BottomSheets from '../components/BottomSheets';
+import InputText from '../components/TextInput/InputText';
+import SubmitButton from '../components/Button/SubmitButton';
+import BottomSheets from '../components/BottomSheet/BottomSheets';
 import Header from '../components/Header';
 // Imports
 import useAppContext from '../context/useAppContext';

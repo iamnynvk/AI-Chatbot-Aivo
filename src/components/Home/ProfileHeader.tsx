@@ -8,10 +8,10 @@ import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // Imports
-import useAppContext from '../context/useAppContext';
-import {LABELS} from '../localization/labels';
-import {FONT} from '../constants';
-import {ROUTES} from '../routes/routes';
+import useAppContext from '../../context/useAppContext';
+import {LABELS} from '../../localization/labels';
+import {FONT} from '../../constants';
+import {ROUTES} from '../../routes/routes';
 
 const ProfileHeader = () => {
   const navigation: any = useNavigation();

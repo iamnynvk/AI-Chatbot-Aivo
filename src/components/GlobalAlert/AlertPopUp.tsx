@@ -6,11 +6,11 @@ import {
   Animated,
   NativeModules,
 } from 'react-native';
-import useAppContext from '../context/useAppContext';
-import {COLORS, FONT, images} from '../constants';
-import {LABELS} from '../localization/labels';
+import useAppContext from '../../context/useAppContext';
+import {COLORS, FONT, images} from '../../constants';
+import {LABELS} from '../../localization/labels';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {IOS_DEVICE} from '../constants/theme';
+import {IOS_DEVICE} from '../../constants/theme';
 
 const AlertPopUp = () => {
   const {StatusBarManager} = NativeModules;

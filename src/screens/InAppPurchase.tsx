@@ -9,7 +9,7 @@ import useAppContext from '../context/useAppContext';
 import Header from '../components/Header';
 import FeaturesList from '../components/InAppPurchase/FeaturesList';
 import PlansList from '../components/InAppPurchase/PlansList';
-import SubmitButton from '../components/SubmitButton';
+import SubmitButton from '../components/Button/SubmitButton';
 // Imports
 import {LABELS} from '../localization/labels';
 import {FONT, images} from '../constants';

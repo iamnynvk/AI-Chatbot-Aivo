@@ -2,10 +2,10 @@ import React from 'react';
 import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 // Imports
-import {COLORS, FONT} from '../constants';
-import {ISubmitButton} from '../types';
-import {SCREEN_WIDTH} from '../constants/theme';
-import useAppContext from '../context/useAppContext';
+import {COLORS, FONT} from '../../constants';
+import {ISubmitButton} from '../../types';
+import {SCREEN_WIDTH} from '../../constants/theme';
+import useAppContext from '../../context/useAppContext';
 
 const SubmitButton = ({
   isDisable,

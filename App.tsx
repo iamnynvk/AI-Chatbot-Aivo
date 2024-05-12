@@ -5,7 +5,7 @@ import {PaperProvider} from 'react-native-paper';
 
 // Import
 import Routes from './src/routes';
-import AlertPopUp from './src/components/AlertPopUp';
+import AlertPopUp from './src/components/GlobalAlert/AlertPopUp';
 import {ContextProvider} from './src/context/ContextProvider';
 import {requestMultiplePermissions} from './src/utils/AskPermission';
 import {initFirebase} from './src/utils/Firebase';

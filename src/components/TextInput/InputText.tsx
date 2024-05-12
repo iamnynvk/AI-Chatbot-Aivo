@@ -1,9 +1,9 @@
 import React from 'react';
 import {TextInput, View} from 'react-native';
-import {FONT} from '../constants';
-import {IPropsTypes} from '../types';
-import {SCREEN_WIDTH} from '../constants/theme';
-import useAppContext from '../context/useAppContext';
+import {FONT} from '../../constants';
+import {IPropsTypes} from '../../types';
+import {SCREEN_WIDTH} from '../../constants/theme';
+import useAppContext from '../../context/useAppContext';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const InputText = ({

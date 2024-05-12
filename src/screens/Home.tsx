@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import useAppContext from '../context/useAppContext';
-import ProfileHeader from '../components/ProfileHeader';
+import ProfileHeader from '../components/Home/ProfileHeader';
 import {useNavigation} from '@react-navigation/native';
 import SubscriptionCard from '../components/InAppPurchase/SubscriptionCard';
 import {POPULAR_FEATURES} from '../../assets/data';

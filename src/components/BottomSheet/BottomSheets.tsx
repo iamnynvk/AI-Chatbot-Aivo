@@ -1,6 +1,6 @@
 import React from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import useAppContext from '../context/useAppContext';
+import useAppContext from '../../context/useAppContext';
 
 const BottomSheets = ({refs, children, sheetHeight}: any) => {
   const {theme}: any = useAppContext();
