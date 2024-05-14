@@ -4,7 +4,6 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import useAppContext from '../../context/useAppContext';
 import FastImage from 'react-native-fast-image';
 import {COLORS, FONT} from '../../constants';
-import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 const FeaturesCard = ({data}: any) => {
   const {theme}: any = useAppContext();
@@ -19,13 +18,7 @@ const FeaturesCard = ({data}: any) => {
           resizeMode="contain"
         />
         <Text style={styles.titleText}>{data?.title}</Text>
-      </View>
-      <View style={styles.arrowContainer}>
-        <FontAwesome6
-          name="location-arrow"
-          size={wp(5)}
-          color={theme?.textColor}
-        />
+        <Text style={styles.descriptionText}>{data?.description}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -33,7 +26,6 @@ const FeaturesCard = ({data}: any) => {
 
 const getStyles = ({theme}: any) => ({
   container: {
-    height: wp(40),
     flex: 1,
     margin: wp(2),
     borderRadius: wp(3),
@@ -60,14 +52,12 @@ const getStyles = ({theme}: any) => ({
     marginTop: wp(2),
     fontFamily: FONT.notoSansExtraBold,
   },
-  arrowContainer: {
-    position: 'absolute',
-    backgroundColor: theme?.backgroundColor,
-    padding: wp(3.5),
-    bottom: 0,
-    right: 0,
-    borderTopLeftRadius: wp(4),
-    borderBottomRightRadius: wp(3),
+  descriptionText: {
+    fontFamily: FONT.notoSansRegular,
+    textAlign: 'justify',
+    marginTop: wp(3),
+    color: theme?.lightTextColor,
+    fontSize: wp(3.5),
   },
 });
 

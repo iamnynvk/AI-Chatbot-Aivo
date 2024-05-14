@@ -49,7 +49,7 @@ const getStyles = ({theme}: any) => ({
     flexDirection: 'row',
     backgroundColor: theme?.tagColor,
     padding: wp(4),
-    marginBottom: wp(3),
+    marginVertical: wp(3),
     borderRadius: wp(3),
     shadowColor: COLORS.black,
     shadowOffset: {

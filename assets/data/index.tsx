@@ -77,21 +77,29 @@ export const POPULAR_FEATURES = [
   {
     id: 1,
     title: 'Chat With Aivo',
+    description:
+      'Engage in text-based conversations with Aivo, our AI assistant.',
     images: images.img_message,
   },
   {
     id: 2,
     title: 'Talk With Aivo',
+    description:
+      'Have a voice-based interaction with Aivo. Speak your queries, and Aivo will respond with relevant information and assistance.',
     images: images.img_voice,
   },
   {
     id: 3,
     title: 'Image Search',
+    description:
+      'Search for images effortlessly using our Image Search feature.',
     images: images.img_image,
   },
   {
     id: 4,
     title: 'History',
+    description:
+      'Access your interaction history with Aivo. Quickly review past conversations, searches.',
     images: images.img_docks,
   },
 ];

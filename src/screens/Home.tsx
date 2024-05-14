@@ -1,6 +1,5 @@
 import React from 'react';
 import {FlatList, View} from 'react-native';
-import {ScrollView} from 'react-native-virtualized-view';
 import useAppContext from '../context/useAppContext';
 import ProfileHeader from '../components/Home/ProfileHeader';
 import SubscriptionCard from '../components/InAppPurchase/SubscriptionCard';
@@ -17,31 +16,32 @@ const Home = () => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
 
+  const _renderPopularFeatures = () => {
+    return (
+      <React.Fragment>
+        <FlatList
+          data={POPULAR_FEATURES}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={() => {
+            return (
+              <React.Fragment>
+                <SubscriptionCard />
+                <TitleHeader title={LABELS.POPULAR} />
+              </React.Fragment>
+            );
+          }}
+          renderItem={({item}: any) => <FeaturesCard data={item} />}
+          keyExtractor={() => String(Math.random())}
+        />
+      </React.Fragment>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      {/* Header */}
       <ProfileHeader />
-
-      {/* Body */}
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.screenContainer}>
-          <FlatList
-            data={POPULAR_FEATURES}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={() => {
-              return (
-                <React.Fragment>
-                  <SubscriptionCard />
-                  <TitleHeader title={LABELS.POPULAR} />
-                </React.Fragment>
-              );
-            }}
-            renderItem={({item}: any) => <FeaturesCard data={item} />}
-            keyExtractor={() => String(Math.random())}
-          />
-        </View>
-      </ScrollView>
+      <View style={styles.screenContainer}>{_renderPopularFeatures()}</View>
     </View>
   );
 };
@@ -52,7 +52,8 @@ const getStyles = ({theme}: any) => ({
     backgroundColor: theme?.backgroundColor,
   },
   screenContainer: {
-    padding: wp(2.5),
+    flex: 1,
+    paddingHorizontal: wp(2.5),
   },
 });
 
