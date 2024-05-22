@@ -79,27 +79,81 @@ export const POPULAR_FEATURES = [
     title: 'Chat With Aivo',
     description:
       'Engage in text-based conversations with Aivo, our AI assistant.',
-    images: images.img_message,
+    images: images.img_chat,
+    type: 'popular_features',
   },
   {
     id: 2,
     title: 'Talk With Aivo',
     description:
-      'Have a voice-based interaction with Aivo. Speak your queries, and Aivo will respond with relevant information and assistance.',
-    images: images.img_voice,
+      'Have a voice-based interaction, Speak your queries, and provides relevant information and assistance.',
+    images: images.img_mic,
+    type: 'popular_features',
   },
   {
     id: 3,
     title: 'Image Search',
     description:
       'Search for images effortlessly using our Image Search feature.',
-    images: images.img_image,
+    images: images.img_search_image,
+    type: 'popular_features',
   },
   {
     id: 4,
     title: 'History',
     description:
       'Access your interaction history with Aivo. Quickly review past conversations, searches.',
-    images: images.img_docks,
+    images: images.img_history,
+    type: 'popular_features',
   },
+];
+
+export const ASSISTANT_FEATURES_HOME = [
+  {
+    id: 5,
+    title: 'Art',
+    additionalTitle: 'Art',
+    description:
+      'Create digital arts, learn art, history and express bring your thoughts to life',
+    images: images.img_art,
+    type: 'assistant_features',
+  },
+  {
+    id: 6,
+    title: 'Code',
+    additionalTitle: 'Code',
+    description:
+      'Generate programming codes or algorithms for complex work application and website',
+    images: images.img_code,
+    type: 'assistant_features',
+  },
+  {
+    id: 7,
+    title: 'Booking',
+    additionalTitle: 'Booking',
+    description:
+      'Find tourist attraction, book flights, hotels and lean about more places',
+    images: images.img_booking,
+    type: 'assistant_features',
+  },
+  {
+    id: 8,
+    title: 'Content',
+    additionalTitle: 'Content',
+    description:
+      'Write contents for your articles, websites and blogs and more.',
+    images: images.img_content_search,
+    type: 'assistant_features',
+  },
+];
+
+export const FEATURES_FOR_HOME = [
+  {
+    id: Math.random(),
+    title: LABELS.POPULAR,
+    type: 'header_one',
+  },
+  ...POPULAR_FEATURES,
+  {id: Math.random(), title: LABELS.EXPLORE, type: 'header_two'},
+  ...ASSISTANT_FEATURES_HOME,
 ];

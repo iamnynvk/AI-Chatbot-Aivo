@@ -15,6 +15,14 @@ import img_message from '../../assets/images/img_message.png';
 import img_voice from '../../assets/images/img_micro.png';
 import img_image from '../../assets/images/img_picture.png';
 import img_docks from '../../assets/images/img_docks.png';
+import img_art from '../../assets/images/img_art.png';
+import img_code from '../../assets/images/img_code.png';
+import img_booking from '../../assets/images/img_booking.png';
+import img_content_search from '../../assets/images/img_content_search.png';
+import img_chat from '../../assets/images/img_chat.png';
+import img_mic from '../../assets/images/img_mic.png';
+import img_search_image from '../../assets/images/img_image.png';
+import img_history from '../../assets/images/img_history.png';
 
 const images = {
   img_bot_say,
@@ -34,6 +42,14 @@ const images = {
   img_voice,
   img_image,
   img_docks,
+  img_art,
+  img_code,
+  img_booking,
+  img_content_search,
+  img_chat,
+  img_mic,
+  img_search_image,
+  img_history,
 };
 
 export default images;

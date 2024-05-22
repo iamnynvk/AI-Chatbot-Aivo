@@ -27,7 +27,7 @@ const FeaturesCard = ({data}: any) => {
 const getStyles = ({theme}: any) => ({
   container: {
     flex: 1,
-    margin: wp(2),
+    marginVertical: wp(1),
     borderRadius: wp(3),
     backgroundColor: theme?.inputColor,
     shadowColor: COLORS.black,
