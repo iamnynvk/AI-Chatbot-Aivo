@@ -1,15 +1,12 @@
 import React from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, SafeAreaView, View} from 'react-native';
 import useAppContext from '../context/useAppContext';
 import ProfileHeader from '../components/Home/ProfileHeader';
 import SubscriptionCard from '../components/InAppPurchase/SubscriptionCard';
 import {FEATURES_FOR_HOME} from '../../assets/data';
 import FeaturesCard from '../components/Home/FeaturesCard';
 import TitleHeader from '../components/Header/TitleHeader';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../routes/routes';
 
@@ -42,7 +39,7 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ProfileHeader />
       <View style={styles.screenContainer}>
         <FlatList
@@ -53,7 +50,7 @@ const Home = () => {
           keyExtractor={(item, index) => `${item.type}_${index}`}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

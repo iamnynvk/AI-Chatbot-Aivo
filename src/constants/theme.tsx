@@ -5,19 +5,6 @@ export const COLORS = {
   black: '#000000',
   danger: '#F44336',
   lightGreen: '#4CAF50',
-  // background: '#070911',
-  // cards: '#0F111B',
-  // grayDark: '#38393b',
-  // blue: '#0258f9',
-  // blueDark: '#2b4292',
-  // purple: '#462963',
-  // lightWhite: '#e1e1e1',
-  // secondary: '#4A4E51',
-  // border: '#f19c12',
-  // pupal: '#3BF6F1',
-  // lightBlue: '#3F43F2',
-  // borderColor: '#181D2C',
-  // tabBackColor: '#1C2132',
 };
 
 export const color: any = {
@@ -52,6 +39,7 @@ export const color: any = {
     borderColor: '#A0A0A0',
     tagColor: '#5AB5FA',
     tabBorderColor: '#4A4E51',
+    tabSelectColor: '#',
   },
 };
 

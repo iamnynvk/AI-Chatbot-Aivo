@@ -28,6 +28,7 @@ const getStyles = ({theme}: any) => ({
   container: {
     flex: 1,
     marginVertical: wp(1),
+    marginHorizontal: wp(1),
     borderRadius: wp(3),
     backgroundColor: theme?.inputColor,
     shadowColor: COLORS.black,
@@ -54,7 +55,6 @@ const getStyles = ({theme}: any) => ({
   },
   descriptionText: {
     fontFamily: FONT.notoSansRegular,
-    textAlign: 'justify',
     marginTop: wp(3),
     color: theme?.lightTextColor,
     fontSize: wp(3.5),
