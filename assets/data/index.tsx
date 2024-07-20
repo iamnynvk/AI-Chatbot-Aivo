@@ -1,4 +1,5 @@
 import {images} from '../../src/constants';
+import {COLLECTIONS} from '../../src/enums';
 import {LABELS} from '../../src/localization/labels';
 
 export const ON_BOARDING = [
@@ -77,6 +78,7 @@ export const POPULAR_FEATURES = [
   {
     id: 1,
     title: 'Chat With Aivo',
+    additionalTitle: COLLECTIONS?.AIVO_CHAT,
     description:
       'Engage in text-based conversations with Aivo, our AI assistant.',
     images: images.img_chat,
@@ -85,6 +87,7 @@ export const POPULAR_FEATURES = [
   {
     id: 2,
     title: 'Talk With Aivo',
+    additionalTitle: COLLECTIONS?.AIVO_TALK,
     description:
       'Have a voice-based interaction, Speak your queries, and provides relevant information and assistance.',
     images: images.img_mic,
@@ -93,6 +96,7 @@ export const POPULAR_FEATURES = [
   {
     id: 3,
     title: 'Image Search',
+    additionalTitle: COLLECTIONS?.IMAGE_SEARCH,
     description:
       'Search for images effortlessly using our Image Search feature.',
     images: images.img_search_image,
@@ -101,6 +105,7 @@ export const POPULAR_FEATURES = [
   {
     id: 4,
     title: 'History',
+    additionalTitle: COLLECTIONS?.HISTORY,
     description:
       'Access your interaction history with Aivo. Quickly review past conversations, searches.',
     images: images.img_history,
@@ -112,7 +117,7 @@ export const ASSISTANT_FEATURES_HOME = [
   {
     id: 5,
     title: 'Art',
-    additionalTitle: 'Art',
+    additionalTitle: COLLECTIONS?.GENERAL_ART,
     description:
       'Create digital arts, learn art, history and express bring your thoughts to life',
     images: images.img_art,
@@ -121,7 +126,7 @@ export const ASSISTANT_FEATURES_HOME = [
   {
     id: 6,
     title: 'Code',
-    additionalTitle: 'Code',
+    additionalTitle: COLLECTIONS?.GENERAL_CODE,
     description:
       'Generate programming codes or algorithms for complex work application and website',
     images: images.img_code,
@@ -130,7 +135,7 @@ export const ASSISTANT_FEATURES_HOME = [
   {
     id: 7,
     title: 'Booking',
-    additionalTitle: 'Booking',
+    additionalTitle: COLLECTIONS?.GENERAL_BOOKING,
     description:
       'Find tourist attraction, book flights, hotels and lean about more places',
     images: images.img_booking,
@@ -139,7 +144,7 @@ export const ASSISTANT_FEATURES_HOME = [
   {
     id: 8,
     title: 'Content',
-    additionalTitle: 'Content',
+    additionalTitle: COLLECTIONS?.GENERAL_CONTENT,
     description:
       'Write contents for your articles, websites and blogs and more.',
     images: images.img_content_search,
@@ -206,6 +211,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 1,
     title: 'Image Generation',
     type: 'all artAndCreativity',
+    additionalTitle: COLLECTIONS?.IMAGE_GENERATION,
     description: 'Create unique images and artworks using AI.',
     images: images.img_edit_image,
     useCases:
@@ -215,6 +221,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 2,
     title: 'Music Composition',
     type: 'all artAndCreativity',
+    additionalTitle: COLLECTIONS?.MUSIC_GENERATION,
     description: 'Compose original music tracks with the help of AI.',
     images: images.img_music,
     useCases:
@@ -224,6 +231,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 3,
     title: 'Poetry Generation',
     type: 'all artAndCreativity',
+    additionalTitle: COLLECTIONS?.POETRY_GENERATION,
     description: 'Generate creative and original poetry using AI.',
     images: images.img_text,
     useCases:
@@ -233,6 +241,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 4,
     title: 'Code Generation',
     type: 'all programmingAndDevelopment',
+    additionalTitle: COLLECTIONS?.CODE_GENERATION,
     description: 'Automate the creation of code snippets and modules.',
     images: images.img_code_one,
     useCases:
@@ -242,6 +251,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 5,
     title: 'Programming Languages',
     type: 'all programmingAndDevelopment',
+    additionalTitle: COLLECTIONS?.PROGRAMMING_LANGUAGE,
     description: 'Learn and get assistance with various programming languages.',
     images: images.img_javascript,
     useCases:
@@ -251,6 +261,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 6,
     title: 'Code Optimization',
     type: 'all programmingAndDevelopment',
+    additionalTitle: COLLECTIONS?.CODE_OPTIMIZATION,
     description: 'Enhance and optimize existing code for better performance.',
     images: images.img_inspect,
     useCases:
@@ -260,6 +271,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 7,
     title: 'Code Debugging',
     type: 'all programmingAndDevelopment',
+    additionalTitle: COLLECTIONS?.CODE_DEBUGGING,
     description: 'Identify and fix bugs in your code with AI assistance.',
     images: images.img_debugging,
     useCases:
@@ -269,6 +281,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 8,
     title: 'Blog Post Generation',
     type: 'all contentCreation',
+    additionalTitle: COLLECTIONS?.BLOG_POST_GENERATION,
     description: 'Create well-written blog posts on various topics.',
     images: images.img_article,
     useCases:
@@ -278,6 +291,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 22,
     title: 'YouTube Content Generation',
     type: 'all contentCreation',
+    additionalTitle: COLLECTIONS?.YOUTUBE_CONTENT_GENERATION,
     description:
       'Create engaging and high-quality content for YouTube channels using AI.',
     images: images.img_youtube,
@@ -288,6 +302,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 10,
     title: 'Social Media Content Creation',
     type: 'all contentCreation',
+    additionalTitle: COLLECTIONS?.SOCIAL_MEDIA_CONTENT_GENERATION,
     description: 'Generate engaging content for social media platforms.',
     images: images.img_facebook,
     useCases:
@@ -297,6 +312,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 11,
     title: 'Video Scriptwriting',
     type: 'all contentCreation',
+    additionalTitle: COLLECTIONS?.VIDEO_SCRIPTWRITING,
     description: 'Write scripts for videos with the help of AI.',
     images: images.img_video,
     useCases:
@@ -306,6 +322,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 12,
     title: 'Email Drafting',
     type: 'all contentCreation',
+    additionalTitle: COLLECTIONS?.EMAIL_DRAFTING,
     description: 'Draft professional and personal emails quickly.',
     images: images.img_email,
     useCases:
@@ -315,6 +332,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 13,
     title: 'Movie and TV Show Recommendations',
     type: 'all entertainment',
+    additionalTitle: COLLECTIONS?.MOVIES_TV_SHOW_RECOMMENDATION,
     description: 'Get personalized recommendations for movies and TV shows.',
     images: images.img_movies,
     useCases:
@@ -324,6 +342,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 14,
     title: 'Game Suggestions',
     type: 'all entertainment',
+    additionalTitle: COLLECTIONS?.GAME_SUGGESTIONS,
     description: 'Receive recommendations for video games.',
     images: images.img_game_one,
     useCases:
@@ -333,6 +352,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 15,
     title: 'English Learning',
     type: 'all educationAndLearning',
+    additionalTitle: COLLECTIONS?.ENGLISH_LEARNING,
     description: 'Learn and improve English language skills.',
     images: images.img_book,
     useCases:
@@ -342,6 +362,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 16,
     title: 'Personalized Learning Plans',
     type: 'all educationAndLearning',
+    additionalTitle: COLLECTIONS?.PERSONALIZED_LEARNING_PLANS,
     description: 'Get customized learning plans tailored to individual needs.',
     images: images.img_content,
     useCases:
@@ -351,6 +372,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 17,
     title: 'Fitness Advice',
     type: 'all healthAndWellness',
+    additionalTitle: COLLECTIONS?.FITNESS_ADVICE,
     description: 'Receive personalized fitness and exercise recommendations.',
     images: images.img_personal_trainer,
     useCases:
@@ -360,6 +382,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 18,
     title: 'Mental Health Support',
     type: 'all healthAndWellness',
+    additionalTitle: COLLECTIONS?.MENTAL_HEALTH_SUPPORT,
     description:
       'Access resources and support for mental health and well-being.',
     images: images.img_mental_health,
@@ -370,6 +393,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 19,
     title: 'Medicine Details',
     type: 'all healthAndWellness',
+    additionalTitle: COLLECTIONS?.MEDICINE_DETAILS,
     description:
       'Access detailed information about various medications, including uses, side effects, interactions, and more.',
     images: images.img_pharma,
@@ -380,6 +404,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 20,
     title: 'Nutrition Planning',
     type: 'all healthAndWellness',
+    additionalTitle: COLLECTIONS?.NUTRITION_PLANNING,
     description: 'Create customized nutrition and diet plans.',
     images: images.img_calories,
     useCases:
@@ -389,6 +414,7 @@ export const RENDER_EXPLORE_TYPES = [
     id: 21,
     title: 'Travel Planning',
     type: 'all travelAndLeisure',
+    additionalTitle: COLLECTIONS?.TRAVEL_PLANNING,
     description: 'Plan trips and create travel itineraries with AI assistance.',
     images: images.img_beach,
     useCases:
@@ -397,7 +423,8 @@ export const RENDER_EXPLORE_TYPES = [
   {
     id: 22,
     title: 'Language Translation',
-    type: 'all educationAndLearning travelAndLeisure',
+    type: 'all educationAndLearning',
+    additionalTitle: COLLECTIONS?.LANGUAGE_TRANSLATIONS,
     description: 'Translate text and speech between different languages.',
     images: images.img_translation,
     useCases:

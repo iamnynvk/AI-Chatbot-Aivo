@@ -11,4 +11,5 @@ export const ROUTES = {
   HISTORY: 'History',
   PROFILE: 'Profile',
   SETTING: 'Setting',
+  AIVO_CHAT: 'AivoChat',
 };

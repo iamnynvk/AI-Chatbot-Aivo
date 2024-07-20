@@ -4,13 +4,29 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import useAppContext from '../../context/useAppContext';
 import FastImage from 'react-native-fast-image';
 import {COLORS, FONT} from '../../constants';
+import {useNavigation} from '@react-navigation/native';
+import {COLLECTIONS} from '../../enums';
+import {ROUTES} from '../../routes/routes';
 
 const FeaturesCard = ({data}: any) => {
+  const navigation: any = useNavigation();
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
 
+  const onCardPress = async () => {
+    navigation?.navigate(
+      data?.additionalTitle == COLLECTIONS?.HISTORY
+        ? ROUTES?.HISTORY
+        : ROUTES?.AIVO_CHAT,
+      data,
+    );
+  };
+
   return (
-    <TouchableOpacity activeOpacity={0.9} style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={styles.container}
+      onPress={onCardPress}>
       <View style={styles.imageContainer}>
         <FastImage
           source={data.images}

@@ -4,7 +4,6 @@ import firestore from '@react-native-firebase/firestore';
 import perf from '@react-native-firebase/perf';
 import storage from '@react-native-firebase/storage';
 import PushNotification from 'react-native-push-notification';
-import {Alert, Platform} from 'react-native';
 import {COLLECTIONS} from '../enums';
 import {ANDROID_DEVICE} from '../constants/theme';
 
@@ -12,19 +11,7 @@ const firebaseAuth: any = auth();
 const db: any = firestore();
 const dbStorage: any = storage();
 
-const deleteLoop = [
-  COLLECTIONS.USERS,
-  COLLECTIONS.PROFILE,
-  COLLECTIONS.CHAT,
-  COLLECTIONS.ART,
-  COLLECTIONS.CODE,
-  COLLECTIONS.BOOKING,
-  COLLECTIONS.CONTENT,
-  COLLECTIONS.HEALTH,
-  COLLECTIONS.TRANSLATE,
-  COLLECTIONS.MUSIC,
-  COLLECTIONS.MOVIES,
-];
+const deleteLoop = [COLLECTIONS.USERS, COLLECTIONS.PROFILE];
 
 /**
  * Returns a user identifier as specified by the authentication provider.
@@ -202,109 +189,6 @@ export const deleteUserData = async () => {
       reject(error);
     }
     deleteUserDataTrack.stop();
-  });
-};
-
-export const storeChatCommunication = async (
-  chatMessage: any,
-  type = 'generalChat',
-) => {
-  return new Promise(async (resolve, reject) => {
-    const storeChatTrack = perf().newTrace('storeChatCommunication-Track');
-    storeChatTrack.start();
-
-    try {
-      const findType =
-        type === 'generalChat'
-          ? COLLECTIONS.CHAT
-          : type === 'Art'
-          ? COLLECTIONS.ART
-          : type === 'Code'
-          ? COLLECTIONS.CODE
-          : type === 'Booking'
-          ? COLLECTIONS.BOOKING
-          : type === 'Content'
-          ? COLLECTIONS.CONTENT
-          : type === 'Health'
-          ? COLLECTIONS.HEALTH
-          : type === 'Translate'
-          ? COLLECTIONS.TRANSLATE
-          : type === 'Music'
-          ? COLLECTIONS.MUSIC
-          : type === 'Movies'
-          ? COLLECTIONS.MOVIES
-          : COLLECTIONS.CHAT;
-      const currentUserId = await getAuthUserId();
-      const queryMessage = await db
-        .collection(findType)
-        .doc(`${currentUserId}-AI`);
-      await queryMessage.set({
-        chat_id: `${currentUserId}-AI`,
-        last_message: chatMessage?.text
-          ? chatMessage?.text
-          : chatMessage?.image,
-        createdAt: JSON.stringify(chatMessage?.createdAt),
-        user_name: chatMessage?.user?.name,
-      });
-      const newCollection = await queryMessage
-        .collection(`${currentUserId}-AI`)
-        .add({
-          ...chatMessage,
-          createdAt: JSON.stringify(chatMessage?.createdAt),
-        });
-      storeChatTrack.stop();
-      resolve(newCollection);
-    } catch (error) {
-      storeChatTrack.stop();
-      reject(error);
-    }
-    storeChatTrack.stop();
-  });
-};
-
-export const getChatCollection = async (type = 'generalChat') => {
-  return new Promise(async (resolve, reject) => {
-    const getChatDataTrack = perf().newTrace('getChatData-Track');
-    getChatDataTrack.start();
-
-    try {
-      const findType =
-        type === 'generalChat'
-          ? COLLECTIONS.CHAT
-          : type === 'Art'
-          ? COLLECTIONS.ART
-          : type === 'Code'
-          ? COLLECTIONS.CODE
-          : type === 'Booking'
-          ? COLLECTIONS.BOOKING
-          : type === 'Content'
-          ? COLLECTIONS.CONTENT
-          : type === 'Health'
-          ? COLLECTIONS.HEALTH
-          : type === 'Translate'
-          ? COLLECTIONS.TRANSLATE
-          : type === 'Music'
-          ? COLLECTIONS.MUSIC
-          : type === 'Movies'
-          ? COLLECTIONS.MOVIES
-          : COLLECTIONS.CHAT;
-      const currentUserId = await getAuthUserId();
-      const queryMessage = await db
-        .collection(findType)
-        .doc(`${currentUserId}-AI`)
-        .collection(`${currentUserId}-AI`)
-        .orderBy('createdAt', 'desc')
-        .get()
-        .then((querySnapshot: any) => {
-          return querySnapshot?._docs;
-        });
-      getChatDataTrack.stop();
-      resolve(queryMessage);
-    } catch (error) {
-      getChatDataTrack.stop();
-      reject(error);
-    }
-    getChatDataTrack.stop();
   });
 };
 
