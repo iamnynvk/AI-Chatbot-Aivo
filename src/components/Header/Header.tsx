@@ -44,12 +44,22 @@ const Header = ({
         </TouchableOpacity>
       </View>
       <View style={styles.titleContainer}>
-        {title && <Text style={styles.heading}>{title}</Text>}
+        {title && (
+          <Text style={styles.heading} numberOfLines={1} ellipsizeMode="tail">
+            {title}
+          </Text>
+        )}
       </View>
       <View style={styles.backContainer}>
         <TouchableOpacity activeOpacity={0.8} onPress={onMenuPress}>
           {menuName && (
-            <Ionicons name={menuName} color={theme?.backColor} size={wp(7)} />
+            // <Ionicons name={menuName} color={theme?.backColor} size={wp(7)} />
+            <Text
+              style={styles.menuStyles}
+              numberOfLines={1}
+              ellipsizeMode="tail">
+              {menuName}
+            </Text>
           )}
         </TouchableOpacity>
       </View>
@@ -78,6 +88,12 @@ const getStyles = ({theme}: any) => ({
   backContainer: {
     flex: 1,
     justifyContent: 'center',
+  },
+  menuStyles: {
+    color: theme?.danger,
+    fontSize: wp(4),
+    alignSelf: 'center',
+    fontFamily: FONT.notoSansExtraBold,
   },
 });
 

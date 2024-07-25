@@ -58,6 +58,7 @@ const AIAssistance = () => {
         horizontal
         data={EXPLORE_TYPES}
         renderItem={renderItem}
+        initialNumToRender={20}
         keyExtractor={item => item.id.toString()}
         extraData={selectedId}
         contentContainerStyle={styles.flatListContentContainer}
@@ -88,6 +89,7 @@ const getStyles = ({theme}: any) => ({
   },
   flatListContentContainer: {
     alignItems: 'center',
+    marginHorizontal: wp(2),
   },
   item: {
     paddingHorizontal: wp(5),

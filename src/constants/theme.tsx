@@ -23,6 +23,10 @@ export const color: any = {
     borderColor: '#E1E1E1',
     tagColor: '#5AB5FA',
     tabBorderColor: '#E1E1E1',
+    senderChatColor: '#0b66c3',
+    receiveChatColor: '#606676',
+    dropDownColor: '#070911',
+    lightWhite: '#e1e1e1',
   },
   dark: {
     backgroundColor: '#000000',
@@ -39,7 +43,10 @@ export const color: any = {
     borderColor: '#A0A0A0',
     tagColor: '#5AB5FA',
     tabBorderColor: '#4A4E51',
-    tabSelectColor: '#',
+    senderChatColor: '#3F43F2',
+    receiveChatColor: '#0F111B',
+    dropDownColor: '#070911',
+    lightWhite: '#e1e1e1',
   },
 };
 
