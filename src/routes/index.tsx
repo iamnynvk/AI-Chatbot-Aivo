@@ -18,6 +18,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import TabNavigation from './TabNavigator';
 import Setting from '../screens/Setting';
 import AivoChat from '../screens/AivoChat';
+import Chat from '../screens/Chat';
 
 const Stack = createNativeStackNavigator();
 
@@ -98,6 +99,11 @@ const index = () => {
           <Stack.Screen
             name={ROUTES.AIVO_CHAT}
             component={AivoChat}
+            options={{animation: 'fade_from_bottom', presentation: 'modal'}}
+          />
+          <Stack.Screen
+            name={ROUTES.VOICE_CHAT}
+            component={Chat}
             options={{animation: 'fade_from_bottom', presentation: 'modal'}}
           />
           <Stack.Screen

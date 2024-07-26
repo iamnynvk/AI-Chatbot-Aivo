@@ -1,24 +1,54 @@
-import React, {useCallback, useRef, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Bubble, GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import Voice from '@react-native-voice/voice';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header/Header';
 import useAppContext from '../context/useAppContext';
 import {FONT} from '../constants';
 import {ActivityIndicator} from 'react-native-paper';
+import ZoomImage from '../components/ZoomImage/ZoomImage';
+import {requestMicrophonePermission} from '../utils/AskPermission';
 
 const AivoChat = ({route}: any) => {
   const {theme, authUser}: any = useAppContext();
   const styles: any = getStyles({theme});
-  const {title} = route?.params;
   const inputRef: any = useRef();
   const [messages, setMessages] = useState<any>([]);
+  const [speechValue, setSpeechValue] = useState<string>('');
   const [isTyping, setIsTyping] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
+  const [isOnMic, setIsOnMic] = useState(false);
+
+  useEffect(() => {
+    Voice.onSpeechStart = onSpeechStartHandler;
+    Voice.onSpeechEnd = onSpeechEndHandler;
+    Voice.onSpeechResults = onSpeechResultsHandler;
+    Voice.onSpeechError = onSpeechErrorHandler;
+
+    return () => {
+      Voice.destroy().then(() => Voice.removeAllListeners());
+    };
+  }, []);
+
+  const onSpeechStartHandler = (e: any) => {};
+
+  const onSpeechEndHandler = () => {
+    setIsOnMic(false);
+  };
+
+  const onSpeechResultsHandler = (e: any) => {
+    setSpeechValue(e.value[0]);
+  };
+
+  const onSpeechErrorHandler = (e: any) => {
+    console.log('Speech error handler', e);
+    setIsOnMic(false);
+  };
 
   const Bubbles = useCallback((props: any) => {
     return (
@@ -60,6 +90,29 @@ const AivoChat = ({route}: any) => {
     );
   };
 
+  const startRecording = async () => {
+    const permission = await requestMicrophonePermission();
+    if (permission) {
+      try {
+        setIsOnMic(true);
+        await Voice.start('en-GB');
+      } catch (error) {
+        console.log('Error when record audio :', error);
+      }
+    }
+  };
+
+  const stopRecording = async () => {
+    try {
+      await Voice.stop();
+      setIsOnMic(false);
+    } catch (error) {
+      console.log('Error when record audio OFF :', error);
+    }
+  };
+
+  const onSend = useCallback(async (messages: any) => {}, []);
+
   const renderInput = (props: any) => {
     return (
       <InputToolbar
@@ -70,14 +123,14 @@ const AivoChat = ({route}: any) => {
           return (
             <TouchableOpacity
               activeOpacity={0.8}
-              // onPress={() => (!isOnMic ? startRecording() : stopRecording())}
+              onPress={() => (!isOnMic ? startRecording() : stopRecording())}
               style={[
                 styles.actionButton,
-                {marginStart: 10, backgroundColor: theme?.lightWhite},
+                {marginStart: 10, backgroundColor: theme?.tabBorderColor},
               ]}>
               <Ionicons
-                color={theme?.backgroundColor}
-                name={'mic-off'}
+                color={theme?.textColor}
+                name={isOnMic ? 'mic-off' : 'mic'}
                 size={wp(4.6)}
               />
             </TouchableOpacity>
@@ -86,30 +139,34 @@ const AivoChat = ({route}: any) => {
         renderSend={() => {
           return (
             <TouchableOpacity
-              // onPress={() =>
-              //   onSend([
-              //     {
-              //       _id: Math.random(),
-              //       createdAt: new Date(),
-              //       text: props?.text.trim(),
-              //       user: {
-              //         _id: 1,
-              //         avatar: authUser?.userImageUrl,
-              //         name: authUser?.email,
-              //       },
-              //     },
-              //   ])
-              // }
+              onPress={() =>
+                onSend([
+                  {
+                    _id: Math.random(),
+                    createdAt: new Date(),
+                    text: props?.text.trim(),
+                    user: {
+                      _id: 1,
+                      avatar: authUser?.userImageUrl,
+                      name: authUser?.email,
+                    },
+                  },
+                ])
+              }
               disabled={props?.text.trim().length == 0 ? true : false}
               activeOpacity={0.8}
               style={[
                 styles.actionButton,
                 {
                   marginEnd: 10,
-                  backgroundColor: theme?.lightBlue,
+                  backgroundColor: theme?.textColor,
                 },
               ]}>
-              <Ionicons color={theme?.textColor} name={'send'} size={wp(4.6)} />
+              <Ionicons
+                color={theme?.backgroundColor}
+                name={'send'}
+                size={wp(4.6)}
+              />
             </TouchableOpacity>
           );
         }}
@@ -132,10 +189,15 @@ const AivoChat = ({route}: any) => {
     );
   };
 
+  const renderMessageImage = useCallback((props: any) => {
+    const {currentMessage} = props;
+    return <ZoomImage imageUri={currentMessage.image} />;
+  }, []);
+
   return (
     <View style={styles.container}>
       <Header
-        title={title}
+        title={route?.params?.title ? route?.params?.title : 'Chat With Aivo'}
         menuName={'Clear'}
         onMenuPress={() => console.log('Delete chat here')}
       />
@@ -158,10 +220,10 @@ const AivoChat = ({route}: any) => {
             messages?.length !== 0 ? null : {transform: [{scaleY: -1}]}
           }
           // onInputTextChanged={data => setSpeechValue(data)}
-          // renderMessageImage={renderMessageImage}
+          renderMessageImage={renderMessageImage}
           scrollToBottom={true}
           scrollToBottomComponent={customDownButton}
-          // renderInputToolbar={(props: any) => renderInput(props)}
+          renderInputToolbar={(props: any) => renderInput(props)}
           renderChatEmpty={(props: any) => <RenderEmpty {...props} />}
           renderBubble={(props: any) => <Bubbles {...props} />}
           keyboardShouldPersistTaps={'handled'}
@@ -178,12 +240,26 @@ const getStyles = ({theme}: any) => ({
   },
   messageContainer: {
     flex: 1,
-    borderTopWidth: 0.4,
-    borderColor: theme?.borderColor,
+    borderTopWidth: 1,
+    borderColor: theme.inputColor,
   },
   customDown: {
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
+  },
+  inputContainerStyle: {
+    backgroundColor: theme?.backgroundColor,
+    borderColor: theme.inputColor,
+    borderTopWidth: 1,
+    minHeight: wp(12),
+  },
+  actionButton: {
+    height: wp(8.6),
+    width: wp(8.6),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: wp(4.3),
     alignSelf: 'center',
   },
 });

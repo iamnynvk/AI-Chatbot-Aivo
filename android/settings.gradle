@@ -14,3 +14,7 @@ project(':react-native-vector-icons').projectDir = new File(rootProject.projectD
 // Firebase Analytics
 include ':@react-native-firebase_analytics'
 project(':@react-native-firebase_analytics').projectDir = new File(rootProject.projectDir, './../node_modules/@react-native-firebase/analytics/android')
+
+// Voice
+include ':@react-native-voice_voice', ':app'
+project(':@react-native-voice_voice').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-voice/voice/android')

@@ -17,6 +17,8 @@ const FeaturesCard = ({data}: any) => {
     navigation?.navigate(
       data?.additionalTitle == COLLECTIONS?.HISTORY
         ? ROUTES?.HISTORY
+        : data?.additionalTitle == COLLECTIONS?.AIVO_TALK
+        ? ROUTES?.VOICE_CHAT
         : ROUTES?.AIVO_CHAT,
       data,
     );

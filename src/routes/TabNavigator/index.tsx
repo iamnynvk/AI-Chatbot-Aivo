@@ -9,7 +9,7 @@ import {
 import {ROUTES} from '../routes';
 // Screens
 import Home from '../../screens/Home';
-import Chat from '../../screens/Chat';
+import AivoChat from '../../screens/AivoChat';
 import Profile from '../../screens/Profile';
 import AIAssistance from '../../screens/AIAssistance';
 import History from '../../screens/History';
@@ -30,8 +30,8 @@ const TabNavigation = () => {
       component: AIAssistance,
     },
     {
-      name: ROUTES.CHAT,
-      component: Chat,
+      name: ROUTES.AIVO_CHAT,
+      component: AivoChat,
     },
     {
       name: ROUTES.HISTORY,
@@ -47,6 +47,7 @@ const TabNavigation = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarHideOnKeyboard: true,
       }}
       initialRouteName="Home">
       <Tab.Group>
@@ -70,7 +71,7 @@ const TabNavigation = () => {
                             ? 'grid'
                             : item?.name == ROUTES.HISTORY
                             ? 'library'
-                            : item?.name == ROUTES.CHAT
+                            : item?.name == ROUTES.AIVO_CHAT
                             ? 'chatbubble'
                             : 'person'
                         }
@@ -90,7 +91,7 @@ const TabNavigation = () => {
                           ? 'grid-outline'
                           : item?.name == ROUTES.HISTORY
                           ? 'library-outline'
-                          : item?.name == ROUTES.CHAT
+                          : item?.name == ROUTES.AIVO_CHAT
                           ? 'chatbubble-outline'
                           : 'person-outline'
                       }

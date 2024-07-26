@@ -7,7 +7,7 @@ export const ROUTES = {
   MAIN: 'Main',
   HOME: 'Home',
   AI_ASSISTANCE: 'AI Assistance',
-  CHAT: 'Chat',
+  VOICE_CHAT: 'Chat',
   HISTORY: 'History',
   PROFILE: 'Profile',
   SETTING: 'Setting',
