@@ -116,7 +116,11 @@ const AivoChat = ({route}: any) => {
   const renderInput = (props: any) => {
     return (
       <InputToolbar
-        textInputStyle={{color: theme?.textColor}}
+        textInputStyle={{
+          color: theme?.textColor,
+          fontFamily: FONT.notoSansMedium,
+          fontSize: wp(3.6),
+        }}
         {...props}
         containerStyle={styles.inputContainerStyle}
         renderActions={() => {
@@ -210,7 +214,7 @@ const AivoChat = ({route}: any) => {
             avatar: authUser?.userImageUrl,
             name: authUser?.email,
           }}
-          // text={speechValue}
+          text={speechValue}
           showUserAvatar={false}
           alwaysShowSend={true}
           isTyping={isTyping}
@@ -219,7 +223,7 @@ const AivoChat = ({route}: any) => {
           messagesContainerStyle={
             messages?.length !== 0 ? null : {transform: [{scaleY: -1}]}
           }
-          // onInputTextChanged={data => setSpeechValue(data)}
+          onInputTextChanged={data => setSpeechValue(data)}
           renderMessageImage={renderMessageImage}
           scrollToBottom={true}
           scrollToBottomComponent={customDownButton}

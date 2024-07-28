@@ -30,7 +30,7 @@ const TabNavigation = () => {
       component: AIAssistance,
     },
     {
-      name: ROUTES.AIVO_CHAT,
+      name: ROUTES.CHAT,
       component: AivoChat,
     },
     {
@@ -59,7 +59,12 @@ const TabNavigation = () => {
               component={item?.component}
               options={{
                 tabBarShowLabel: false,
-                tabBarStyle: styles.tabStyles,
+                tabBarStyle: [
+                  styles.tabStyles,
+                  {
+                    borderTopWidth: item?.name == ROUTES.CHAT ? 0 : 1,
+                  },
+                ],
                 tabBarIcon: ({color, size, focused}): any => {
                   if (focused) {
                     return (
@@ -71,7 +76,7 @@ const TabNavigation = () => {
                             ? 'grid'
                             : item?.name == ROUTES.HISTORY
                             ? 'library'
-                            : item?.name == ROUTES.AIVO_CHAT
+                            : item?.name == ROUTES.CHAT
                             ? 'chatbubble'
                             : 'person'
                         }
@@ -91,7 +96,7 @@ const TabNavigation = () => {
                           ? 'grid-outline'
                           : item?.name == ROUTES.HISTORY
                           ? 'library-outline'
-                          : item?.name == ROUTES.AIVO_CHAT
+                          : item?.name == ROUTES.CHAT
                           ? 'chatbubble-outline'
                           : 'person-outline'
                       }
@@ -121,7 +126,6 @@ const getStyles = ({theme}: any) => ({
 
     // Styles-2
     backgroundColor: theme.backgroundColor,
-    borderTopWidth: 1,
     borderColor: theme.inputColor,
     elevation: 0,
     height: wp(16),

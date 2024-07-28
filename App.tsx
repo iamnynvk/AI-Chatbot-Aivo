@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, TextInput} from 'react-native';
+import {Text, TextInput, LogBox} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import {PaperProvider} from 'react-native-paper';
 
@@ -9,6 +9,9 @@ import AlertPopUp from './src/components/GlobalAlert/AlertPopUp';
 import {ContextProvider} from './src/context/ContextProvider';
 import {requestMultiplePermissions} from './src/utils/AskPermission';
 import {initFirebase} from './src/utils/Firebase';
+
+LogBox.ignoreLogs(['new NativeEventEmitter']);
+LogBox.ignoreAllLogs();
 
 // Prevent font-scaling
 Text.defaultProps = {
