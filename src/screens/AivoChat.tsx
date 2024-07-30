@@ -31,7 +31,7 @@ const AivoChat = ({route}: any) => {
     Voice.onSpeechError = onSpeechErrorHandler;
 
     return () => {
-      Voice.destroy().then(() => Voice.removeAllListeners());
+      Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
 
@@ -201,6 +201,7 @@ const AivoChat = ({route}: any) => {
   return (
     <View style={styles.container}>
       <Header
+        isBack={true}
         title={route?.params?.title ? route?.params?.title : 'Chat With Aivo'}
         menuName={'Clear'}
         onMenuPress={() => console.log('Delete chat here')}

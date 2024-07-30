@@ -45,6 +45,8 @@ import img_pharma from '../../assets/images/img_pharma.png';
 import img_calories from '../../assets/images/img_calories.png';
 import img_beach from '../../assets/images/img_beach.png';
 import img_translation from '../../assets/images/img_translation.png';
+import img_aivoLogoRemoveBg from '../../assets/images/aivologo_removebg.png';
+import anim_text_to_speech from '../../assets/animations/anim_voice_reco_effect.json';
 
 const images = {
   img_bot_say,
@@ -94,6 +96,8 @@ const images = {
   img_calories,
   img_beach,
   img_translation,
+  img_aivoLogoRemoveBg,
+  anim_text_to_speech,
 };
 
 export default images;

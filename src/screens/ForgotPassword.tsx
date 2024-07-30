@@ -61,7 +61,7 @@ const ForgotPassword = () => {
         errors,
       }: any) => (
         <ScrollView style={styles.container}>
-          <Header onPress={() => navigation?.goBack()} />
+          <Header isBack={true} onPress={() => navigation?.goBack()} />
           <Text style={styles.headingText}>{LABELS.FORGOT_PASSWORD_LABEL}</Text>
           <Text style={styles.childText}>{LABELS.FORGOT_DESCRIPTION}</Text>
           <LottieView

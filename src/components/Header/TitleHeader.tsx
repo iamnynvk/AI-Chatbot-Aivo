@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import useAppContext from '../../context/useAppContext';
 import {FONT} from '../../constants';
+import {LABELS} from '../../localization/labels';
 
 const TitleHeader = ({title, description, isShowAll, showAllAction}: any) => {
   const {theme}: any = useAppContext();
@@ -18,7 +19,7 @@ const TitleHeader = ({title, description, isShowAll, showAllAction}: any) => {
       <View style={styles.actionContainer}>
         {isShowAll && (
           <TouchableOpacity activeOpacity={0.8} onPress={showAllAction}>
-            <Text style={styles.actionText}>See All</Text>
+            <Text style={styles.actionText}>{LABELS.SEE_ALL}</Text>
           </TouchableOpacity>
         )}
       </View>

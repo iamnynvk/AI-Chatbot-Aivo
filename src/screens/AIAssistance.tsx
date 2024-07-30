@@ -53,7 +53,7 @@ const AIAssistance = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header isBack={false} title={LABELS.EXPLORE} />
+      <Header isLogo={true} title={LABELS.AI_ASSISTANTS} />
       <FlatList
         horizontal
         data={EXPLORE_TYPES}

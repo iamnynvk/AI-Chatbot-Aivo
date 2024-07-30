@@ -4,13 +4,15 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useAppContext from '../../context/useAppContext';
-import {FONT} from '../../constants';
+import {FONT, images} from '../../constants';
 
 const Header = ({
-  isBack = true,
+  isBack = false,
+  isLogo = false,
   isClose = false,
   onClose,
   title,
@@ -32,6 +34,14 @@ const Header = ({
               name="chevron-back"
               color={theme?.backColor}
               size={wp(7)}
+            />
+          )}
+          {isLogo && (
+            <FastImage
+              source={images.img_aivoLogoRemoveBg}
+              style={styles.iconStyles}
+              resizeMode="contain"
+              tintColor={theme?.textColor}
             />
           )}
           {isClose && (
@@ -94,6 +104,11 @@ const getStyles = ({theme}: any) => ({
     fontSize: wp(4),
     alignSelf: 'center',
     fontFamily: FONT.notoSansExtraBold,
+  },
+  iconStyles: {
+    height: 30,
+    width: 30,
+    alignSelf: 'center',
   },
 });
 

@@ -111,7 +111,7 @@ const SignUp = () => {
         errors,
       }: any) => (
         <ScrollView style={styles.container}>
-          <Header onPress={() => navigation?.goBack()} />
+          <Header isBack={true} onPress={() => navigation?.goBack()} />
           <Text style={styles.heading}>{LABELS.SIGN_UP}</Text>
 
           {/* Profile Photo */}

@@ -49,8 +49,12 @@ export const LABELS = {
   UPGRADE_PLAN: 'Upgrade Plan',
   USER: 'User',
   EXPLORE: 'Explore',
+  AI_ASSISTANTS: 'AI Assistants',
+  AI_AIVO: 'AI Aivo',
+  SEE_ALL: 'See all',
 };
 
 export const STATIC_MESSAGE = {
   SIGN_IN_SUCCESS: "Congratulations 🎉\nYou've successfully logged in to AIVO",
+  HELP_MESSAGE: 'What can I help you with?',
 };

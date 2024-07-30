@@ -27,6 +27,7 @@ export const color: any = {
     receiveChatColor: '#606676',
     dropDownColor: '#070911',
     lightWhite: '#e1e1e1',
+    voiceLine: '#d742bf',
   },
   dark: {
     backgroundColor: '#000000',
@@ -47,6 +48,7 @@ export const color: any = {
     receiveChatColor: '#0F111B',
     dropDownColor: '#070911',
     lightWhite: '#e1e1e1',
+    voiceLine: '#d742bf',
   },
 };
 
