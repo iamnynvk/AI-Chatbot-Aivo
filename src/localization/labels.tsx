@@ -56,5 +56,7 @@ export const LABELS = {
 
 export const STATIC_MESSAGE = {
   SIGN_IN_SUCCESS: "Congratulations 🎉\nYou've successfully logged in to AIVO",
-  HELP_MESSAGE: 'What can I help you with?',
+  HELP_MESSAGE: 'What can I help\nyou with?',
+  LISTENING: "Go a head, I'm\nListening...",
+  TAP_TO_SEARCH: 'Press the button\nand Speak',
 };

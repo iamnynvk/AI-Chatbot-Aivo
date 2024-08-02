@@ -47,6 +47,9 @@ import img_beach from '../../assets/images/img_beach.png';
 import img_translation from '../../assets/images/img_translation.png';
 import img_aivoLogoRemoveBg from '../../assets/images/aivologo_removebg.png';
 import anim_text_to_speech from '../../assets/animations/anim_voice_reco_effect.json';
+import img_speak from '../../assets/images/img_speak.png';
+import img_listening from '../../assets/images/img_listening.png';
+import img_help from '../../assets/images/img_help.png';
 
 const images = {
   img_bot_say,
@@ -98,6 +101,9 @@ const images = {
   img_translation,
   img_aivoLogoRemoveBg,
   anim_text_to_speech,
+  img_speak,
+  img_listening,
+  img_help,
 };
 
 export default images;
