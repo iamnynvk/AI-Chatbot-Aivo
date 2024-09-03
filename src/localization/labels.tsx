@@ -59,6 +59,7 @@ export const LABELS = {
   SYSTEM_DEFAULT: 'System Default',
   CHANGE_PASSWORD: 'Change Password',
   SEND_FEEDBACK: 'Send Feedback',
+  CHAT_WITH_AIVO: 'Chat With Aivo',
 };
 
 export const STATIC_MESSAGE = {

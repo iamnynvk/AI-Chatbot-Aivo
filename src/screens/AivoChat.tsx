@@ -13,6 +13,7 @@ import {FONT} from '../constants';
 import {ActivityIndicator} from 'react-native-paper';
 import ZoomImage from '../components/ZoomImage/ZoomImage';
 import {requestMicrophonePermission} from '../utils/AskPermission';
+import {LABELS} from '../localization/labels';
 
 const AivoChat = ({route}: any) => {
   const {theme, authUser}: any = useAppContext();
@@ -202,7 +203,9 @@ const AivoChat = ({route}: any) => {
     <View style={styles.container}>
       <Header
         isBack={true}
-        title={route?.params?.title ? route?.params?.title : 'Chat With Aivo'}
+        title={
+          route?.params?.title ? route?.params?.title : LABELS.CHAT_WITH_AIVO
+        }
         menuName={'Clear'}
         onMenuPress={() => console.log('Delete chat here')}
       />

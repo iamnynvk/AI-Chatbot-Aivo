@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useAppContext from '../../context/useAppContext';
 import {FONT, images} from '../../constants';
+import {LABELS} from '../../localization/labels';
 
 const Header = ({
   isBack = false,
@@ -62,8 +63,15 @@ const Header = ({
       </View>
       <View style={styles.backContainer}>
         <TouchableOpacity activeOpacity={0.8} onPress={onMenuPress}>
-          {menuName && (
-            // <Ionicons name={menuName} color={theme?.backColor} size={wp(7)} />
+          {menuName && title == LABELS.PROFILE && (
+            <Ionicons
+              name={menuName}
+              color={theme?.danger}
+              size={wp(7)}
+              style={{alignSelf: 'center', marginLeft: wp(7)}}
+            />
+          )}
+          {menuName && title != LABELS.PROFILE && (
             <Text
               style={styles.menuStyles}
               numberOfLines={1}

@@ -46,7 +46,7 @@ const ProfileHeader = () => {
               {authUser?.fullName ? authUser?.fullName : LABELS.USER}
             </Text>
             <Text style={styles.freeAccountText}>
-              {authUser?.plan == null
+              {authUser?.subscription == null
                 ? LABELS.FREE_ACCOUNT
                 : LABELS.PREMIUM_ACCOUNT}
             </Text>
