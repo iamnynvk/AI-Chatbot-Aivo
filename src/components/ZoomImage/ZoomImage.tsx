@@ -17,18 +17,25 @@ import useAppContext from '../../context/useAppContext';
 
 interface IZoomImage {
   imageUri: string;
+  isDirectOpen?: boolean;
+  onClose?: any;
 }
 
-const ZoomImage = ({imageUri}: IZoomImage) => {
+const ZoomImage = ({imageUri, isDirectOpen = false, onClose}: IZoomImage) => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
   const image = [{url: imageUri}];
-  const [isOpenImageView, setIsOpenImageView] = useState(false);
+  const [isOpenImageView, setIsOpenImageView] = useState(isDirectOpen);
   const [valid, setValid] = useState(true);
   const [loadingImage, setLoadingImage] = useState(true);
   const [isError, setIsError] = useState(false);
   const noImageUri =
     'https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg';
+
+  const handleClose = () => {
+    setIsOpenImageView(false);
+    onClose();
+  };
 
   return isOpenImageView ? (
     <View>
@@ -39,7 +46,7 @@ const ZoomImage = ({imageUri}: IZoomImage) => {
             size={wp(6)}
             color={theme?.backColor}
             style={styles.backIcon}
-            onPress={() => setIsOpenImageView(false)}
+            onPress={handleClose}
           />
         </View>
         <ImageViewer
@@ -48,7 +55,7 @@ const ZoomImage = ({imageUri}: IZoomImage) => {
           enablePreload={true}
           enableSwipeDown
           renderIndicator={() => null}
-          onSwipeDown={() => setIsOpenImageView(false)}
+          onSwipeDown={handleClose}
           enableImageZoom={true}
         />
       </Modal>

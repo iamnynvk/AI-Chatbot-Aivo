@@ -45,7 +45,11 @@ const ProfileHeader = () => {
             <Text style={styles.userNameText}>
               {authUser?.fullName ? authUser?.fullName : LABELS.USER}
             </Text>
-            <Text style={styles.freeAccountText}>{LABELS.FREE_ACCOUNT}</Text>
+            <Text style={styles.freeAccountText}>
+              {authUser?.plan == null
+                ? LABELS.FREE_ACCOUNT
+                : LABELS.PREMIUM_ACCOUNT}
+            </Text>
           </View>
         </View>
         <View style={styles.menuContainer}>

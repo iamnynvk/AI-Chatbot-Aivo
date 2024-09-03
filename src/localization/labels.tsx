@@ -52,6 +52,13 @@ export const LABELS = {
   AI_ASSISTANTS: 'AI Assistants',
   AI_AIVO: 'AI Aivo',
   SEE_ALL: 'See all',
+  PROFILE: 'Profile',
+  EDIT: 'Edit',
+  EMAIL_LABEL: 'Email',
+  THEME: 'Theme',
+  SYSTEM_DEFAULT: 'System Default',
+  CHANGE_PASSWORD: 'Change Password',
+  SEND_FEEDBACK: 'Send Feedback',
 };
 
 export const STATIC_MESSAGE = {

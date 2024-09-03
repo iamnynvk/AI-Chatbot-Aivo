@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import Voice from '@react-native-voice/voice';
+import LottieView from 'lottie-react-native';
+import {useNavigation} from '@react-navigation/native';
 import {AnimatePresence, MotiImage, MotiView} from 'moti';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useAppContext from '../context/useAppContext';
 import Header from '../components/Header/Header';
-import {FONT, images} from '../constants';
-import {Text} from 'react-native';
-import {STATIC_MESSAGE} from '../localization/labels';
-import LottieView from 'lottie-react-native';
-import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../routes/routes';
+import {FONT, images} from '../constants';
+import {STATIC_MESSAGE} from '../localization/labels';
 import {requestMicrophonePermission} from '../utils/AskPermission';
 
 const Chat = ({route}: any) => {
