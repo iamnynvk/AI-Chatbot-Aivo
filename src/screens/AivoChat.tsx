@@ -202,7 +202,8 @@ const AivoChat = ({route}: any) => {
   return (
     <View style={styles.container}>
       <Header
-        isBack={true}
+        isBack={route?.params?.title}
+        isLogo={!route?.params?.title}
         title={
           route?.params?.title ? route?.params?.title : LABELS.CHAT_WITH_AIVO
         }
