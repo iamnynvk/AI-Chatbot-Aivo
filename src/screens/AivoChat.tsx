@@ -250,7 +250,7 @@ const getStyles = ({theme}: any) => ({
   messageContainer: {
     flex: 1,
     borderTopWidth: 1,
-    borderColor: theme.inputColor,
+    borderColor: theme?.inputColor,
   },
   customDown: {
     justifyContent: 'center',
@@ -259,7 +259,7 @@ const getStyles = ({theme}: any) => ({
   },
   inputContainerStyle: {
     backgroundColor: theme?.backgroundColor,
-    borderColor: theme.inputColor,
+    borderColor: theme?.inputColor,
     borderTopWidth: 1,
     minHeight: wp(12),
   },

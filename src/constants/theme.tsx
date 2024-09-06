@@ -28,6 +28,7 @@ export const color: any = {
     dropDownColor: '#070911',
     lightWhite: '#e1e1e1',
     voiceLine: '#d742bf',
+    feedbackText: '#e1e1e1',
   },
   dark: {
     backgroundColor: '#000000',
@@ -49,6 +50,7 @@ export const color: any = {
     dropDownColor: '#070911',
     lightWhite: '#e1e1e1',
     voiceLine: '#d742bf',
+    feedbackText: '#a8a8a8',
   },
 };
 

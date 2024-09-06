@@ -1,5 +1,5 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -19,7 +19,7 @@ import List from '../components/List/List';
 
 const Profile = () => {
   const navigation: any = useNavigation();
-  const {theme, authUser}: any = useAppContext();
+  const {theme, authUser, themeMode}: any = useAppContext();
   const styles: any = getStyles({theme});
   const refRBSheet: any = useRef();
   const [isZoomVisible, setIsZoomVisible] = useState<boolean>(false);
@@ -83,7 +83,7 @@ const Profile = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Header
         isLogo={true}
         title={LABELS.PROFILE}
@@ -141,15 +141,28 @@ const Profile = () => {
         <View style={styles.detailContainer}>
           <List label={LABELS?.EMAIL_LABEL} title={authUser?.email} />
           <List
-            label={LABELS?.THEME}
-            title={'System Default'}
-            onPress={() => navigation?.navigate(ROUTES?.SETTING)}
+            label={LABELS?.DARK_MODE}
+            title={themeMode?.label}
+            onPress={() =>
+              navigation?.navigate(ROUTES?.SETTING, {
+                title: LABELS?.DARK_MODE,
+              })
+            }
           />
           <List
             label={LABELS?.CHANGE_PASSWORD}
             onPress={() => navigation?.navigate(ROUTES?.CHANGE_PASSWORD)}
           />
           <List label={LABELS?.SEND_FEEDBACK} onPress={requestInAppReview} />
+        </View>
+
+        <View style={styles.appInfoContainer}>
+          <Text style={styles.appInfoText}>
+            {LABELS.AIVO_CHATBOT} - {LABELS.VERSION} {'0.0.1'}
+          </Text>
+          <Text style={styles.appInfoText}>
+            {LABELS.TERM_OF_USE} | {LABELS.PRIVACY_POLICY}
+          </Text>
         </View>
       </View>
 
@@ -187,7 +200,7 @@ const Profile = () => {
           </View>
         </View>
       </BottomSheets>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -210,14 +223,14 @@ const getStyles = ({theme}: any) => ({
     position: 'absolute',
     bottom: wp(0),
     right: wp(-2),
-    backgroundColor: theme.backgroundColor,
+    backgroundColor: theme?.backgroundColor,
     borderRadius: wp(20),
   },
   imageStyles: {
-    height: wp(30),
-    width: wp(30),
+    height: wp(34),
+    width: wp(34),
     alignSelf: 'center',
-    borderRadius: wp(15),
+    borderRadius: wp(17),
   },
   midContainer: {
     alignItems: 'center',
@@ -276,6 +289,17 @@ const getStyles = ({theme}: any) => ({
   },
   detailContainer: {
     marginTop: wp(6),
+  },
+  appInfoContainer: {
+    position: 'absolute',
+    bottom: wp(2),
+    alignSelf: 'center',
+  },
+  appInfoText: {
+    marginHorizontal: wp(4),
+    color: theme?.feedbackText,
+    fontFamily: FONT.notoSansMedium,
+    fontSize: wp(3.4),
   },
 });
 

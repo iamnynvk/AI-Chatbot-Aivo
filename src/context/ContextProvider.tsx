@@ -10,12 +10,15 @@ import {
   signUpWithEmailPassword,
 } from '../utils/Firebase';
 import {firebase} from '@react-native-firebase/auth';
+import {getValueInAsync} from '../utils/AsyncStorage';
+import {LABELS} from '../localization/labels';
 
 export const AppContext = createContext({});
 
 export const ContextProvider = ({children}: any) => {
   const systemScheme = Appearance.getColorScheme();
   const [colorScheme, setColorScheme] = useState<any>(systemScheme);
+  const [themeMode, setThemeMode] = useState('');
   const theme: any = color[colorScheme];
   const [authUser, setAuthUser] = useState<any>();
   const [feedBack, setFeedBack] = useState({
@@ -35,6 +38,8 @@ export const ContextProvider = ({children}: any) => {
         setFeedBack,
         authUser,
         setAuthUser,
+        themeMode,
+        setThemeMode,
         signUpUser: async (email: string, password: string) => {
           try {
             const confirmation: any = await signUpWithEmailPassword(
@@ -63,7 +68,14 @@ export const ContextProvider = ({children}: any) => {
         fetchCurrentUserData: async () => {
           try {
             const userCollection: any = await getUserData(authUser?.uid);
+            const getUserThemeMode: any = await getValueInAsync(
+              LABELS?.DARK_MODE,
+            );
+            setThemeMode(getUserThemeMode);
             setAuthUser(userCollection?._data);
+            if (getUserThemeMode?.value != 'default') {
+              setColorScheme(getUserThemeMode?.value);
+            }
           } catch (e) {
             handleAuthError(e, (message: any) => {
               Alert.alert('Aivo', message);
@@ -88,8 +100,8 @@ export const ContextProvider = ({children}: any) => {
           feedBack?.type === FEEDBACK.SUCCESS
             ? COLORS.lightGreen
             : feedBack?.type === FEEDBACK.ERROR
-            ? COLORS.danger
-            : theme.backgroundColor
+            ? COLORS?.danger
+            : theme?.backgroundColor
         }
         barStyle={
           colorScheme === MODE.DARK || feedBack?.type === FEEDBACK.SUCCESS

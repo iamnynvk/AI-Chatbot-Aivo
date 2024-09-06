@@ -16,7 +16,7 @@ const FeaturesList = ({data}: any) => {
       <View style={styles.iconContainer}>
         <MaterialCommunityIcons
           name={data?.item?.image}
-          color={theme.textColor}
+          color={theme?.textColor}
           size={wp(5.6)}
         />
       </View>

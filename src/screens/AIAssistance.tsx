@@ -33,16 +33,16 @@ const AIAssistance = () => {
         style={[
           styles.item,
           {
-            backgroundColor: isSelected ? theme.tagColor : theme.borderColor,
+            backgroundColor: isSelected ? theme?.tagColor : theme?.borderColor,
             borderWidth: 1,
-            borderColor: isSelected ? theme.tagColor : theme.borderColor,
+            borderColor: isSelected ? theme?.tagColor : theme?.borderColor,
           },
         ]}
         onPress={() => handlePress(item)}>
         <Text
           style={{
             fontSize: wp(3.4),
-            color: isSelected ? theme?.backgroundColor : theme.backColor,
+            color: isSelected ? theme?.backgroundColor : theme?.backColor,
             fontFamily: isSelected ? FONT.notoSansBold : FONT.notoSansSemiBold,
           }}>
           {item.title}

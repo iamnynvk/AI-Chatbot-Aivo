@@ -35,10 +35,7 @@ const List = ({label, title, onPress}: any) => {
         </View>
       </View>
       {LABELS?.SEND_FEEDBACK == label && (
-        <Text
-          style={
-            styles.feedbackText
-          }>{`Chatbot AI can make mistakes, Consider checking important information and send us your feedback`}</Text>
+        <Text style={styles.feedbackText}>{LABELS.FEEDBACK_MESSAGE}</Text>
       )}
     </React.Fragment>
   );
@@ -76,7 +73,7 @@ const getStyles = ({theme}: any) => ({
   },
   feedbackText: {
     marginHorizontal: wp(4),
-    color: theme?.lightWhite,
+    color: theme?.feedbackText,
     fontFamily: FONT.notoSansMedium,
     fontSize: wp(3.1),
   },

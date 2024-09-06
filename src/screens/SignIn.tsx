@@ -240,7 +240,7 @@ const getStyles = ({theme}: any) => ({
     fontSize: wp(3.6),
   },
   register: {
-    color: theme.link,
+    color: theme?.link,
     fontFamily: FONT.notoSansExtraBold,
   },
 });

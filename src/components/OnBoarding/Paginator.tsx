@@ -91,12 +91,12 @@ const getStyles = ({theme}: any) => ({
   },
   skipButtonStyles: {
     fontFamily: FONT.notoSansBold,
-    color: theme.textColor,
+    color: theme?.textColor,
   },
   animatedDot: {
     height: wp(2),
     borderRadius: wp(2),
-    backgroundColor: theme.secondaryColor,
+    backgroundColor: theme?.secondaryColor,
     marginHorizontal: wp(1),
   },
   NextContainer: {
@@ -104,12 +104,12 @@ const getStyles = ({theme}: any) => ({
     height: '100%',
     borderTopLeftRadius: wp(4),
     borderBottomLeftRadius: wp(4),
-    backgroundColor: theme.secondaryColor,
+    backgroundColor: theme?.secondaryColor,
     justifyContent: 'center',
     alignItems: 'center',
   },
   nextButtonStyles: {
-    color: theme.wrapperColor,
+    color: theme?.wrapperColor,
     fontFamily: FONT.notoSansBold,
   },
   pagingDot: {

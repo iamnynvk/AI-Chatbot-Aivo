@@ -259,7 +259,7 @@ const getStyles = ({theme}: any) => ({
     borderRadius: wp(10),
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: theme.inputColor,
+    borderColor: theme?.inputColor,
   },
   center: {
     alignItems: 'center',

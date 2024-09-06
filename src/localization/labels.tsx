@@ -60,6 +60,19 @@ export const LABELS = {
   CHANGE_PASSWORD: 'Change Password',
   SEND_FEEDBACK: 'Send Feedback',
   CHAT_WITH_AIVO: 'Chat With Aivo',
+  AIVO_CHATBOT: 'Aivo Chatbot',
+  VERSION: 'Version',
+  TERM_OF_USE: 'Term of use',
+  PRIVACY_POLICY: 'Privacy policy',
+  FEEDBACK_MESSAGE:
+    'Chatbot AI can make mistakes, Consider checking important information and send us your feedback',
+  SETTING: 'Setting',
+  PREFERENCES: 'Preferences',
+  DARK_MODE: 'Dark mode',
+  DARK_MODE_INSTRUCTION:
+    "We'll adjust your preference based on your device's system settings.",
+  OFF: 'Off',
+  ON: 'On',
 };
 
 export const STATIC_MESSAGE = {

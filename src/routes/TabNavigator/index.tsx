@@ -81,7 +81,7 @@ const TabNavigation = () => {
                             : 'person'
                         }
                         size={wp(6)}
-                        color={theme.backgroundColor}
+                        color={theme?.backgroundColor}
                         style={styles.focusTabStyles}
                       />
                     );
@@ -117,21 +117,21 @@ const TabNavigation = () => {
 const getStyles = ({theme}: any) => ({
   tabStyles: {
     // Styles-1
-    // backgroundColor: theme.inputColor,
+    // backgroundColor: theme?.inputColor,
     // borderWidth: 0,
-    // borderColor: theme.inputColor,
+    // borderColor: theme?.inputColor,
     // elevation: 0,
     // height: wp(16),
     // borderRadius: wp(4),
 
     // Styles-2
-    backgroundColor: theme.backgroundColor,
-    borderColor: theme.inputColor,
+    backgroundColor: theme?.backgroundColor,
+    borderColor: theme?.inputColor,
     elevation: 0,
     height: wp(16),
   },
   focusTabStyles: {
-    backgroundColor: theme.textColor,
+    backgroundColor: theme?.textColor,
     padding: hp(1),
     borderRadius: wp(10),
   },

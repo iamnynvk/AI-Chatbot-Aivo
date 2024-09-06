@@ -311,7 +311,7 @@ const getStyles = ({theme}: any) => ({
   },
   heading: {
     marginTop: wp(2),
-    color: theme.textColor,
+    color: theme?.textColor,
     width: '90%',
     alignSelf: 'center',
     fontFamily: FONT.notoSansExtraBold,
@@ -328,7 +328,7 @@ const getStyles = ({theme}: any) => ({
     position: 'absolute',
     bottom: 0,
     right: 0,
-    backgroundColor: theme.backgroundColor,
+    backgroundColor: theme?.backgroundColor,
     borderRadius: wp(20),
   },
   imageStyles: {
@@ -367,7 +367,7 @@ const getStyles = ({theme}: any) => ({
     fontSize: wp(3.6),
   },
   register: {
-    color: theme.link,
+    color: theme?.link,
     fontWeight: 'bold',
   },
   sheetContainer: {
