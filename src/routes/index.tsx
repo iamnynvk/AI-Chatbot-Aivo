@@ -19,7 +19,7 @@ import TabNavigation from './TabNavigator';
 import Setting from '../screens/Setting';
 import AivoChat from '../screens/AivoChat';
 import Chat from '../screens/Chat';
-import EditProfile from '../screens/EditProfile';
+import ChangePassword from '../screens/ChangePassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -118,7 +118,11 @@ const index = () => {
             component={Setting}
             options={{animation: 'fade_from_bottom', presentation: 'modal'}}
           />
-          <Stack.Screen name={ROUTES.EDIT_PROFILE} component={EditProfile} />
+          <Stack.Screen
+            name={ROUTES.CHANGE_PASSWORD}
+            component={ChangePassword}
+            options={{animation: 'fade_from_bottom', presentation: 'modal'}}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
