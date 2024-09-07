@@ -19,7 +19,7 @@ export const AppContext = createContext({});
 export const ContextProvider = ({children}: any) => {
   const systemScheme = Appearance.getColorScheme();
   const [colorScheme, setColorScheme] = useState<any>(systemScheme);
-  const [themeMode, setThemeMode] = useState('');
+  const [themeMode, setThemeMode] = useState<any>('');
   const theme: any = color[colorScheme];
   const [authUser, setAuthUser] = useState<any>();
   const [appInfo, setAppInfo] = useState<any>();
@@ -71,13 +71,22 @@ export const ContextProvider = ({children}: any) => {
         fetchCurrentUserData: async () => {
           try {
             const userCollection: any = await getUserData(authUser?.uid);
+            setAuthUser(userCollection?._data);
+            // Configure theme modes
             const getUserThemeMode: any = await getValueInAsync(
               LABELS?.DARK_MODE,
             );
-            setThemeMode(getUserThemeMode);
-            setAuthUser(userCollection?._data);
-            if (getUserThemeMode?.value != 'default') {
-              setColorScheme(getUserThemeMode?.value);
+            if (
+              getUserThemeMode == null ||
+              getUserThemeMode?.value == undefined
+            ) {
+              setThemeMode({label: 'System Default', value: 'default'});
+              setColorScheme(systemScheme);
+            } else {
+              if (getUserThemeMode?.value != 'default') {
+                setColorScheme(getUserThemeMode?.value);
+              }
+              setThemeMode(getUserThemeMode);
             }
           } catch (e) {
             handleAuthError(e, (message: any) => {
