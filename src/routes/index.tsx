@@ -5,7 +5,7 @@ import auth from '@react-native-firebase/auth';
 // Imports
 import {ROUTES} from './routes';
 import {getValueInAsync} from '../utils/AsyncStorage';
-import {ON_BOARDING_BUTTON} from '../enums';
+import {COLLECTIONS, DOC_NAME, ON_BOARDING_BUTTON} from '../enums';
 import NavigationService from './NavigationService';
 import useAppContext from '../context/useAppContext';
 // Screens
@@ -24,17 +24,19 @@ import ChangePassword from '../screens/ChangePassword';
 const Stack = createNativeStackNavigator();
 
 const index = () => {
-  const {theme, setAuthUser, fetchCurrentUserData}: any = useAppContext();
+  const {theme, setAuthUser, fetchCurrentUserData, getCollectionData}: any =
+    useAppContext();
   const [initializing, setInitializing] = useState<boolean>(true);
   const [user, setUser] = useState();
   const [isSeenIntro, setIsSeenIntro] = useState<any>(null);
 
   // Actions
-  function onAuthStateChanged(user: any) {
+  async function onAuthStateChanged(user: any) {
     setUser(user);
     setAuthUser(user);
     if (user?.email) {
-      fetchCurrentUserData();
+      await fetchCurrentUserData();
+      await getCollectionData(COLLECTIONS?.AIVO, DOC_NAME?.APP_INFO);
     }
     if (initializing) setInitializing(false);
   }

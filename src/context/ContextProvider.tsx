@@ -2,8 +2,9 @@ import {createContext, useState} from 'react';
 import {Alert, Appearance, StatusBar} from 'react-native';
 // Imports
 import {color, COLORS} from '../constants';
-import {FEEDBACK, MODE} from '../enums';
+import {COLLECTIONS, FEEDBACK, MODE} from '../enums';
 import {
+  getCollectedData,
   getUserData,
   handleAuthError,
   signInWithEmailPassword,
@@ -21,6 +22,7 @@ export const ContextProvider = ({children}: any) => {
   const [themeMode, setThemeMode] = useState('');
   const theme: any = color[colorScheme];
   const [authUser, setAuthUser] = useState<any>();
+  const [appInfo, setAppInfo] = useState<any>();
   const [feedBack, setFeedBack] = useState({
     show: false,
     message: '',
@@ -36,6 +38,7 @@ export const ContextProvider = ({children}: any) => {
         theme,
         feedBack,
         setFeedBack,
+        appInfo,
         authUser,
         setAuthUser,
         themeMode,
@@ -82,6 +85,15 @@ export const ContextProvider = ({children}: any) => {
             });
             return e;
           }
+        },
+        getCollectionData: async (collectionName: string, docName?: string) => {
+          try {
+            const collectionData: any = await getCollectedData(
+              collectionName,
+              docName,
+            );
+            setAppInfo(collectionData);
+          } catch (error) {}
         },
         sendResetLink: async (email: string) => {
           try {

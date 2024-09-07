@@ -41,8 +41,8 @@ const Setting = ({route}: any) => {
         title={route?.params?.title ?? LABELS?.PREFERENCES}
       />
       <View style={styles.renderModeContainer}>
-        {options.map(option => (
-          <View style={styles.labelContainer}>
+        {options.map((option: any, index: any) => (
+          <View style={styles.labelContainer} key={index}>
             <Text style={styles.labelStyle}>{option?.label}</Text>
             <RadioButton
               color={theme?.senderChatColor}
@@ -83,7 +83,7 @@ const getStyles = ({theme}: any) => ({
     marginTop: wp(2),
     fontSize: wp(3),
     fontFamily: FONT?.notoSansRegular,
-    color: theme?.textColor,
+    color: theme?.feedbackText,
   },
 });
 

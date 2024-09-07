@@ -1,5 +1,5 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Linking, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -19,7 +19,7 @@ import List from '../components/List/List';
 
 const Profile = () => {
   const navigation: any = useNavigation();
-  const {theme, authUser, themeMode}: any = useAppContext();
+  const {theme, authUser, themeMode, appInfo}: any = useAppContext();
   const styles: any = getStyles({theme});
   const refRBSheet: any = useRef();
   const [isZoomVisible, setIsZoomVisible] = useState<boolean>(false);
@@ -121,21 +121,25 @@ const Profile = () => {
               ? `You’ve got ${authUser?.credit ?? '0'} credits available!`
               : `278 days of Premium perks left. Keep exploring!`}
           </Text>
-          <View style={styles.purchaseContainer}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() =>
+              authUser?.subscription == null &&
+              navigation?.navigate(ROUTES?.INAPPPURCHASE)
+            }
+            style={styles.purchaseContainer}>
             <Ionicons
               name={authUser?.subscription == null ? 'sparkles' : 'rocket'}
               size={wp(5)}
               color={theme?.wrapperColor}
               style={{marginHorizontal: wp(1)}}
             />
-            <Text
-              style={styles.freeAccountText}
-              onPress={() => navigation?.navigate(ROUTES?.INAPPPURCHASE)}>
+            <Text style={styles.freeAccountText}>
               {authUser?.subscription == null
                 ? LABELS.FREE_ACCOUNT
                 : LABELS.PREMIUM_ACCOUNT}
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.detailContainer}>
@@ -160,9 +164,18 @@ const Profile = () => {
           <Text style={styles.appInfoText}>
             {LABELS.AIVO_CHATBOT} - {LABELS.VERSION} {'0.0.1'}
           </Text>
-          <Text style={styles.appInfoText}>
-            {LABELS.TERM_OF_USE} | {LABELS.PRIVACY_POLICY}
-          </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={styles.appInfoText}
+              onPress={() => Linking.openURL(appInfo?.termAndCondition)}>
+              {LABELS.TERM_OF_USE} |
+            </Text>
+            <Text
+              style={styles.appInfoText}
+              onPress={() => Linking.openURL(appInfo?.privacyPolicy)}>
+              {` ${LABELS.PRIVACY_POLICY}`}
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -296,7 +309,6 @@ const getStyles = ({theme}: any) => ({
     alignSelf: 'center',
   },
   appInfoText: {
-    marginHorizontal: wp(4),
     color: theme?.feedbackText,
     fontFamily: FONT.notoSansMedium,
     fontSize: wp(3.4),

@@ -13,6 +13,7 @@ export const ON_BOARDING_BUTTON: any = {
 };
 
 export const COLLECTIONS: any = {
+  AIVO: 'Aivo',
   USERS: 'Users',
   PROFILE: 'Profile',
   AIVO_CHAT: 'AivoChat',
@@ -45,6 +46,10 @@ export const COLLECTIONS: any = {
   NUTRITION_PLANNING: 'NutritionPlanningChat',
   TRAVEL_PLANNING: 'TravelPlanningChat',
   LANGUAGE_TRANSLATIONS: 'LanguageTranslationChat',
+};
+
+export const DOC_NAME: any = {
+  APP_INFO: 'appInfo',
 };
 
 export const FEEDBACK: any = {

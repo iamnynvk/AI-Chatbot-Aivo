@@ -117,6 +117,21 @@ export const signInWithEmailPassword = async (
   });
 };
 
+export const getCollectedData = async (
+  collectionName: string,
+  docName?: string,
+) => {
+  try {
+    const collection = docName
+      ? await db.collection(collectionName).doc(docName).get()
+      : await db.collection(collectionName).get();
+    return docName ? collection?._data : collection;
+  } catch (error) {
+    console.log('Error while get User data -', error);
+    return error;
+  }
+};
+
 export const getUserData = async (userId: any) => {
   const getUserDataTrack = perf().startTrace('getUserData-Track');
   (await getUserDataTrack).start();
