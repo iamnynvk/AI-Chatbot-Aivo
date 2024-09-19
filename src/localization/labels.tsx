@@ -32,6 +32,7 @@ export const LABELS = {
   REGISTER: 'Register Here',
   PLACEHOLDER_FULL_NAME: 'Enter the full name',
   EMAIL: 'Enter the email address',
+  PHONE_NUMBER: 'Enter the mobile number',
   PLACEHOLDER_CONFIRM_PASSWORD: 'Confirm Password',
   HAVE_ALREADY_ACCOUNT: 'Have already an account?',
   SIGN_IN: 'Sign In',

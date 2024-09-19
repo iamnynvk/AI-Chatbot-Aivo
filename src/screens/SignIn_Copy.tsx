@@ -19,10 +19,14 @@ import {LABELS} from '../localization/labels';
 import {IToggle} from '../types';
 import {createUser} from '../utils/Firebase';
 import {ROUTES} from '../routes/routes';
+import {Dropdown} from 'react-native-element-dropdown';
+import {PROFESSION} from '../../assets/data';
+import {SCREEN_WIDTH} from '../constants/theme';
 
 const SignUp = () => {
   const emailRef: any = useRef();
   const phoneRef: any = useRef();
+  const dropRef: any = useRef();
   const passwordRef: any = useRef();
   const confirmPassRef: any = useRef();
   const refRBSheet: any = useRef();
@@ -31,6 +35,8 @@ const SignUp = () => {
   const styles: any = getStyles({theme});
   const [profileImage, setProfileImage] = useState<any>(null);
   const [activeInputField, setActiveInputField] = useState('');
+  const [isFocus, setIsFocus] = useState(false);
+
   const [handleToggle, setHandleToggle] = useState<IToggle>({
     loading: false,
     isClick: false,
@@ -97,6 +103,7 @@ const SignUp = () => {
         fullName: '',
         email: '',
         phoneNumber: '',
+        profession: '',
         password: '',
         confirmPassword: '',
       }}
@@ -104,6 +111,7 @@ const SignUp = () => {
       validationSchema={signUpValidation}
       onSubmit={(values: any) => signUpHandler(values)}>
       {({
+        setFieldValue,
         handleChange,
         handleBlur,
         handleSubmit,
@@ -211,6 +219,70 @@ const SignUp = () => {
             {touched.phoneNumber && errors.phoneNumber ? (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{errors.phoneNumber}</Text>
+              </View>
+            ) : (
+              <View style={styles.errorContainer}>
+                <Text></Text>
+              </View>
+            )}
+
+            <Dropdown
+              ref={dropRef}
+              style={{
+                borderWidth: 1,
+                borderColor:
+                  activeInputField == 'profession'
+                    ? theme?.lightBorder
+                    : theme?.borderLines,
+                width: SCREEN_WIDTH / 1.2,
+                height: wp(12),
+                borderRadius: wp(2.4),
+                paddingHorizontal: 12,
+                marginTop: wp(4),
+                backgroundColor: theme?.inputColor,
+              }}
+              data={PROFESSION}
+              placeholderStyle={{
+                color: theme?.lightTextColor,
+                fontSize: wp(3.8),
+              }}
+              itemTextStyle={{
+                color: theme?.textColor,
+                fontSize: wp(3.8),
+              }}
+              autoScroll
+              containerStyle={{
+                borderRadius: wp(2.4),
+              }}
+              fontFamily={FONT.notoSansMedium}
+              selectedTextStyle={{
+                color: theme?.textColor,
+                fontSize: wp(3.8),
+              }}
+              search
+              labelField="ProfessionName"
+              valueField="ID"
+              placeholder={'Select your profession'}
+              searchPlaceholder="Search profession"
+              inputSearchStyle={{
+                color: theme?.lightTextColor,
+                fontSize: wp(3.8),
+                borderRadius: wp(2.4),
+              }}
+              value={values.profession}
+              onFocus={() => setActiveInputField('profession')}
+              onBlur={() => {
+                handleBlur('profession');
+                setActiveInputField('');
+              }}
+              onChange={(item: any) => {
+                setFieldValue('profession', item.ID);
+                setActiveInputField('');
+              }}
+            />
+            {touched.profession && errors.profession ? (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{errors.profession}</Text>
               </View>
             ) : (
               <View style={styles.errorContainer}>
@@ -339,7 +411,6 @@ const getStyles = ({theme}: any) => ({
     backgroundColor: theme?.backgroundColor,
   },
   heading: {
-    marginTop: wp(2),
     color: theme?.textColor,
     width: '90%',
     alignSelf: 'center',
@@ -385,7 +456,7 @@ const getStyles = ({theme}: any) => ({
     fontFamily: FONT.notoSansRegular,
   },
   userInputContainer: {
-    marginTop: wp(5),
+    marginTop: wp(4),
     justifyContent: 'center',
     alignItems: 'center',
   },
