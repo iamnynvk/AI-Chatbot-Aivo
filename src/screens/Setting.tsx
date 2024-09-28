@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, Linking} from 'react-native';
+import React, {useRef} from 'react';
+import {View, Text, Linking, Share} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import InAppReview from 'react-native-in-app-review';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
@@ -11,11 +11,15 @@ import List from '../components/List/List';
 import {LABELS} from '../localization/labels';
 import {ROUTES} from '../routes/routes';
 import {FONT} from '../constants';
+import {Alert} from 'react-native';
+import {FEEDBACK} from '../enums';
+import BottomSheets from '../components/BottomSheet/BottomSheets';
 
 const Setting = () => {
   const navigation: any = useNavigation();
-  const {theme, authUser, themeMode, appInfo}: any = useAppContext();
+  const {theme, setFeedBack, themeMode, appInfo}: any = useAppContext();
   const styles: any = getStyles({theme});
+  const refRBSheet: any = useRef<any>();
 
   const requestInAppReview = () => {
     if (InAppReview.isAvailable()) {
@@ -29,6 +33,20 @@ const Setting = () => {
         .catch(error => {
           console.log('In-App review flow failed:', error);
         });
+    }
+  };
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: 'www.google.com',
+      });
+    } catch (error: any) {
+      setFeedBack({
+        show: true,
+        message: error,
+        type: FEEDBACK.ERROR,
+      });
     }
   };
 
@@ -48,9 +66,12 @@ const Setting = () => {
           title={themeMode?.label}
           onPress={() => navigation?.navigate(ROUTES?.MODE)}
         />
-        <List label={LABELS.SHARE} onPress={() => {}} />
+        <List label={LABELS.SHARE} onPress={onShare} />
         <List label={LABELS?.RATE_APP} onPress={requestInAppReview} />
-        <List label={LABELS?.SEND_FEEDBACK} onPress={() => {}} />
+        <List
+          label={LABELS?.SEND_FEEDBACK}
+          onPress={() => refRBSheet?.current?.open()}
+        />
       </View>
       <View style={styles.appInfoContainer}>
         <Text style={styles.appInfoText}>
@@ -70,6 +91,10 @@ const Setting = () => {
           </Text>
         </View>
       </View>
+
+      <BottomSheets refs={refRBSheet} sheetHeight={'75%'}>
+        <View style={styles.sheetContainer}></View>
+      </BottomSheets>
     </View>
   );
 };
@@ -101,6 +126,7 @@ const getStyles = ({theme}: any) => ({
     fontFamily: FONT.notoSansMedium,
     fontSize: wp(3.4),
   },
+  sheetContainer: {},
 });
 
 export default Setting;

@@ -9,12 +9,24 @@ const BottomSheets = ({refs, children, sheetHeight}: any) => {
       ref={refs}
       openDuration={5000}
       closeOnDragDown={true}
+      closeOnPressBack={true}
+      draggable={true}
+      dragOnContent={true}
+      useNativeDriver={true}
       customStyles={{
         container: {
           borderTopEndRadius: 10,
           borderTopStartRadius: 10,
           height: sheetHeight,
-          backgroundColor: theme?.borderLines,
+          backgroundColor: theme?.backgroundColor,
+          shadowColor: theme?.textColor,
+          shadowOffset: {
+            width: 0,
+            height: 5,
+          },
+          shadowOpacity: 0.34,
+          shadowRadius: 6.27,
+          elevation: 10,
         },
         wrapper: {
           backgroundColor: 'transparent',
@@ -24,8 +36,7 @@ const BottomSheets = ({refs, children, sheetHeight}: any) => {
       customModalProps={{
         animationType: 'slide',
         statusBarTranslucent: true,
-      }}
-      closeOnPressBack={true}>
+      }}>
       {children}
     </RBSheet>
   );

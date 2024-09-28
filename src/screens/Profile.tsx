@@ -216,13 +216,8 @@ const Profile = () => {
                     style={styles.boxContainer}
                     activeOpacity={0.9}
                     onPress={() => onMediaPicker('camera')}>
-                    <Ionicons
-                      name="camera"
-                      size={30}
-                      color={theme?.wrapperColor}
-                    />
-                    <Text
-                      style={[styles.pickerText, {color: theme?.wrapperColor}]}>
+                    <Ionicons name="camera" size={30} color={theme?.link} />
+                    <Text style={[styles.pickerText, {color: theme?.link}]}>
                       {LABELS.CAMERA}
                     </Text>
                   </TouchableOpacity>
@@ -232,13 +227,8 @@ const Profile = () => {
                     style={styles.boxContainer}
                     activeOpacity={0.9}
                     onPress={() => onMediaPicker('gallery')}>
-                    <Ionicons
-                      name="image"
-                      size={30}
-                      color={theme?.wrapperColor}
-                    />
-                    <Text
-                      style={[styles.pickerText, {color: theme?.wrapperColor}]}>
+                    <Ionicons name="image" size={30} color={theme?.link} />
+                    <Text style={[styles.pickerText, {color: theme?.link}]}>
                       {LABELS.GALLERY}
                     </Text>
                   </TouchableOpacity>
