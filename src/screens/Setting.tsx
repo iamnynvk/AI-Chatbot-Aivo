@@ -1,59 +1,75 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import React from 'react';
+import {View, Text, Linking} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import InAppReview from 'react-native-in-app-review';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+// Import
+import ProfileCard from '../components/Profile/ProfileCard';
 import useAppContext from '../context/useAppContext';
 import Header from '../components/Header/Header';
+import List from '../components/List/List';
 import {LABELS} from '../localization/labels';
-import {RadioButton} from 'react-native-paper';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {ROUTES} from '../routes/routes';
 import {FONT} from '../constants';
-import {storeValueInAsync} from '../utils/AsyncStorage';
 
-const options = [
-  {label: 'On', value: 'dark'},
-  {label: 'Off', value: 'light'},
-  {label: 'System Default', value: 'default'},
-];
-
-const Setting = ({route}: any) => {
-  const {theme, systemScheme, setThemeMode, setColorScheme, themeMode}: any =
-    useAppContext();
+const Setting = () => {
+  const navigation: any = useNavigation();
+  const {theme, authUser, themeMode, appInfo}: any = useAppContext();
   const styles: any = getStyles({theme});
-  const [selectedMode, setSelectedMode] = useState(themeMode?.value);
 
-  useEffect(() => {
-    if (selectedMode == 'default') {
-      setColorScheme(systemScheme);
-    } else {
-      setColorScheme(selectedMode);
+  const requestInAppReview = () => {
+    if (InAppReview.isAvailable()) {
+      InAppReview.RequestInAppReview()
+        .then(hasFlowFinishedSuccessfully => {
+          console.log(
+            'In-App review flow finished successfully:',
+            hasFlowFinishedSuccessfully,
+          );
+        })
+        .catch(error => {
+          console.log('In-App review flow failed:', error);
+        });
     }
-  }, [selectedMode]);
-
-  const onSelectMode = async (mode: any) => {
-    setSelectedMode(mode?.value);
-    setThemeMode(mode);
-    await storeValueInAsync(LABELS?.DARK_MODE, mode);
   };
 
   return (
     <View style={styles.container}>
-      <Header
-        isBack={true}
-        title={route?.params?.title ?? LABELS?.PREFERENCES}
-      />
-      <View style={styles.renderModeContainer}>
-        {options.map((option: any, index: any) => (
-          <View style={styles.labelContainer} key={index}>
-            <Text style={styles.labelStyle}>{option?.label}</Text>
-            <RadioButton
-              color={theme?.senderChatColor}
-              value={option?.value}
-              status={option?.value === selectedMode ? 'checked' : 'unchecked'}
-              onPress={() => onSelectMode(option)}
-            />
-          </View>
-        ))}
+      <Header isLogo={true} title={LABELS.SETTING} />
+      <View style={styles.bodyContainer}>
+        <View style={styles.profileCardContainer}>
+          <ProfileCard />
+        </View>
+        <List
+          label={LABELS.UPGRADE}
+          onPress={() => navigation?.navigate(ROUTES.INAPPPURCHASE)}
+        />
+        <List
+          label={LABELS?.DARK_MODE}
+          title={themeMode?.label}
+          onPress={() => navigation?.navigate(ROUTES?.MODE)}
+        />
+        <List label={LABELS.SHARE} onPress={() => {}} />
+        <List label={LABELS?.RATE_APP} onPress={requestInAppReview} />
+        <List label={LABELS?.SEND_FEEDBACK} onPress={() => {}} />
       </View>
-      <Text style={styles.modeInstruction}>{LABELS.DARK_MODE_INSTRUCTION}</Text>
+      <View style={styles.appInfoContainer}>
+        <Text style={styles.appInfoText}>
+          {LABELS.AIVO_CHATBOT} - {LABELS.VERSION} {'0.0.1'}
+        </Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text
+            style={[styles.appInfoText, {color: theme?.link}]}
+            onPress={() => Linking.openURL(appInfo?.termAndCondition)}>
+            {LABELS.TERM_OF_USE}
+          </Text>
+          <Text style={styles.appInfoText}> | </Text>
+          <Text
+            style={[styles.appInfoText, {color: theme?.link}]}
+            onPress={() => Linking.openURL(appInfo?.privacyPolicy)}>
+            {LABELS.PRIVACY_POLICY}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -63,27 +79,27 @@ const getStyles = ({theme}: any) => ({
     flex: 1,
     backgroundColor: theme?.backgroundColor,
   },
-  renderModeContainer: {
-    marginTop: wp(2),
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  bodyContainer: {
+    flex: 1,
     paddingHorizontal: wp(2.5),
-    paddingVertical: wp(1),
   },
-  labelStyle: {
-    fontSize: wp(3.8),
-    fontFamily: FONT?.notoSansMedium,
-    color: theme?.textColor,
+  profileCardContainer: {
+    marginTop: wp(1),
   },
-  modeInstruction: {
+  headerTitle: {
+    fontFamily: FONT.notoSansBold,
+    textTransform: 'uppercase',
+    fontSize: wp(4),
+  },
+  appInfoContainer: {
+    position: 'absolute',
+    bottom: wp(2),
     alignSelf: 'center',
-    marginTop: wp(2),
-    fontSize: wp(3),
-    fontFamily: FONT?.notoSansRegular,
+  },
+  appInfoText: {
     color: theme?.feedbackText,
+    fontFamily: FONT.notoSansMedium,
+    fontSize: wp(3.4),
   },
 });
 

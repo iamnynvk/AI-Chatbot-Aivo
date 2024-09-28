@@ -14,13 +14,14 @@ import Header from '../components/Header/Header';
 // Imports
 import useAppContext from '../context/useAppContext';
 import {FONT, images} from '../constants';
-import {LABELS} from '../localization/labels';
+import {LABELS, STATIC_MESSAGE} from '../localization/labels';
 import {IToggle} from '../types';
 import {forgotPasswordValidation} from '../enums/validation';
 import {SCREEN_WIDTH} from '../constants/theme';
+import {FEEDBACK} from '../enums';
 
 const ForgotPassword = () => {
-  const {theme, sendResetLink}: any = useAppContext();
+  const {theme, sendResetLink, setFeedBack}: any = useAppContext();
   const styles: any = getStyles({theme});
   const emailRef: any = useRef();
   const navigation: any = useNavigation();
@@ -36,7 +37,11 @@ const ForgotPassword = () => {
       isClick: true,
     });
     await sendResetLink(values?.email);
-    Alert.alert('Aivo', 'Please check your email to reset your password.');
+    setFeedBack({
+      show: true,
+      message: STATIC_MESSAGE.FORGOT_PASSWORD,
+      type: FEEDBACK.SUCCESS,
+    });
     setHandleToggle({
       loading: false,
       isClick: false,

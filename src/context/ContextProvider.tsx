@@ -52,7 +52,11 @@ export const ContextProvider = ({children}: any) => {
             return confirmation;
           } catch (e: any) {
             handleAuthError(e, (message: any) => {
-              Alert.alert('Aivo', message);
+              setFeedBack({
+                show: true,
+                message: message,
+                type: FEEDBACK.ERROR,
+              });
             });
             return e;
           }
@@ -63,7 +67,11 @@ export const ContextProvider = ({children}: any) => {
             return confirmation;
           } catch (e) {
             handleAuthError(e, (message: any) => {
-              Alert.alert('Aivo', message);
+              setFeedBack({
+                show: true,
+                message: message,
+                type: FEEDBACK.ERROR,
+              });
             });
             return e;
           }
@@ -90,7 +98,11 @@ export const ContextProvider = ({children}: any) => {
             }
           } catch (e) {
             handleAuthError(e, (message: any) => {
-              Alert.alert('Aivo', message);
+              setFeedBack({
+                show: true,
+                message: message,
+                type: FEEDBACK.ERROR,
+              });
             });
             return e;
           }
@@ -109,7 +121,11 @@ export const ContextProvider = ({children}: any) => {
             await firebase.auth().sendPasswordResetEmail(email);
           } catch (e) {
             handleAuthError(e, (message: any) => {
-              Alert.alert('Aivo', message);
+              setFeedBack({
+                show: true,
+                message: message,
+                type: FEEDBACK.ERROR,
+              });
             });
             return e;
           }

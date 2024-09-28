@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import useAppContext from '../../context/useAppContext';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {FONT} from '../../constants';
@@ -10,7 +10,7 @@ const List = ({label, title, onPress}: any) => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
   return (
-    <React.Fragment>
+    <TouchableOpacity activeOpacity={1} onPress={onPress}>
       <View
         style={[
           styles.container,
@@ -37,7 +37,7 @@ const List = ({label, title, onPress}: any) => {
       {LABELS?.SEND_FEEDBACK == label && (
         <Text style={styles.feedbackText}>{LABELS.FEEDBACK_MESSAGE}</Text>
       )}
-    </React.Fragment>
+    </TouchableOpacity>
   );
 };
 
@@ -72,7 +72,8 @@ const getStyles = ({theme}: any) => ({
     alignSelf: 'flex-end',
   },
   feedbackText: {
-    marginHorizontal: wp(4),
+    marginHorizontal: wp(3),
+    textAlign: 'left',
     color: theme?.feedbackText,
     fontFamily: FONT.notoSansMedium,
     fontSize: wp(3.1),

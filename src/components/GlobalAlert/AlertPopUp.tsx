@@ -53,7 +53,7 @@ const AlertPopUp = () => {
         style={[
           styles.container,
           {top: IOS_DEVICE ? StatusBarManager.HEIGHT : 0},
-          feedBack.type === 'error' && styles.error,
+          feedBack.type === 'Error' && styles.error,
           {
             transform: [{translateY: slideAnimation}],
             top: IOS_DEVICE ? StatusBarManager.HEIGHT : 0,
@@ -61,7 +61,7 @@ const AlertPopUp = () => {
         ]}>
         <Image
           source={
-            feedBack?.type === 'error' ? images.img_error : images.img_success
+            feedBack?.type === 'Error' ? images.img_error : images.img_success
           }
           style={styles.icon}
           resizeMode="contain"

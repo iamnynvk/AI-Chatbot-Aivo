@@ -1,29 +1,38 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {Linking, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import ImagePicker from 'react-native-image-crop-picker';
-import InAppReview from 'react-native-in-app-review';
+import {Formik} from 'formik';
 // Imports
-import {logoutUser} from '../utils/Firebase';
+import {getAuthUserId, logoutUser, updateUser} from '../utils/Firebase';
 import useAppContext from '../context/useAppContext';
 import Header from '../components/Header/Header';
-import {LABELS} from '../localization/labels';
+import {LABELS, STATIC_MESSAGE} from '../localization/labels';
 import FastImage from 'react-native-fast-image';
-import {FONT, images} from '../constants';
+import {COLORS, FONT, images} from '../constants';
 import ZoomImage from '../components/ZoomImage/ZoomImage';
 import BottomSheets from '../components/BottomSheet/BottomSheets';
 import {ROUTES} from '../routes/routes';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import List from '../components/List/List';
+import {updateProfileValidation} from '../enums/validation';
+import InputText from '../components/TextInput/InputText';
+import {FEEDBACK} from '../enums';
+import SubmitButton from '../components/Button/SubmitButton';
+import {goBack} from '../routes/NavigationService';
 
 const Profile = () => {
   const navigation: any = useNavigation();
-  const {theme, authUser, themeMode, appInfo}: any = useAppContext();
+  const {theme, authUser, fetchCurrentUserData, setFeedBack}: any =
+    useAppContext();
   const styles: any = getStyles({theme});
+  const userId = getAuthUserId();
   const refRBSheet: any = useRef();
   const [isZoomVisible, setIsZoomVisible] = useState<boolean>(false);
+  const [activeInputField, setActiveInputField] = useState('');
   const [profileImage, setProfileImage] = useState<any>(authUser?.userImageUrl);
+  const [isLoadSignOut, setIsLoadSignOut] = useState(false);
+  const [isLoadUpdate, setIsLoadUpdate] = useState(false);
 
   // plan - Only plan name store in firebase.
   // Subscription - Subscription plan all the details are stored on firebase.
@@ -58,22 +67,25 @@ const Profile = () => {
     }
   }, []);
 
-  const requestInAppReview = () => {
-    if (InAppReview.isAvailable()) {
-      InAppReview.RequestInAppReview()
-        .then(hasFlowFinishedSuccessfully => {
-          console.log(
-            'In-App review flow finished successfully:',
-            hasFlowFinishedSuccessfully,
-          );
-        })
-        .catch(error => {
-          console.log('In-App review flow failed:', error);
-        });
-    }
+  const updateHandler = async (values: any) => {
+    setIsLoadUpdate(true);
+    const userCollection = {
+      fullName: values.fullName,
+      userImageUrl: profileImage,
+    };
+    await updateUser(userCollection, userId);
+    setFeedBack({
+      show: true,
+      message: STATIC_MESSAGE.PROFILE_UPDATE,
+      type: FEEDBACK.SUCCESS,
+    });
+    fetchCurrentUserData();
+    navigation?.goBack();
+    setIsLoadUpdate(false);
   };
 
-  const userLogOut = async () => {
+  const userSignOut = async () => {
+    setIsLoadSignOut(true);
     logoutUser().then(() => {
       navigation?.reset({
         index: 0,
@@ -83,137 +95,160 @@ const Profile = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Header
-        isLogo={true}
-        title={LABELS.PROFILE}
-        menuName={'log-out-outline'}
-        onMenuPress={userLogOut}
-      />
-      <View style={styles.bodyContainer}>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.photoContainer}
-          onPress={() => setIsZoomVisible(true)}>
-          <FastImage
-            source={profileImage ? {uri: profileImage} : images.img_user_logo}
-            resizeMode="cover"
-            style={styles.imageStyles}
-          />
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => refRBSheet.current.open()}
-            style={styles.openModelStyles}>
-            <Ionicons
-              name={'add-circle'}
-              size={wp(11)}
-              color={theme?.secondaryColor}
+    <Formik
+      initialValues={{
+        fullName: authUser?.fullName,
+        email: authUser?.email,
+      }}
+      validateOnMount={true}
+      validationSchema={updateProfileValidation}
+      onSubmit={(values: any) => updateHandler(values)}>
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        touched,
+        values,
+        isValid,
+        errors,
+      }: any) => {
+        const isSameName =
+          authUser?.fullName?.toLowerCase() === values?.fullName?.toLowerCase();
+        const isSameImage =
+          authUser?.userImageUrl?.toLowerCase() === profileImage?.toLowerCase();
+
+        return (
+          <View style={styles.container}>
+            <Header
+              isBack={true}
+              title={LABELS.PROFILE}
+              menuName={!isValid || (isSameName && isSameImage) ? '' : 'Done'}
+              menuStyles={{color: theme?.link}}
+              isLoading={isLoadUpdate}
+              onMenuPress={handleSubmit}
             />
-          </TouchableOpacity>
-        </TouchableOpacity>
+            <View style={styles.bodyContainer}>
+              <TouchableOpacity
+                activeOpacity={1}
+                style={styles.photoContainer}
+                onPress={() => setIsZoomVisible(true)}>
+                <FastImage
+                  source={
+                    profileImage ? {uri: profileImage} : images.img_user_logo
+                  }
+                  resizeMode="cover"
+                  style={styles.imageStyles}
+                />
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() => refRBSheet.current.open()}
+                  style={styles.openModelStyles}>
+                  <Ionicons
+                    name={'add-circle'}
+                    size={wp(11)}
+                    color={theme?.secondaryColor}
+                  />
+                </TouchableOpacity>
+              </TouchableOpacity>
 
-        <View style={styles.midContainer}>
-          <Text style={styles.userName}>
-            {authUser?.fullName ?? LABELS.USER}
-          </Text>
-          <Text style={styles.dayCalculation}>
-            {authUser?.subscription == null
-              ? `You’ve got ${authUser?.credit ?? '0'} credits available!`
-              : `278 days of Premium perks left. Keep exploring!`}
-          </Text>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() =>
-              authUser?.subscription == null &&
-              navigation?.navigate(ROUTES?.INAPPPURCHASE)
-            }
-            style={styles.purchaseContainer}>
-            <Ionicons
-              name={authUser?.subscription == null ? 'sparkles' : 'rocket'}
-              size={wp(5)}
-              color={theme?.wrapperColor}
-              style={{marginHorizontal: wp(1)}}
-            />
-            <Text style={styles.freeAccountText}>
-              {authUser?.subscription == null
-                ? LABELS.FREE_ACCOUNT
-                : LABELS.PREMIUM_ACCOUNT}
-            </Text>
-          </TouchableOpacity>
-        </View>
+              <View style={styles.midContainer}>
+                <Text style={styles.userName}>
+                  {authUser?.fullName ?? LABELS.USER}
+                </Text>
+                <View style={styles.emailContainer}>
+                  <Ionicons
+                    name="mail-outline"
+                    size={wp(4.6)}
+                    color={theme?.link}
+                    style={{alignSelf: 'flex-end'}}
+                  />
+                  <Text style={styles.email}>{`  ${
+                    authUser?.email ?? LABELS.EMAIL_LABEL
+                  }`}</Text>
+                </View>
+              </View>
 
-        <View style={styles.detailContainer}>
-          <List label={LABELS?.EMAIL_LABEL} title={authUser?.email} />
-          <List
-            label={LABELS?.DARK_MODE}
-            title={themeMode?.label}
-            onPress={() =>
-              navigation?.navigate(ROUTES?.SETTING, {
-                title: LABELS?.DARK_MODE,
-              })
-            }
-          />
-          <List
-            label={LABELS?.CHANGE_PASSWORD}
-            onPress={() => navigation?.navigate(ROUTES?.CHANGE_PASSWORD)}
-          />
-          <List label={LABELS?.SEND_FEEDBACK} onPress={requestInAppReview} />
-        </View>
+              <View style={styles.inputContainer}>
+                <InputText
+                  name={'fullName'}
+                  placeHolderText={'Enter the full name'}
+                  isSecure={false}
+                  onBlurInput={handleBlur('fullName')}
+                  onChange={handleChange('fullName')}
+                  values={values?.fullName}
+                  isTouch={touched.fullName}
+                  isError={touched.fullName && errors.fullName}
+                  activeInputField={activeInputField}
+                  setActiveInputField={setActiveInputField}
+                />
+                {touched.fullName && errors.fullName ? (
+                  <View style={styles.errorContainer}>
+                    <Text style={styles.errorText}>{errors.fullName}</Text>
+                  </View>
+                ) : (
+                  <View style={styles.errorContainer}>
+                    <Text></Text>
+                  </View>
+                )}
+              </View>
 
-        <View style={styles.appInfoContainer}>
-          <Text style={styles.appInfoText}>
-            {LABELS.AIVO_CHATBOT} - {LABELS.VERSION} {'0.0.1'}
-          </Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text
-              style={styles.appInfoText}
-              onPress={() => Linking.openURL(appInfo?.termAndCondition)}>
-              {LABELS.TERM_OF_USE} |
-            </Text>
-            <Text
-              style={styles.appInfoText}
-              onPress={() => Linking.openURL(appInfo?.privacyPolicy)}>
-              {` ${LABELS.PRIVACY_POLICY}`}
-            </Text>
+              <View style={styles.signOutContainer}>
+                <SubmitButton
+                  handleSubmitButton={userSignOut}
+                  isLoading={isLoadSignOut}
+                  title={LABELS.SIGN_OUT}
+                />
+              </View>
+            </View>
+
+            {isZoomVisible && (
+              <ZoomImage
+                isDirectOpen={isZoomVisible}
+                imageUri={profileImage}
+                onClose={() => setIsZoomVisible(false)}
+              />
+            )}
+
+            <BottomSheets refs={refRBSheet} sheetHeight={'12%'}>
+              <View style={styles.sheetContainer}>
+                <View style={styles.sheetBoxContainer}>
+                  <TouchableOpacity
+                    style={styles.boxContainer}
+                    activeOpacity={0.9}
+                    onPress={() => onMediaPicker('camera')}>
+                    <Ionicons
+                      name="camera"
+                      size={30}
+                      color={theme?.wrapperColor}
+                    />
+                    <Text
+                      style={[styles.pickerText, {color: theme?.wrapperColor}]}>
+                      {LABELS.CAMERA}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.sheetBoxContainer}>
+                  <TouchableOpacity
+                    style={styles.boxContainer}
+                    activeOpacity={0.9}
+                    onPress={() => onMediaPicker('gallery')}>
+                    <Ionicons
+                      name="image"
+                      size={30}
+                      color={theme?.wrapperColor}
+                    />
+                    <Text
+                      style={[styles.pickerText, {color: theme?.wrapperColor}]}>
+                      {LABELS.GALLERY}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </BottomSheets>
           </View>
-        </View>
-      </View>
-
-      {isZoomVisible && (
-        <ZoomImage
-          isDirectOpen={isZoomVisible}
-          imageUri={profileImage}
-          onClose={() => setIsZoomVisible(false)}
-        />
-      )}
-
-      <BottomSheets refs={refRBSheet} sheetHeight={'12%'}>
-        <View style={styles.sheetContainer}>
-          <View style={styles.sheetBoxContainer}>
-            <TouchableOpacity
-              style={styles.boxContainer}
-              activeOpacity={0.9}
-              onPress={() => onMediaPicker('camera')}>
-              <Ionicons name="camera" size={30} color={theme?.wrapperColor} />
-              <Text style={[styles.pickerText, {color: theme?.wrapperColor}]}>
-                {LABELS.CAMERA}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.sheetBoxContainer}>
-            <TouchableOpacity
-              style={styles.boxContainer}
-              activeOpacity={0.9}
-              onPress={() => onMediaPicker('gallery')}>
-              <Ionicons name="image" size={30} color={theme?.wrapperColor} />
-              <Text style={[styles.pickerText, {color: theme?.wrapperColor}]}>
-                {LABELS.GALLERY}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </BottomSheets>
-    </View>
+        );
+      }}
+    </Formik>
   );
 };
 
@@ -253,26 +288,13 @@ const getStyles = ({theme}: any) => ({
     fontSize: wp(5),
     fontFamily: FONT.notoSansBold,
   },
-  dayCalculation: {
-    marginTop: wp(2),
-    fontSize: wp(3.4),
-    fontFamily: FONT.notoSansMedium,
-    color: theme?.textColor,
-  },
-  purchaseContainer: {
-    backgroundColor: theme?.tagColor,
+  emailContainer: {
     flexDirection: 'row',
-    marginTop: wp(3),
-    paddingHorizontal: wp(2),
-    paddingVertical: wp(1.5),
-    alignSelf: 'center',
-    borderRadius: wp(10),
   },
-  freeAccountText: {
-    alignSelf: 'center',
-    fontSize: wp(3.4),
-    fontFamily: FONT.notoSansMedium,
-    color: theme?.wrapperColor,
+  email: {
+    fontFamily: FONT.notoSansRegular,
+    fontSize: wp(3.2),
+    color: theme?.lightTextColor,
   },
   sheetContainer: {
     flex: 1,
@@ -300,18 +322,27 @@ const getStyles = ({theme}: any) => ({
     color: theme?.textColor,
     fontSize: wp(3.6),
   },
-  detailContainer: {
-    marginTop: wp(6),
+  inputContainer: {
+    alignItems: 'center',
+    marginTop: wp(10),
   },
-  appInfoContainer: {
+  errorContainer: {
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    marginHorizontal: wp(8),
+    marginTop: wp(1),
+  },
+  errorText: {
+    fontSize: wp(3.3),
+    color: theme?.danger,
+    alignItems: 'center',
+    marginStart: wp(1),
+    fontFamily: FONT.notoSansRegular,
+  },
+  signOutContainer: {
     position: 'absolute',
-    bottom: wp(2),
     alignSelf: 'center',
-  },
-  appInfoText: {
-    color: theme?.feedbackText,
-    fontFamily: FONT.notoSansMedium,
-    fontSize: wp(3.4),
+    bottom: wp(10),
   },
 });
 

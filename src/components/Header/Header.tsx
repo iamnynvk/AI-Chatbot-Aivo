@@ -10,15 +10,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import useAppContext from '../../context/useAppContext';
 import {FONT, images} from '../../constants';
 import {LABELS} from '../../localization/labels';
+import {ActivityIndicator} from 'react-native-paper';
 
 const Header = ({
   isBack = false,
   isLogo = false,
   isClose = false,
+  isLoading = false,
   onClose,
   title,
   menuName,
   onMenuPress,
+  menuStyles = {},
 }: any) => {
   const {theme}: any = useAppContext();
   const navigation: any = useNavigation();
@@ -62,22 +65,21 @@ const Header = ({
         )}
       </View>
       <View style={styles.backContainer}>
-        <TouchableOpacity activeOpacity={0.8} onPress={onMenuPress}>
-          {menuName && title == LABELS.PROFILE && (
-            <Ionicons
-              name={menuName}
-              color={theme?.danger}
-              size={wp(7)}
-              style={{alignSelf: 'center', marginLeft: wp(7)}}
-            />
-          )}
-          {menuName && title != LABELS.PROFILE && (
-            <Text
-              style={styles.menuStyles}
-              numberOfLines={1}
-              ellipsizeMode="tail">
-              {menuName}
-            </Text>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={onMenuPress}
+          disabled={isLoading}>
+          {isLoading ? (
+            <ActivityIndicator size={'small'} color={theme?.link} />
+          ) : (
+            menuName && (
+              <Text
+                style={[styles.menuStyles, menuStyles]}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {menuName}
+              </Text>
+            )
           )}
         </TouchableOpacity>
       </View>

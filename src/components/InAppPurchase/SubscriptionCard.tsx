@@ -87,6 +87,14 @@ const getStyles = ({theme}: any) => ({
     borderRadius: wp(2),
     width: hp(12),
     alignItems: 'center',
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 1,
   },
   upgradeText: {
     fontFamily: FONT.notoSansRegular,

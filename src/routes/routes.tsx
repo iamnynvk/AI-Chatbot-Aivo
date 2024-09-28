@@ -13,5 +13,5 @@ export const ROUTES = {
   PROFILE: 'Profile',
   SETTING: 'Setting',
   AIVO_CHAT: 'AivoChat',
-  CHANGE_PASSWORD: 'ChangePassword',
+  MODE: 'Mode',
 };

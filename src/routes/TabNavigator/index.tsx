@@ -10,10 +10,10 @@ import {ROUTES} from '../routes';
 // Screens
 import Home from '../../screens/Home';
 import AivoChat from '../../screens/AivoChat';
-import Profile from '../../screens/Profile';
 import AIAssistance from '../../screens/AIAssistance';
 import History from '../../screens/History';
 import useAppContext from '../../context/useAppContext';
+import Setting from '../../screens/Setting';
 
 const TabNavigation = () => {
   const {theme}: any = useAppContext();
@@ -38,8 +38,8 @@ const TabNavigation = () => {
       component: History,
     },
     {
-      name: ROUTES.PROFILE,
-      component: Profile,
+      name: ROUTES.SETTING,
+      component: Setting,
     },
   ];
 
@@ -78,7 +78,7 @@ const TabNavigation = () => {
                             ? 'library'
                             : item?.name == ROUTES.CHAT
                             ? 'chatbubble'
-                            : 'person'
+                            : 'settings'
                         }
                         size={wp(6)}
                         color={theme?.backgroundColor}
@@ -98,7 +98,7 @@ const TabNavigation = () => {
                           ? 'library-outline'
                           : item?.name == ROUTES.CHAT
                           ? 'chatbubble-outline'
-                          : 'person-outline'
+                          : 'settings-outline'
                       }
                       size={wp(5)}
                       color={color}

@@ -22,7 +22,6 @@ import {ROUTES} from '../routes/routes';
 
 const SignUp = () => {
   const emailRef: any = useRef();
-  const phoneRef: any = useRef();
   const passwordRef: any = useRef();
   const confirmPassRef: any = useRef();
   const refRBSheet: any = useRef();
@@ -96,7 +95,6 @@ const SignUp = () => {
       initialValues={{
         fullName: '',
         email: '',
-        phoneNumber: '',
         password: '',
         confirmPassword: '',
       }}
@@ -170,7 +168,7 @@ const SignUp = () => {
               refs={emailRef}
               textContainer={styles.userInputContainer}
               placeHolderText={LABELS.EMAIL}
-              isNextFocus={phoneRef}
+              isNextFocus={passwordRef}
               isSecure={false}
               onBlurInput={handleBlur('email')}
               isTouch={touched.email}
@@ -184,33 +182,6 @@ const SignUp = () => {
             {touched.email && errors.email ? (
               <View style={styles.errorContainer}>
                 <Text style={styles.errorText}>{errors.email}</Text>
-              </View>
-            ) : (
-              <View style={styles.errorContainer}>
-                <Text></Text>
-              </View>
-            )}
-
-            <InputText
-              name={'phoneNumber'}
-              refs={phoneRef}
-              textContainer={styles.userInputContainer}
-              placeHolderText={LABELS.PHONE_NUMBER}
-              isNextFocus={passwordRef}
-              isSecure={false}
-              keyType={'number-pad'}
-              onBlurInput={handleBlur('phoneNumber')}
-              isTouch={touched.phoneNumber}
-              onChange={handleChange('phoneNumber')}
-              values={values?.phoneNumber.toLowerCase()}
-              isError={touched.phoneNumber && errors.phoneNumber}
-              isEditable={!handleToggle?.loading}
-              activeInputField={activeInputField}
-              setActiveInputField={setActiveInputField}
-            />
-            {touched.phoneNumber && errors.phoneNumber ? (
-              <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{errors.phoneNumber}</Text>
               </View>
             ) : (
               <View style={styles.errorContainer}>

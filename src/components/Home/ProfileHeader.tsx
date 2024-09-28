@@ -1,5 +1,10 @@
 import React from 'react';
-import {View, Text, TouchableWithoutFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from 'react-native';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -10,7 +15,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Imports
 import useAppContext from '../../context/useAppContext';
 import {LABELS} from '../../localization/labels';
-import {FONT, images} from '../../constants';
+import {COLORS, FONT, images} from '../../constants';
 import {ROUTES} from '../../routes/routes';
 
 const ProfileHeader = () => {
@@ -53,15 +58,18 @@ const ProfileHeader = () => {
           </View>
         </View>
         <View style={styles.menuContainer}>
-          <TouchableWithoutFeedback
-            onPress={() => navigation.navigate(ROUTES.SETTING)}>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            style={styles.creditContainer}
+            onPress={() => {}}>
             <Ionicons
-              name="settings-outline"
-              size={wp(6)}
-              color={theme?.backColor}
-              style={styles.settingIcon}
+              name={'sparkles'}
+              size={wp(3.8)}
+              color={COLORS.white}
+              style={{marginHorizontal: wp(1)}}
             />
-          </TouchableWithoutFeedback>
+            <Text style={styles.creditText}>10</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -116,13 +124,39 @@ const getStyles = ({theme}: any) => ({
     borderRadius: wp(1),
     fontFamily: FONT.notoSansMedium,
     color: theme?.wrapperColor,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 1,
   },
   menuContainer: {
     flex: 0.15,
     justifyContent: 'center',
   },
-  settingIcon: {
-    alignSelf: 'center',
+  creditContainer: {
+    flexDirection: 'row',
+    padding: wp(2),
+    borderRadius: wp(10),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme?.tagColor,
+    shadowColor: COLORS.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 1,
+  },
+  creditText: {
+    color: COLORS.white,
+    fontFamily: FONT.notoSansBold,
+    fontSize: wp(4),
   },
 });
 

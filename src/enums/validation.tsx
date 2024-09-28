@@ -36,3 +36,7 @@ export const forgotPasswordValidation = object({
     .matches(emailRegEx, 'Email address is not valid!')
     .required('Email address is required!'),
 });
+
+export const updateProfileValidation = object({
+  fullName: string().required('Full name is required'),
+});

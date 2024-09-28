@@ -58,7 +58,6 @@ export const LABELS = {
   EMAIL_LABEL: 'Email',
   THEME: 'Theme',
   SYSTEM_DEFAULT: 'System Default',
-  CHANGE_PASSWORD: 'Change Password',
   SEND_FEEDBACK: 'Send Feedback',
   CHAT_WITH_AIVO: 'Chat With Aivo',
   AIVO_CHATBOT: 'Aivo Chatbot',
@@ -74,6 +73,13 @@ export const LABELS = {
     "We'll adjust your preference based on your device's system settings.",
   OFF: 'Off',
   ON: 'On',
+  ACCOUNT: 'Account',
+  MODE: 'Mode',
+  CUSTOMER_SERVICE: 'Customer Service',
+  SHARE: 'Share',
+  RATE_APP: 'Rate App',
+  FEEDBACK: 'Feedback',
+  SIGN_OUT: 'Sign out',
 };
 
 export const STATIC_MESSAGE = {
@@ -81,4 +87,8 @@ export const STATIC_MESSAGE = {
   HELP_MESSAGE: 'What can I help\nyou with?',
   LISTENING: "Go a head, I'm\nListening...",
   TAP_TO_SEARCH: 'Press the button\nand Speak',
+  PROFILE_UPDATE: 'Details Updated successfully!',
+  FORGOT_PASSWORD: 'Please check your email to reset your password.',
+  MICRO_PHONE_PERMISSION:
+    'We need micro phone permission for access to recorded audio.',
 };
