@@ -25,20 +25,17 @@ import Mode from '../screens/Mode';
 const Stack = createNativeStackNavigator();
 
 const index = () => {
-  const {theme, setAuthUser, fetchCurrentUserData, getCollectionData}: any =
+  const {theme, authUser, fetchCurrentUserData, getCollectionData}: any =
     useAppContext();
   const [initializing, setInitializing] = useState<boolean>(true);
-  const [user, setUser] = useState();
   const [isSeenIntro, setIsSeenIntro] = useState<any>(null);
 
   // Actions
   async function onAuthStateChanged(user: any) {
-    setUser(user);
-    setAuthUser(user);
-    if (user?.email) {
-      await fetchCurrentUserData();
-      await getCollectionData(COLLECTIONS?.AIVO, DOC_NAME?.APP_INFO);
+    if (user?.email && user?.uid) {
+      await fetchCurrentUserData(authUser?.uid);
     }
+    await getCollectionData(COLLECTIONS?.AIVO, DOC_NAME?.APP_INFO);
     if (initializing) setInitializing(false);
   }
 
@@ -84,7 +81,11 @@ const index = () => {
       theme={MyTheme}>
       <Stack.Navigator
         initialRouteName={
-          !isSeenIntro ? ROUTES.ONBOARDING : user ? ROUTES.MAIN : ROUTES.SIGN_IN
+          !isSeenIntro
+            ? ROUTES.ONBOARDING
+            : authUser?.uid
+            ? ROUTES.MAIN
+            : ROUTES.SIGN_IN
         }
         screenOptions={{headerShown: false}}>
         <Stack.Group>

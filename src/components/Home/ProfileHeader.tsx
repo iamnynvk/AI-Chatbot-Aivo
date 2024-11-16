@@ -68,7 +68,7 @@ const ProfileHeader = () => {
               color={COLORS.white}
               style={{marginHorizontal: wp(1)}}
             />
-            <Text style={styles.creditText}>10</Text>
+            <Text style={styles.creditText}>{authUser?.credit}</Text>
           </TouchableOpacity>
         </View>
       </View>

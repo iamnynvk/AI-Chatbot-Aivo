@@ -23,7 +23,7 @@ import {goBack} from '../routes/NavigationService';
 
 const Profile = () => {
   const navigation: any = useNavigation();
-  const {theme, authUser, fetchCurrentUserData, setFeedBack}: any =
+  const {theme, authUser, fetchCurrentUserData, setAuthUser, setFeedBack}: any =
     useAppContext();
   const styles: any = getStyles({theme});
   const userId = getAuthUserId();
@@ -87,6 +87,7 @@ const Profile = () => {
   const userSignOut = async () => {
     setIsLoadSignOut(true);
     logoutUser().then(() => {
+      setAuthUser(null);
       navigation?.reset({
         index: 0,
         routes: [{name: ROUTES.SIGN_IN}],

@@ -76,9 +76,9 @@ export const ContextProvider = ({children}: any) => {
             return e;
           }
         },
-        fetchCurrentUserData: async () => {
+        fetchCurrentUserData: async (userId: any) => {
           try {
-            const userCollection: any = await getUserData(authUser?.uid);
+            const userCollection: any = await getUserData(userId);
             setAuthUser(userCollection?._data);
             // Configure theme modes
             const getUserThemeMode: any = await getValueInAsync(

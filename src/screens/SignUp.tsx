@@ -21,12 +21,13 @@ import {createUser} from '../utils/Firebase';
 import {ROUTES} from '../routes/routes';
 
 const SignUp = () => {
+  const navigation: any = useNavigation();
+  const {theme, appInfo, signUpUser, fetchCurrentUserData}: any =
+    useAppContext();
   const emailRef: any = useRef();
   const passwordRef: any = useRef();
   const confirmPassRef: any = useRef();
   const refRBSheet: any = useRef();
-  const navigation: any = useNavigation();
-  const {theme, signUpUser}: any = useAppContext();
   const styles: any = getStyles({theme});
   const [profileImage, setProfileImage] = useState<any>(null);
   const [activeInputField, setActiveInputField] = useState('');
@@ -70,10 +71,6 @@ const SignUp = () => {
       isClick: true,
       loading: true,
     });
-    const userCollection = {
-      ...values,
-      userImageUrl: profileImage,
-    };
 
     const confirmation = await signUpUser(values?.email, values?.password);
     if (confirmation.code) {
@@ -82,11 +79,20 @@ const SignUp = () => {
         loading: false,
       });
     } else {
-      await createUser(userCollection, confirmation);
-      navigation?.reset({
-        index: 0,
-        routes: [{name: ROUTES.INAPPPURCHASE}],
-      });
+      const userCollection = {
+        ...values,
+        userImageUrl: profileImage,
+        creditPoints: appInfo?.creditPoints ?? 8,
+        uid: confirmation?.user?.uid,
+      };
+      const data: any = await createUser(userCollection, confirmation);
+      if (data?.status) {
+        await fetchCurrentUserData();
+        navigation?.reset({
+          index: 0,
+          routes: [{name: ROUTES.INAPPPURCHASE}],
+        });
+      }
     }
   };
 
@@ -100,7 +106,7 @@ const SignUp = () => {
       }}
       validateOnMount={true}
       validationSchema={signUpValidation}
-      onSubmit={(values: any) => signUpHandler(values)}>
+      onSubmit={signUpHandler}>
       {({
         handleChange,
         handleBlur,

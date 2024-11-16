@@ -271,13 +271,14 @@ export const createUser = async (userCollection: any, confirmation: any) => {
           userImageUrl: url,
           fcmToken: fcmToken,
           subscription: null,
-          credit: 10,
+          credit: userCollection?.creditPoints,
           currentPlan: null,
+          uid: userCollection?.uid,
           createdAt: new Date(),
         })
         .then((response: any) => {
           createUserTrack.stop();
-          resolve(response);
+          resolve({status: true});
         })
         .catch((err: any) => {
           createUserTrack.stop();

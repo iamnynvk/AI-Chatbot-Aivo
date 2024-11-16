@@ -16,13 +16,6 @@ export const signUpValidation = object({
   email: string()
     .matches(emailRegEx, 'Email address is not valid!')
     .required('Email address is required!'),
-  phoneNumber: string()
-    .matches(
-      phoneRegEx,
-      'Invalid mobile number. It must start with 6-9 and be 10 digits long!',
-    )
-    .required('Mobile number is required!'),
-  profession: string().required('Profession is required!'),
   password: string()
     .min(6, ({min}) => `Password must be at least ${min} characters.`)
     .required('Password is required!'),
