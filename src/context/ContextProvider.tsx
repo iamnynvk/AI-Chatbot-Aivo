@@ -107,7 +107,7 @@ export const ContextProvider = ({children}: any) => {
             return e;
           }
         },
-        getCollectionData: async (collectionName: string, docName?: string) => {
+        getAppInfoData: async (collectionName: string, docName?: string) => {
           try {
             const collectionData: any = await getCollectedData(
               collectionName,
@@ -127,6 +127,14 @@ export const ContextProvider = ({children}: any) => {
                 type: FEEDBACK.ERROR,
               });
             });
+            return e;
+          }
+        },
+        getCollectionData: async (collectionName: string) => {
+          try {
+            const confirmation = await getCollectedData(collectionName);
+            return confirmation;
+          } catch (e) {
             return e;
           }
         },

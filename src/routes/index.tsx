@@ -25,7 +25,7 @@ import Mode from '../screens/Mode';
 const Stack = createNativeStackNavigator();
 
 const index = () => {
-  const {theme, authUser, fetchCurrentUserData, getCollectionData}: any =
+  const {theme, authUser, fetchCurrentUserData, getAppInfoData}: any =
     useAppContext();
   const [initializing, setInitializing] = useState<boolean>(true);
   const [isSeenIntro, setIsSeenIntro] = useState<any>(null);
@@ -35,7 +35,7 @@ const index = () => {
     if (user?.email && user?.uid) {
       await fetchCurrentUserData(authUser?.uid);
     }
-    await getCollectionData(COLLECTIONS?.AIVO, DOC_NAME?.APP_INFO);
+    await getAppInfoData(COLLECTIONS?.AIVO, DOC_NAME?.APP_INFO);
     if (initializing) setInitializing(false);
   }
 

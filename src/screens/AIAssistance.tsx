@@ -8,7 +8,7 @@ import {EXPLORE_TYPES, RENDER_EXPLORE_TYPES} from '../../assets/data';
 import {TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {FONT} from '../constants';
-import FeaturesCard from '../components/Home/FeaturesCard';
+import FeaturesCard from '../components/Cards/FeaturesCard';
 
 const AIAssistance = () => {
   const {theme}: any = useAppContext();
@@ -74,7 +74,7 @@ const AIAssistance = () => {
           numColumns={2}
           data={ExploreData}
           renderItem={({item}: any) => <FeaturesCard data={item} />}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item: any) => item.id.toString()}
           showsVerticalScrollIndicator={false}
         />
       </View>

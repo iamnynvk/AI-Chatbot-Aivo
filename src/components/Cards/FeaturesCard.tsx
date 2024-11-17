@@ -31,7 +31,11 @@ const FeaturesCard = ({data}: any) => {
       onPress={onCardPress}>
       <View style={styles.imageContainer}>
         <FastImage
-          source={data.images}
+          source={
+            typeof data?.images === 'number'
+              ? data?.images
+              : {uri: data?.images}
+          }
           style={styles.iconStyles}
           resizeMode="contain"
         />

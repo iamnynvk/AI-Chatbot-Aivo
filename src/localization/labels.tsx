@@ -80,6 +80,7 @@ export const LABELS = {
   RATE_APP: 'Rate App',
   FEEDBACK: 'Feedback',
   SIGN_OUT: 'Sign out',
+  EMPTY_MESSAGE: "Oops! It seems like there's nothing here right now.",
 };
 
 export const STATIC_MESSAGE = {
