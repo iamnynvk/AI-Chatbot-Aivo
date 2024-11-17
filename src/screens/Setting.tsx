@@ -68,10 +68,10 @@ const Setting = () => {
         />
         <List label={LABELS.SHARE} onPress={onShare} />
         <List label={LABELS?.RATE_APP} onPress={requestInAppReview} />
-        <List
+        {/* <List
           label={LABELS?.SEND_FEEDBACK}
           onPress={() => refRBSheet?.current?.open()}
-        />
+        /> */}
       </View>
       <View style={styles.appInfoContainer}>
         <Text style={styles.appInfoText}>
@@ -92,9 +92,9 @@ const Setting = () => {
         </View>
       </View>
 
-      <BottomSheets refs={refRBSheet} sheetHeight={'75%'}>
+      {/* <BottomSheets refs={refRBSheet} sheetHeight={'75%'}>
         <View style={styles.sheetContainer}></View>
-      </BottomSheets>
+      </BottomSheets> */}
     </View>
   );
 };
