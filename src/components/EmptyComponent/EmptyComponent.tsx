@@ -4,11 +4,12 @@ import useAppContext from '../../context/useAppContext';
 import {LABELS} from '../../localization/labels';
 import {FONT, SCREEN_HEIGHT} from '../../constants/theme';
 
-export const EmptyComponent = () => {
+export const EmptyComponent = ({contentStyles}: any) => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
   return (
-    <View style={[styles.emptyContainer, {alignItems: 'center'}]}>
+    <View
+      style={[styles.emptyContainer, {alignItems: 'center', ...contentStyles}]}>
       <Text style={styles.errorMessage}>{LABELS?.EMPTY_MESSAGE}</Text>
     </View>
   );

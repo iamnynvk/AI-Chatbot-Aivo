@@ -288,7 +288,7 @@ export const RENDER_EXPLORE_TYPES = [
       'Generating content for blogs, writing articles for websites, creating posts for content marketing.',
   },
   {
-    id: 22,
+    id: 9,
     title: 'YouTube Content Generation',
     type: 'all contentCreation',
     additionalTitle: COLLECTIONS?.YOUTUBE_CONTENT_GENERATION,

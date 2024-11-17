@@ -15,10 +15,36 @@ const FeaturesCardShimmer = ({size}: any) => {
     <React.Fragment>
       {[...Array(size)].map((_, index) => (
         <View key={index} style={styles.shimmerContainer}>
-          <ShimmerPlaceHolder style={styles.shimmerIcon} />
-          <ShimmerPlaceHolder style={styles.shimmerTitle} />
-          <ShimmerPlaceHolder style={styles.shimmerDescription} />
           <ShimmerPlaceHolder
+            shimmerColors={[
+              theme?.shimmerColor1,
+              theme?.shimmerColor2,
+              theme?.shimmerColor1,
+            ]}
+            style={styles.shimmerIcon}
+          />
+          <ShimmerPlaceHolder
+            shimmerColors={[
+              theme?.shimmerColor1,
+              theme?.shimmerColor2,
+              theme?.shimmerColor1,
+            ]}
+            style={styles.shimmerTitle}
+          />
+          <ShimmerPlaceHolder
+            shimmerColors={[
+              theme?.shimmerColor1,
+              theme?.shimmerColor2,
+              theme?.shimmerColor1,
+            ]}
+            style={styles.shimmerDescription}
+          />
+          <ShimmerPlaceHolder
+            shimmerColors={[
+              theme?.shimmerColor1,
+              theme?.shimmerColor2,
+              theme?.shimmerColor1,
+            ]}
             style={[
               styles.shimmerDescription,
               {width: wp(80), marginTop: wp(1)},

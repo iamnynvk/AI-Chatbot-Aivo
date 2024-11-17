@@ -29,6 +29,8 @@ export const color: any = {
     lightWhite: '#e1e1e1',
     voiceLine: '#d742bf',
     feedbackText: '#e1e1e1',
+    shimmerColor1: '#e0e0e0',
+    shimmerColor2: '#f5f5f5',
   },
   dark: {
     backgroundColor: '#000000',
@@ -51,6 +53,8 @@ export const color: any = {
     lightWhite: '#e1e1e1',
     voiceLine: '#d742bf',
     feedbackText: '#a8a8a8',
+    shimmerColor1: '#1E2433',
+    shimmerColor2: '#292F40',
   },
 };
 

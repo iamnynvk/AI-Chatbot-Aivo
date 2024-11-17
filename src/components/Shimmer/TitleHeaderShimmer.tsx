@@ -10,7 +10,16 @@ const TitleHeaderShimmer = () => {
   const {theme}: any = useAppContext();
   const styles: any = getStyles({theme});
 
-  return <ShimmerPlaceHolder style={styles.shimmerHeading} />;
+  return (
+    <ShimmerPlaceHolder
+      shimmerColors={[
+        theme?.shimmerColor1,
+        theme?.shimmerColor2,
+        theme?.shimmerColor1,
+      ]}
+      style={styles.shimmerHeading}
+    />
+  );
 };
 
 const getStyles = ({theme}: any) => ({

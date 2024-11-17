@@ -1,27 +1,63 @@
-import React, {useState} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import useAppContext from '../context/useAppContext';
 import Header from '../components/Header/Header';
 import {LABELS} from '../localization/labels';
 import {FlatList} from 'react-native';
-import {EXPLORE_TYPES, RENDER_EXPLORE_TYPES} from '../../assets/data';
 import {TouchableOpacity} from 'react-native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {FONT} from '../constants';
 import FeaturesCard from '../components/Cards/FeaturesCard';
+import {COLLECTIONS} from '../enums';
+import ExploreTypeShimmer from '../components/Shimmer/ExploreTypeShimmer';
+import FeaturesCardShimmer from '../components/Shimmer/FeaturesCardShimmer';
+import {EmptyComponent} from '../components/EmptyComponent/EmptyComponent';
+import {SCREEN_HEIGHT} from '../constants/theme';
 
 const AIAssistance = () => {
-  const {theme}: any = useAppContext();
+  const {theme, getCollectionData}: any = useAppContext();
   const styles: any = getStyles({theme});
   const [selectedId, setSelectedId] = useState(1);
-  const [ExploreData, setExploreData] = useState(RENDER_EXPLORE_TYPES);
+  const [exploreTypes, setExploreTypes] = useState<any>([]);
+  const [aiAssistants, setAiAssistants] = useState<any>([]);
+  const [aiAssistantData, setAiAssistantData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    getAiAssistantData();
+  }, []);
+
+  const getAiAssistantData = async () => {
+    try {
+      const exploreType = await fetchCollectionData(COLLECTIONS?.EXPLORE_TYPES);
+      const aiAssistant = await fetchCollectionData(COLLECTIONS?.AI_ASSISTANTS);
+      setExploreTypes(exploreType);
+      setAiAssistants(aiAssistant);
+      setAiAssistantData(aiAssistant);
+    } catch (error) {
+      console.error('Error assistant data:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchCollectionData = async (
+    collectionName: string,
+    limit?: number,
+  ) => {
+    const result = await getCollectionData(collectionName);
+    const data = result?._docs
+      ?.map((item: any) => item?._data)
+      ?.sort((a: any, b: any) => a.id - b.id);
+    return limit ? data?.slice(0, limit) : data;
+  };
 
   const handlePress = (categories: any) => {
     setSelectedId(selectedId === categories?.id ? selectedId : categories?.id);
-    const filterCategories = RENDER_EXPLORE_TYPES.filter((singleItem: any) => {
+    const filterCategories = aiAssistantData.filter((singleItem: any) => {
       return singleItem.type.includes(categories?.type);
     });
-    setExploreData(filterCategories);
+    setAiAssistants(filterCategories);
   };
 
   const renderItem = ({item}: any) => {
@@ -51,33 +87,52 @@ const AIAssistance = () => {
     );
   };
 
+  const _renderShimmerEffect = () => {
+    return (
+      <ScrollView>
+        <ExploreTypeShimmer size={5} />
+        <View style={styles.shimmerHandler}>
+          <FeaturesCardShimmer size={8} />
+        </View>
+      </ScrollView>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Header isLogo={true} title={LABELS.AI_ASSISTANTS} />
-      <FlatList
-        horizontal
-        data={EXPLORE_TYPES}
-        renderItem={renderItem}
-        initialNumToRender={20}
-        keyExtractor={item => item.id.toString()}
-        extraData={selectedId}
-        contentContainerStyle={styles.flatListContentContainer}
-        showsHorizontalScrollIndicator={false}
-      />
-      <View
-        style={{
-          height: '88%',
-          width: '100%',
-          paddingTop: wp(5),
-        }}>
-        <FlatList
-          numColumns={2}
-          data={ExploreData}
-          renderItem={({item}: any) => <FeaturesCard data={item} />}
-          keyExtractor={(item: any) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+      {isLoading ? (
+        <>{_renderShimmerEffect()}</>
+      ) : exploreTypes.length === 0 && aiAssistants.length === 0 ? (
+        <EmptyComponent contentStyles={{marginTop: SCREEN_HEIGHT / 2.6}} />
+      ) : (
+        <>
+          <FlatList
+            horizontal
+            data={exploreTypes}
+            renderItem={renderItem}
+            initialNumToRender={20}
+            keyExtractor={item => item.id.toString()}
+            extraData={selectedId}
+            contentContainerStyle={styles.flatListContentContainer}
+            showsHorizontalScrollIndicator={false}
+          />
+          <View
+            style={{
+              height: '88%',
+              width: '100%',
+              paddingTop: wp(5),
+            }}>
+            <FlatList
+              numColumns={2}
+              data={aiAssistants}
+              renderItem={({item}: any) => <FeaturesCard data={item} />}
+              keyExtractor={(item: any) => item.id.toString()}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };
@@ -96,6 +151,10 @@ const getStyles = ({theme}: any) => ({
     paddingVertical: wp(2),
     marginHorizontal: wp(2),
     borderRadius: wp(100),
+  },
+  shimmerHandler: {
+    marginTop: wp(2),
+    marginBottom: wp(7),
   },
 });
 
