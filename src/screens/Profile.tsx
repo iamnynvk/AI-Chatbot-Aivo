@@ -4,13 +4,18 @@ import {useNavigation} from '@react-navigation/native';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Formik} from 'formik';
-// Imports
-import {getAuthUserId, logoutUser, updateUser} from '../utils/Firebase';
+import {
+  deleteUser,
+  getAuthUserId,
+  handleAuthError,
+  logoutUser,
+  updateUser,
+} from '../utils/Firebase';
 import useAppContext from '../context/useAppContext';
 import Header from '../components/Header/Header';
 import {LABELS, STATIC_MESSAGE} from '../localization/labels';
 import FastImage from 'react-native-fast-image';
-import {COLORS, FONT, images} from '../constants';
+import {FONT, images} from '../constants';
 import ZoomImage from '../components/ZoomImage/ZoomImage';
 import BottomSheets from '../components/BottomSheet/BottomSheets';
 import {ROUTES} from '../routes/routes';
@@ -19,7 +24,8 @@ import {updateProfileValidation} from '../enums/validation';
 import InputText from '../components/TextInput/InputText';
 import {FEEDBACK} from '../enums';
 import SubmitButton from '../components/Button/SubmitButton';
-import {goBack} from '../routes/NavigationService';
+import DynamicAlertModal from '../components/DynamicAlertModal/DynamicAlertModal';
+import LoadingOverlay from '../components/Loader/LoadingOverlay';
 
 const Profile = () => {
   const navigation: any = useNavigation();
@@ -29,10 +35,13 @@ const Profile = () => {
   const userId = getAuthUserId();
   const refRBSheet: any = useRef();
   const [isZoomVisible, setIsZoomVisible] = useState<boolean>(false);
-  const [activeInputField, setActiveInputField] = useState('');
+  const [activeInputField, setActiveInputField] = useState<string>('');
   const [profileImage, setProfileImage] = useState<any>(authUser?.userImageUrl);
-  const [isLoadSignOut, setIsLoadSignOut] = useState(false);
-  const [isLoadUpdate, setIsLoadUpdate] = useState(false);
+  const [isLoadUpdate, setIsLoadUpdate] = useState<boolean>(false);
+  const [isLoadSignOut, setIsLoadSignOut] = useState<boolean>(false);
+  const [isDeleteAccount, setIsDeleteAccount] = useState<boolean>(false);
+  const [isAccountDeleteLoader, setIsAccountDeleteLoader] =
+    useState<boolean>(false);
 
   // plan - Only plan name store in firebase.
   // Subscription - Subscription plan all the details are stored on firebase.
@@ -85,14 +94,63 @@ const Profile = () => {
   };
 
   const userSignOut = async () => {
-    setIsLoadSignOut(true);
-    logoutUser().then(() => {
-      setAuthUser(null);
-      navigation?.reset({
-        index: 0,
-        routes: [{name: ROUTES.SIGN_IN}],
+    try {
+      setIsLoadSignOut(true);
+      let timer = setTimeout(() => {
+        logoutUser().then(() => {
+          setAuthUser(null);
+          setFeedBack({
+            show: true,
+            message: STATIC_MESSAGE?.SIGN_OUT_SUCCESS,
+            type: FEEDBACK.SUCCESS,
+          });
+          navigation?.reset({
+            index: 0,
+            routes: [{name: ROUTES.SIGN_IN}],
+          });
+        });
+      }, 2000);
+      return () => clearTimeout(timer);
+    } catch (error) {
+      console.log('Error while user signOut :', error);
+      handleAuthError(error, (message: any) => {
+        setFeedBack({
+          show: true,
+          message: message,
+          type: FEEDBACK.ERROR,
+        });
       });
-    });
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setIsDeleteAccount(false);
+    setIsAccountDeleteLoader(true);
+    try {
+      await deleteUser();
+      let timer = setTimeout(() => {
+        setIsAccountDeleteLoader(false);
+        setFeedBack({
+          show: true,
+          message: STATIC_MESSAGE?.DELETE_ACCOUNT_SUCCESS,
+          type: FEEDBACK.SUCCESS,
+        });
+        navigation?.reset({
+          index: 0,
+          routes: [{name: ROUTES?.SIGN_IN}],
+        });
+      }, 2000);
+      return () => clearTimeout(timer);
+    } catch (error) {
+      setIsAccountDeleteLoader(false);
+      handleAuthError(error, (message: any) => {
+        setFeedBack({
+          show: true,
+          message: message,
+          type: FEEDBACK.ERROR,
+        });
+      });
+    }
   };
 
   return (
@@ -120,6 +178,10 @@ const Profile = () => {
 
         return (
           <View style={styles.container}>
+            <LoadingOverlay
+              visible={isAccountDeleteLoader}
+              textContent={STATIC_MESSAGE?.SIGNING_OUT}
+            />
             <Header
               isBack={true}
               title={LABELS.PROFILE}
@@ -197,8 +259,17 @@ const Profile = () => {
                 <SubmitButton
                   handleSubmitButton={userSignOut}
                   isLoading={isLoadSignOut}
+                  isDisable={isLoadSignOut == true}
                   title={LABELS.SIGN_OUT}
                 />
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.deleteAccountContainer}
+                  onPress={() => setIsDeleteAccount(true)}>
+                  <Text style={styles.deleteText}>
+                    {LABELS?.DELETE_ACCOUNT}
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -236,6 +307,16 @@ const Profile = () => {
                 </View>
               </View>
             </BottomSheets>
+
+            <DynamicAlertModal
+              isVisible={isDeleteAccount}
+              title={LABELS?.DELETE_ACCOUNT_TITLE}
+              message={STATIC_MESSAGE?.DELETE_DESCRIPTION}
+              confirmButtonName={LABELS?.DELETE}
+              confirmButtonStyles={{paddingHorizontal: wp(8)}}
+              onConfirm={handleDeleteAccount}
+              onCancel={() => setIsDeleteAccount(false)}
+            />
           </View>
         );
       }}
@@ -334,6 +415,17 @@ const getStyles = ({theme}: any) => ({
     position: 'absolute',
     alignSelf: 'center',
     bottom: wp(10),
+  },
+  deleteAccountContainer: {
+    marginTop: wp(4),
+    alignSelf: 'center',
+    paddingHorizontal: wp(5),
+    paddingVertical: wp(2),
+  },
+  deleteText: {
+    fontFamily: FONT.notoSansBold,
+    color: theme?.danger,
+    fontSize: wp(4),
   },
 });
 

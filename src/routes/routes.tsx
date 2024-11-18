@@ -14,4 +14,5 @@ export const ROUTES = {
   SETTING: 'Setting',
   AIVO_CHAT: 'AivoChat',
   MODE: 'Mode',
+  FEEDBACK: 'Feedback',
 };

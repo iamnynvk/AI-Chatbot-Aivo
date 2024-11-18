@@ -18,7 +18,7 @@ import {FONT, images} from '../constants';
 import {signInValidation} from '../enums/validation';
 import {getValueInAsync} from '../utils/AsyncStorage';
 import {LABELS, STATIC_MESSAGE} from '../localization/labels';
-import {getFCMToken, setCollectionData} from '../utils/Firebase';
+import {getFCMToken, setUpdateCollectionData} from '../utils/Firebase';
 import {COLLECTIONS, FEEDBACK, IN_APP_PURCHASE_SEEN} from '../enums';
 
 const SignIn = () => {
@@ -63,7 +63,7 @@ const SignIn = () => {
         message: STATIC_MESSAGE.SIGN_IN_SUCCESS,
         type: FEEDBACK.SUCCESS,
       });
-      await setCollectionData({fcmToken: fcmToken}, COLLECTIONS.USERS);
+      await setUpdateCollectionData({fcmToken: fcmToken}, COLLECTIONS.USERS);
       confirmation?.user?.uid &&
         navigation?.reset({
           index: 0,

@@ -1,25 +1,21 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {View, Text, Linking, Share} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import InAppReview from 'react-native-in-app-review';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-// Import
 import ProfileCard from '../components/Profile/ProfileCard';
 import useAppContext from '../context/useAppContext';
 import Header from '../components/Header/Header';
 import List from '../components/List/List';
-import {LABELS} from '../localization/labels';
-import {ROUTES} from '../routes/routes';
-import {FONT} from '../constants';
-import {Alert} from 'react-native';
 import {FEEDBACK} from '../enums';
-import BottomSheets from '../components/BottomSheet/BottomSheets';
+import {FONT} from '../constants';
+import {ROUTES} from '../routes/routes';
+import {useNavigation} from '@react-navigation/native';
+import {LABELS, STATIC_MESSAGE} from '../localization/labels';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const Setting = () => {
   const navigation: any = useNavigation();
   const {theme, setFeedBack, themeMode, appInfo}: any = useAppContext();
   const styles: any = getStyles({theme});
-  const refRBSheet: any = useRef<any>();
 
   const requestInAppReview = () => {
     if (InAppReview.isAvailable()) {
@@ -29,6 +25,11 @@ const Setting = () => {
             'In-App review flow finished successfully:',
             hasFlowFinishedSuccessfully,
           );
+          setFeedBack({
+            show: true,
+            message: STATIC_MESSAGE.USER_REVIEW_MULTIPLE,
+            type: FEEDBACK.SUCCESS,
+          });
         })
         .catch(error => {
           console.log('In-App review flow failed:', error);
@@ -39,7 +40,7 @@ const Setting = () => {
   const onShare = async () => {
     try {
       await Share.share({
-        message: 'www.google.com',
+        message: STATIC_MESSAGE?.SHARE_LINK + appInfo?.appLink,
       });
     } catch (error: any) {
       setFeedBack({
@@ -68,14 +69,15 @@ const Setting = () => {
         />
         <List label={LABELS.SHARE} onPress={onShare} />
         <List label={LABELS?.RATE_APP} onPress={requestInAppReview} />
-        {/* <List
+        <List
           label={LABELS?.SEND_FEEDBACK}
-          onPress={() => refRBSheet?.current?.open()}
-        /> */}
+          onPress={() => navigation?.navigate(ROUTES?.FEEDBACK)}
+        />
       </View>
       <View style={styles.appInfoContainer}>
         <Text style={styles.appInfoText}>
-          {LABELS.AIVO_CHATBOT} - {LABELS.VERSION} {'0.0.1'}
+          {LABELS.AIVO_CHATBOT} - {LABELS.VERSION}{' '}
+          {appInfo?.appVersion || '0.0.1'}
         </Text>
         <View style={{flexDirection: 'row'}}>
           <Text
@@ -91,10 +93,6 @@ const Setting = () => {
           </Text>
         </View>
       </View>
-
-      {/* <BottomSheets refs={refRBSheet} sheetHeight={'75%'}>
-        <View style={styles.sheetContainer}></View>
-      </BottomSheets> */}
     </View>
   );
 };
@@ -126,7 +124,6 @@ const getStyles = ({theme}: any) => ({
     fontFamily: FONT.notoSansMedium,
     fontSize: wp(3.4),
   },
-  sheetContainer: {},
 });
 
 export default Setting;

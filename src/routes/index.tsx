@@ -21,6 +21,7 @@ import AivoChat from '../screens/AivoChat';
 import Chat from '../screens/Chat';
 import Profile from '../screens/Profile';
 import Mode from '../screens/Mode';
+import Feedback from '../screens/Feedback';
 
 const Stack = createNativeStackNavigator();
 
@@ -130,6 +131,11 @@ const index = () => {
           <Stack.Screen
             name={ROUTES.MODE}
             component={Mode}
+            options={{animation: 'fade_from_bottom', presentation: 'modal'}}
+          />
+          <Stack.Screen
+            name={ROUTES.FEEDBACK}
+            component={Feedback}
             options={{animation: 'fade_from_bottom', presentation: 'modal'}}
           />
         </Stack.Group>

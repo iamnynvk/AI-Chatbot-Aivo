@@ -156,6 +156,9 @@ export const deleteUser = async () => {
     const deleteUserTrack = perf().newTrace('deleteUser-Track');
     deleteUserTrack.start();
 
+    const currentUserId = await getAuthUserId();
+    await db.collection(COLLECTIONS?.USERS).doc(currentUserId).delete();
+
     deleteUserData().then(() => {
       firebaseAuth.currentUser
         .delete()
@@ -314,7 +317,7 @@ export const updateUser = async (userDetails: any, userId: any) => {
   }
 };
 
-export const setCollectionData = async (
+export const setUpdateCollectionData = async (
   storeData: any,
   collectionName: string,
   docName?: any,
@@ -328,6 +331,28 @@ export const setCollectionData = async (
       .collection(collectionName)
       .doc(docName ? docName : currentUserId)
       .update(storeData);
+    collectionDataTrack.stop();
+  } catch (error) {
+    console.log('Error while to update document', error);
+    collectionDataTrack.stop();
+  }
+  collectionDataTrack.stop();
+};
+
+export const storeData = async (
+  data: any,
+  collectionName: string,
+  docName?: any,
+) => {
+  const collectionDataTrack = perf().newTrace('collectionData-Track');
+  collectionDataTrack.start();
+
+  try {
+    const currentUserId = await getAuthUserId();
+    await db
+      .collection(collectionName)
+      .doc(docName ? docName : currentUserId)
+      .set(data);
     collectionDataTrack.stop();
   } catch (error) {
     console.log('Error while to update document', error);

@@ -33,3 +33,12 @@ export const forgotPasswordValidation = object({
 export const updateProfileValidation = object({
   fullName: string().required('Full name is required'),
 });
+
+export const feedBackValidation = object({
+  email: string()
+    .matches(emailRegEx, 'Email address is not valid!')
+    .required('Email address is required!'),
+  notes: string()
+    .min(10, ({min}) => `Notes must be at least ${min} characters.`)
+    .required('Notes are required!'),
+});

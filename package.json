@@ -38,6 +38,7 @@
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-in-app-review": "^4.3.3",
     "react-native-linear-gradient": "^2.8.3",
+    "react-native-modal": "^13.0.1",
     "react-native-paper": "^5.12.3",
     "react-native-permissions": "^4.1.5",
     "react-native-push-notification": "^8.1.1",

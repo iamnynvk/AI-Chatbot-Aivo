@@ -18,6 +18,7 @@ export const COLLECTIONS: any = {
   PROFILE: 'Profile',
   AIVO_CHAT: 'AivoChat',
   AIVO_TALK: 'AivoTalk',
+  FEEDBACK: 'Feedback',
   POPULAR_FEATURES: 'PopularFeatures',
   ASSISTANT_FEATURES: 'AssistantFeatures',
   AI_ASSISTANTS: 'AiAssistants',

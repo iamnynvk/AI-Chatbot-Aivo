@@ -31,6 +31,7 @@ export const color: any = {
     feedbackText: '#e1e1e1',
     shimmerColor1: '#e0e0e0',
     shimmerColor2: '#f5f5f5',
+    loadingOverlayBackground: 'rgba(0, 0, 0, 0.50)',
   },
   dark: {
     backgroundColor: '#000000',
@@ -55,6 +56,7 @@ export const color: any = {
     feedbackText: '#a8a8a8',
     shimmerColor1: '#1E2433',
     shimmerColor2: '#292F40',
+    loadingOverlayBackground: 'rgba(24, 29, 44, 0.8)',
   },
 };
 
