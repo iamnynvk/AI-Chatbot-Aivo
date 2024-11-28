@@ -132,6 +132,71 @@ export const getCollectedData = async (
   }
 };
 
+export const getChatCollection = async (
+  collectionName: string = 'AivoChat',
+) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const currentUserId = await getAuthUserId();
+      const queryMessage = await db
+        .collection(collectionName)
+        .doc(`${currentUserId}-AI`)
+        .collection(`${currentUserId}-AI`)
+        .orderBy('createdAt', 'desc')
+        .get()
+        .then((querySnapshot: any) => {
+          return querySnapshot?._docs;
+        });
+      resolve(queryMessage);
+    } catch (error) {
+      console.log('Error while get chat collection data -', error);
+      reject(error);
+      return error;
+    }
+  });
+};
+
+export const storeChatCommunication = async (
+  chatMessage: any,
+  collectionName: string = 'AivoChat',
+) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const currentUserId = await getAuthUserId();
+      const queryMessage = await db
+        .collection(collectionName)
+        .doc(`${currentUserId}-AI`);
+      await queryMessage.set({
+        chat_id: `${currentUserId}-AI`,
+        last_message: chatMessage?.text
+          ? chatMessage?.text
+          : chatMessage?.image,
+        createdAt: JSON.stringify(chatMessage?.createdAt),
+        user_name: chatMessage?.user?.name,
+      });
+      const newCollection = await queryMessage
+        .collection(`${currentUserId}-AI`)
+        .add({
+          ...chatMessage,
+          createdAt: JSON.stringify(chatMessage?.createdAt),
+        });
+      resolve(newCollection);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const updateCredits = async (credits: any, userId: string) => {
+  try {
+    await db.collection(COLLECTIONS.USERS).doc(userId).update({
+      credit: credits,
+    });
+  } catch (error) {
+    console.error('Error updating credits:', error);
+  }
+};
+
 export const getUserData = async (userId: any) => {
   const getUserDataTrack = perf().startTrace('getUserData-Track');
   (await getUserDataTrack).start();

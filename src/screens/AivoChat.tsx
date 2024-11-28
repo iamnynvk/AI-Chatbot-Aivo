@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {Bubble, GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import {
   heightPercentageToDP as hp,
@@ -13,10 +13,21 @@ import {FONT} from '../constants';
 import {ActivityIndicator} from 'react-native-paper';
 import ZoomImage from '../components/ZoomImage/ZoomImage';
 import {requestMicrophonePermission} from '../utils/AskPermission';
-import {LABELS} from '../localization/labels';
+import {LABELS, STATIC_MESSAGE} from '../localization/labels';
+import {getChatGPTResponse, getDallEResponse} from '../config';
+import {FEEDBACK} from '../enums';
+import {Keyboard} from 'react-native';
+import {updateCredits} from '../utils/Firebase';
 
 const AivoChat = ({route}: any) => {
-  const {theme, authUser}: any = useAppContext();
+  const {
+    theme,
+    authUser,
+    appInfo,
+    setFeedBack,
+    getChatCollectionData,
+    storeChatData,
+  }: any = useAppContext();
   const styles: any = getStyles({theme});
   const inputRef: any = useRef();
   const [messages, setMessages] = useState<any>([]);
@@ -24,6 +35,32 @@ const AivoChat = ({route}: any) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isLoader, setIsLoader] = useState(false);
   const [isOnMic, setIsOnMic] = useState(false);
+  const [credits, setCredits] = useState(authUser?.credit);
+
+  useEffect(() => {
+    updateCredits(credits, authUser?.uid);
+  }, [credits]);
+
+  useEffect(() => {
+    const fetchChatData = async () => {
+      try {
+        setIsLoader(true);
+        const chatData = await getChatCollectionData(
+          route?.params?.additionalTitle,
+        );
+        chatData?.map((singleChat: any) => {
+          singleChat.createdAt = JSON.parse(singleChat.createdAt);
+        });
+        setMessages(chatData);
+        setIsLoader(false);
+      } catch (error) {
+        setIsLoader(false);
+        console.log('Error fetching user chat collection data :', error);
+      }
+    };
+
+    fetchChatData();
+  }, [route?.params?.additionalTitle]);
 
   useEffect(() => {
     Voice.onSpeechStart = onSpeechStartHandler;
@@ -49,6 +86,101 @@ const AivoChat = ({route}: any) => {
   const onSpeechErrorHandler = (e: any) => {
     console.log('Speech error handler', e);
     setIsOnMic(false);
+  };
+
+  const startRecording = async () => {
+    const permission = await requestMicrophonePermission();
+    if (permission) {
+      try {
+        setIsOnMic(true);
+        await Voice.start('en-GB');
+      } catch (error) {
+        console.log('Error when record audio :', error);
+      }
+    }
+  };
+
+  const stopRecording = async () => {
+    try {
+      await Voice.stop();
+      setIsOnMic(false);
+    } catch (error) {
+      console.log('Error when record audio OFF :', error);
+    }
+  };
+
+  const onSend = useCallback(async (messages: any) => {
+    inputRef?.current?.clear();
+    setMessages((previousMessages: any) =>
+      GiftedChat.append(previousMessages, messages),
+    );
+    setIsTyping(true);
+    const userChat = await storeChatData(
+      messages[0],
+      route?.params?.additionalTitle,
+    );
+    if (userChat?.code) {
+      setIsTyping(false);
+    } else {
+      const userMessage = messages[0].text;
+      const chatGPTResponse: any =
+        route?.params?.useKey === 'chatGPT'
+          ? await getChatGPTResponse(
+              appInfo?.ChatGPT_API_KEY,
+              appInfo?.chatgpt_model,
+              appInfo?.response_token,
+              route?.params?.message_hint,
+              userMessage,
+            )
+          : await getDallEResponse(
+              appInfo?.ChatGPT_API_KEY,
+              appInfo?.dalle_model,
+              appInfo?.generatePhotoSize,
+              route?.params?.message_hint,
+              userMessage,
+            );
+
+      const responseObject: any = {
+        _id: Math.random(),
+        ...(route?.params?.useKey === 'dallE' && {
+          image: chatGPTResponse?.data[0]?.url,
+        }),
+        ...(route?.params?.useKey != 'dallE' && {text: chatGPTResponse}),
+        createdAt: new Date(),
+        user: {
+          _id: '2',
+          name: LABELS?.AI_AIVO,
+          avatar:
+            'https://firebasestorage.googleapis.com/v0/b/ai-chatbot-aivo-007.appspot.com/o/App_Assets%2Faivologo.png?alt=media&token=341e43a2-fc88-466b-89b8-6493222aff17',
+        },
+      };
+
+      setCredits((prevCredit: any) => prevCredit - 1);
+
+      await setMessages((previousMessages: any) =>
+        GiftedChat.append(previousMessages, [responseObject]),
+      );
+
+      await storeChatData(responseObject, route?.params?.additionalTitle);
+      setIsTyping(false);
+    }
+    setSpeechValue('');
+    setIsTyping(false);
+  }, []);
+
+  const RenderEmpty = (props: any) => {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignContent: 'center',
+        }}>
+        {isLoader && (
+          <ActivityIndicator color={theme?.textColor} size={'small'} />
+        )}
+      </View>
+    );
   };
 
   const Bubbles = useCallback((props: any) => {
@@ -78,41 +210,6 @@ const AivoChat = ({route}: any) => {
       />
     );
   }, []);
-
-  const customDownButton = () => {
-    return (
-      <View style={styles.customDown}>
-        <Ionicons
-          name={'chevron-down-outline'}
-          size={26}
-          color={theme?.dropDownColor}
-        />
-      </View>
-    );
-  };
-
-  const startRecording = async () => {
-    const permission = await requestMicrophonePermission();
-    if (permission) {
-      try {
-        setIsOnMic(true);
-        await Voice.start('en-GB');
-      } catch (error) {
-        console.log('Error when record audio :', error);
-      }
-    }
-  };
-
-  const stopRecording = async () => {
-    try {
-      await Voice.stop();
-      setIsOnMic(false);
-    } catch (error) {
-      console.log('Error when record audio OFF :', error);
-    }
-  };
-
-  const onSend = useCallback(async (messages: any) => {}, []);
 
   const renderInput = (props: any) => {
     return (
@@ -144,20 +241,29 @@ const AivoChat = ({route}: any) => {
         renderSend={() => {
           return (
             <TouchableOpacity
-              onPress={() =>
-                onSend([
-                  {
-                    _id: Math.random(),
-                    createdAt: new Date(),
-                    text: props?.text.trim(),
-                    user: {
-                      _id: 1,
-                      avatar: authUser?.userImageUrl,
-                      name: authUser?.email,
+              onPress={() => {
+                Keyboard.dismiss();
+                if (credits < 1) {
+                  setFeedBack({
+                    show: true,
+                    message: STATIC_MESSAGE?.LIMIT_REACHED,
+                    type: FEEDBACK.ERROR,
+                  });
+                } else {
+                  onSend([
+                    {
+                      _id: Math.random(),
+                      createdAt: new Date(),
+                      text: props?.text.trim(),
+                      user: {
+                        _id: 1,
+                        avatar: authUser?.userImageUrl,
+                        name: authUser?.email,
+                      },
                     },
-                  },
-                ])
-              }
+                  ]);
+                }
+              }}
               disabled={props?.text.trim().length == 0 ? true : false}
               activeOpacity={0.8}
               style={[
@@ -179,24 +285,21 @@ const AivoChat = ({route}: any) => {
     );
   };
 
-  const RenderEmpty = (props: any) => {
+  const customDownButton = () => {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignContent: 'center',
-        }}>
-        {isLoader && (
-          <ActivityIndicator color={theme?.textColor} size={'small'} />
-        )}
+      <View style={styles.customDown}>
+        <Ionicons
+          name={'chevron-down-outline'}
+          size={26}
+          color={theme?.dropDownColor}
+        />
       </View>
     );
   };
 
   const renderMessageImage = useCallback((props: any) => {
     const {currentMessage} = props;
-    return <ZoomImage imageUri={currentMessage.image} />;
+    return <ZoomImage imageUri={currentMessage.image} onClose={() => {}} />;
   }, []);
 
   return (

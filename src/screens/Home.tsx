@@ -17,7 +17,8 @@ import {EmptyComponent} from '../components/EmptyComponent/EmptyComponent';
 
 const Home = () => {
   const navigation: any = useNavigation();
-  const {theme, getCollectionData}: any = useAppContext();
+  const {theme, getCollectionData, authUser, fetchCurrentUserData}: any =
+    useAppContext();
   const [featuresForHome, setFeaturesForHome] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(true);
   const styles: any = getStyles({theme});
@@ -25,6 +26,13 @@ const Home = () => {
   useEffect(() => {
     getFeaturesData();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchCurrentUserData(authUser?.uid);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const getFeaturesData = async () => {
     try {

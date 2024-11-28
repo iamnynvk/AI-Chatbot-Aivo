@@ -91,6 +91,7 @@ export const LABELS = {
             you. Share your suggestions, report issues, or let us know what you
             love about our app. We're listening!`,
   SUGGESTION: 'Write your suggestions...',
+  HISTORY: 'History',
 };
 
 export const STATIC_MESSAGE = {
@@ -120,4 +121,6 @@ Many more things...
   DELETE_ACCOUNT_SUCCESS:
     'Your account has been deleted.\nThank you for being a part of our journey!',
   SIGN_OUT_SUCCESS: `You’ve signed out successfully.\nSee you again soon!`,
+  LIMIT_REACHED:
+    'You’ve hit your usage limit. Please upgrade your plan to continue using our features. Thank you!',
 };

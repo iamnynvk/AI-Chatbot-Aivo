@@ -4,11 +4,13 @@ import {Alert, Appearance, StatusBar} from 'react-native';
 import {color, COLORS} from '../constants';
 import {COLLECTIONS, FEEDBACK, MODE} from '../enums';
 import {
+  getChatCollection,
   getCollectedData,
   getUserData,
   handleAuthError,
   signInWithEmailPassword,
   signUpWithEmailPassword,
+  storeChatCommunication,
 } from '../utils/Firebase';
 import {firebase} from '@react-native-firebase/auth';
 import {getValueInAsync} from '../utils/AsyncStorage';
@@ -135,6 +137,30 @@ export const ContextProvider = ({children}: any) => {
             const confirmation = await getCollectedData(collectionName);
             return confirmation;
           } catch (e) {
+            return e;
+          }
+        },
+        getChatCollectionData: async (collectionName: string) => {
+          try {
+            const collectionData: any = await getChatCollection(collectionName);
+            return collectionData?.map((singleData: any) => {
+              return singleData?._data;
+            });
+          } catch (e) {
+            return e;
+          }
+        },
+        storeChatData: async (message: any, collectionName: string) => {
+          try {
+            await storeChatCommunication(message, collectionName);
+          } catch (e: any) {
+            handleAuthError(e, (message: any) => {
+              setFeedBack({
+                show: true,
+                message: message,
+                type: FEEDBACK.ERROR,
+              });
+            });
             return e;
           }
         },
